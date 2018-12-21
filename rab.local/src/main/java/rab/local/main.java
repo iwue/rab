@@ -3,6 +3,10 @@ package rab.local;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,7 +14,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import controller.rab.local.ps4controller;
+import controller.rab.local.ControllerOp;
+import exceptions.rab.local.MultipleObjects;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
 
@@ -23,7 +28,7 @@ public class main {
 	protected Shell shell;
 	private List<Controller> foundControllers;
 	private static Logger logger = LogManager.getLogger(main.class);
-	private ps4controller ps4c = new ps4controller(); 
+	private ControllerOp ps4c = new ControllerOp(); 
 	
 	/**
 	 * Launch the application.
@@ -36,14 +41,23 @@ public class main {
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} 
 	}
 
 	/**
 	 * Open the window.
 	 */
 	public void open() {
-		ps4c.searchForControllers();
+		// Verb
+		try {
+			ps4c.waitForController();
+		} catch (MultipleObjects e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 		Display display = Display.getDefault();
 		createContents();
 		shell.open();
