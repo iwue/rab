@@ -14,11 +14,11 @@ import exceptions.rab.local.MultipleObjects;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
 
-public class ControllerOp {
+public class JoystickController {
 	
 	private List<Controller> foundControllers = new ArrayList<>();
 	private Controller connectectedController;
-	private static Logger logger = LogManager.getLogger(ControllerOp.class);
+	private static Logger logger = LogManager.getLogger(JoystickController.class);
 
     /**
      * Search (and save) for controllers of type Controller.Type.STICK,
@@ -60,9 +60,10 @@ public class ControllerOp {
      * 
      * Das Objekt {@value currentController} wird danach gesetzt.
 	 * @throws MultipleObjects Es wurden mehere Controller gefunden.
+	 * @throws Exception Restlichen Fehler
 	 */
 	@Timeable(limit = 2, unit = TimeUnit.SECONDS)
-	public void waitForController() throws MultipleObjects, Exception{
+	public void connectToHardware() throws MultipleObjects, Exception{
 		boolean isConnected = false;
 
 		System.out.print("Searching for Controller.");
@@ -90,13 +91,9 @@ public class ControllerOp {
 		this.foundControllers = foundControllers;
 	}
 
-
-
 	public Controller getConnectectedController() {
 		return connectectedController;
 	}
-
-
 
 	public void setConnectectedController(Controller connectectedController) {
 		this.connectectedController = connectectedController;

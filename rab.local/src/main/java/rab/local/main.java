@@ -14,7 +14,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import controller.rab.local.ControllerOp;
+import controller.rab.local.EvController;
+import controller.rab.local.JoystickController;
 import exceptions.rab.local.MultipleObjects;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
@@ -26,9 +27,9 @@ import org.eclipse.swt.widgets.Combo;
 public class main {
 
 	protected Shell shell;
-	private List<Controller> foundControllers;
 	private static Logger logger = LogManager.getLogger(main.class);
-	private ControllerOp ps4c = new ControllerOp(); 
+	private JoystickController ps4c = new JoystickController(); 
+	private EvController evC = new EvController();
 	
 	/**
 	 * Launch the application.
@@ -48,15 +49,17 @@ public class main {
 	 * Open the window.
 	 */
 	public void open() {
-		// Verb
+		// Verbinden mit dem Controller und EV3
 		try {
-			ps4c.waitForController();
+			ps4c.connectToHardware();
+			evC.connectToHardware();
+			
+			evC.getEv3().getTextLCD().drawString("Projekt RAB\nJuri Stadler\nIsaac Würth\nPascalHelfenberger", 5, 5);
 		} catch (MultipleObjects e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		
 		Display display = Display.getDefault();
 		createContents();
