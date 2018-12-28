@@ -4,11 +4,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import lejos.hardware.BrickFinder;
-import lejos.hardware.ev3.EV3;
+import lejos.hardware.BrickInfo;
+import lejos.hardware.ev3.*;
+import lejos.remote.ev3.RemoteEV3;
 
 public class EvController {
 
-	private EV3 ev3;	
+	private RemoteEV3 ev3;	
 	private static Logger logger = LogManager.getLogger(EvController.class);
 
 	
@@ -18,9 +20,9 @@ public class EvController {
 	 * @throws Exception 
 	 */
 	public void connectToHardware() throws Exception{
-		
 		try {
-			ev3 = (EV3) BrickFinder.getLocal();
+			ev3 = new RemoteEV3("10.0.1.1");
+			ev3.isLocal();
 		} catch (Exception e) {
 			logger.error("Fehler beim verbinden.");
 			logger.error(e);
@@ -29,12 +31,12 @@ public class EvController {
 	}
 
 
-	public EV3 getEv3() {
+	public RemoteEV3 getEv3() {
 		return ev3;
 	}
 
 
-	public void setEv3(EV3 ev3) {
+	public void setEv3(RemoteEV3 ev3) {
 		this.ev3 = ev3;
 	}
 }

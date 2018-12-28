@@ -24,7 +24,7 @@ public class JoystickController {
      * Search (and save) for controllers of type Controller.Type.STICK,
      * Controller.Type.GAMEPAD, Controller.Type.WHEEL and Controller.Type.FINGERSTICK.
      */
-	public void searchForControllers() {
+	private void searchForControllers() {
         Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
 
         for(int i = 0; i < controllers.length; i++){

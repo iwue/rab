@@ -17,6 +17,14 @@ import org.eclipse.swt.widgets.Shell;
 import controller.rab.local.EvController;
 import controller.rab.local.JoystickController;
 import exceptions.rab.local.MultipleObjects;
+import lejos.hardware.lcd.LCD;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.hardware.motor.EV3MediumRegulatedMotor;
+import lejos.hardware.motor.Motor;
+import lejos.hardware.port.MotorPort;
+import lejos.remote.ev3.RMIRegulatedMotor;
+import lejos.remote.ev3.RMIRemoteRegulatedMotor;
+import lejos.robotics.RegulatedMotor;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
 
@@ -28,7 +36,7 @@ public class main {
 
 	protected Shell shell;
 	private static Logger logger = LogManager.getLogger(main.class);
-	private JoystickController ps4c = new JoystickController(); 
+	private JoystickController jsController = new JoystickController(); 
 	private EvController evC = new EvController();
 	
 	/**
@@ -41,24 +49,68 @@ public class main {
 			main window = new main();
 			window.open();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		} 
 	}
 
 	/**
 	 * Open the window.
 	 */
+	
 	public void open() {
 		// Verbinden mit dem Controller und EV3
 		try {
-			ps4c.connectToHardware();
+			jsController.connectToHardware();
 			evC.connectToHardware();
+			evC.getEv3().getLED().setPattern(1);
+			RMIRegulatedMotor motor = evC.getEv3().createRegulatedMotor("C", 'M');
+
 			
-			evC.getEv3().getTextLCD().drawString("Projekt RAB\nJuri Stadler\nIsaac Würth\nPascalHelfenberger", 5, 5);
+			evC.getEv3().getGraphicsLCD().clear();
+			evC.getEv3().getGraphicsLCD().drawString("Projekt RAB", 2, 20, 5);
+			evC.getEv3().getGraphicsLCD().drawString("Juri,Isaac,Pascal", 2, 35, 5);
+			evC.getEv3().getGraphicsLCD().drawString("Ready...", 2, 50, 5);
+			evC.getEv3().getLED().setPattern(4);
+			
+			motor.setAcceleration(300);
+			float conCur = 0;
+			int speed = 0;
+			int maxSpeed = 200;
+			while(true) {
+				jsController.getConnectectedController().poll();
+				conCur = jsController.getConnectectedController().getComponents()[2].getPollData();
+				speed = (int) (maxSpeed * conCur);
+				
+				
+				if (conCur > -0.08 && conCur < 0.08) {
+					System.out.println("stop: " + speed);
+					motor.stop(true);
+				} else  if(conCur >= -1 && conCur <= 1){
+					;
+					if(speed > 0) {
+						System.out.println("forward: " + speed);
+						motor.forward();
+						motor.setSpeed(speed);
+					} else {
+						System.out.println("backward: " + speed);
+						motor.backward();
+						motor.setSpeed(speed);
+					}
+				}
+				
+				if(jsController.getConnectectedController().getComponents()[6].getPollData() == 1.0f) {
+					break;
+				}
+			}
+			
+			motor.close();
+			evC.getEv3().getLED().setPattern(1);
+			System.exit(0);;
+
 		} catch (MultipleObjects e) {
-			e.printStackTrace();
+			logger.error(e);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		
 		Display display = Display.getDefault();
@@ -82,4 +134,9 @@ public class main {
 		shell.setText("SWT Application");
 
 	}
+	
+	public static int getAxisValueInPercentage(float axisValue)
+    {
+        return (int)(((2 - (1 - axisValue)) * 100) / 2);
+    }
 }
