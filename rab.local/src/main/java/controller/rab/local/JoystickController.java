@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,17 +17,18 @@ import net.java.games.input.ControllerEnvironment;
 
 public class JoystickController {
 	
-	private List<Controller> foundControllers = new ArrayList<>();
 	private Controller connectectedController;
+	private int position = 0;
 	private static Logger logger = LogManager.getLogger(JoystickController.class);
 
     /**
      * Search (and save) for controllers of type Controller.Type.STICK,
      * Controller.Type.GAMEPAD, Controller.Type.WHEEL and Controller.Type.FINGERSTICK.
      */
-	private void searchForControllers() {
-        Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
-
+	private List<Controller> searchJoysticks() {
+		List<Controller> foundControllers = new ArrayList<>();
+		Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
+		
         for(int i = 0; i < controllers.length; i++){
             Controller controller = controllers[i];
 
@@ -37,18 +39,23 @@ public class JoystickController {
                     controller.getType() == Controller.Type.FINGERSTICK
                )
             {
-                // Add new controller to the list of all controllers.
-                foundControllers.add(controller);
-            
-                foundControllers.forEach(
-                		(con) -> Arrays.asList(con.getComponents()).forEach(
-                				(component) -> logger.info(con.getName()
-                						+"\n\tComponent:\t"+component.getName()
-                						+"\n\tID:\t\t"+component.getIdentifier()
-                						+"\n\tDeadzone:\t"+component.getDeadZone()
-                						+"\n\tPolldata:\t"+component.getPollData())));
+            		foundControllers.add(controller);
+                               
+//                foundControllers.forEach(
+//                		(con) -> Arrays.asList(con.getComponents()).forEach(
+//                				(component) -> logger.info(con.getName()
+//                						+"\n\tComponent:\t"+component.getName()
+//                						+"\n\tID:\t\t"+component.getIdentifier()
+//                						+"\n\tDeadzone:\t"+component.getDeadZone()
+//                						+"\n\tPolldata:\t"+component.getPollData())));
             }
         }
+        
+        // Ausgabe alles Controller in Log
+        foundControllers.forEach(
+        		controller -> logger.info("Matching Joytick: " + controller.getName()));
+        
+        return foundControllers;
     }
 	
 	
@@ -62,17 +69,17 @@ public class JoystickController {
 	 * @throws MultipleObjects Es wurden mehere Controller gefunden.
 	 * @throws Exception Restlichen Fehler
 	 */
-	@Timeable(limit = 2, unit = TimeUnit.SECONDS)
-	public void connectToHardware() throws MultipleObjects, Exception{
+	public void connect(int positon) throws MultipleObjects, TimeoutException, InterruptedException{
 		boolean isConnected = false;
 
 		System.out.print("Searching for Controller.");
-		while(!isConnected) {
-			searchForControllers();
-			if (!foundControllers.isEmpty()) {
+		for(int i = 0; i <= 10; i++) {
+			List<Controller> controllers = this.searchJoysticks();
+			
+			if (!controllers.isEmpty()) {
 				// Solange nur ein Controller verbunden ist, wird dieser genutzt
-				if(foundControllers.size() == 1) {
-					connectectedController = foundControllers.get(0);
+				if(controllers.size() == 1) {
+					connectectedController = controllers.get(positon);
 					return;
 				} else {
 					throw new MultipleObjects("Es wurden mehrere Controller gefunden");
@@ -81,14 +88,7 @@ public class JoystickController {
 			Thread.sleep(500);
 			System.out.print(".");
 		}
-	}
-
-	public List<Controller> getFoundControllers() {
-		return foundControllers;
-	}
-
-	public void setFoundControllers(List<Controller> foundControllers) {
-		this.foundControllers = foundControllers;
+		throw new TimeoutException();
 	}
 
 	public Controller getConnectectedController() {

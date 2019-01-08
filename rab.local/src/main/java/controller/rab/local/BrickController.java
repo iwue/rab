@@ -8,21 +8,27 @@ import lejos.hardware.BrickInfo;
 import lejos.hardware.ev3.*;
 import lejos.remote.ev3.RemoteEV3;
 
-public class EvController {
+public class BrickController {
 
-	private RemoteEV3 ev3;	
-	private static Logger logger = LogManager.getLogger(EvController.class);
-
+	private RemoteEV3 brick;
+	private String ip;
+	private static Logger logger = LogManager.getLogger(BrickController.class);
+	
+	public BrickController(String ip) throws Exception{
+		this.ip = ip;
+		
+		this.connect();
+	}
 	
 	/**
 	 * Verbinden mit dem EV3
 	 *
 	 * @throws Exception 
 	 */
-	public void connectToHardware() throws Exception{
+	public void connect() throws Exception{
 		try {
-			ev3 = new RemoteEV3("10.0.1.1");
-			ev3.isLocal();
+			brick = new RemoteEV3(this.ip);
+			brick.isLocal();
 		} catch (Exception e) {
 			logger.error("Fehler beim verbinden.");
 			logger.error(e);
@@ -31,12 +37,7 @@ public class EvController {
 	}
 
 
-	public RemoteEV3 getEv3() {
-		return ev3;
-	}
-
-
-	public void setEv3(RemoteEV3 ev3) {
-		this.ev3 = ev3;
+	public RemoteEV3 getBrick() {
+		return brick;
 	}
 }

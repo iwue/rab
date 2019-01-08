@@ -14,7 +14,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import controller.rab.local.EvController;
+import controller.rab.local.BrickController;
 import controller.rab.local.JoystickController;
 import exceptions.rab.local.MultipleObjects;
 import lejos.hardware.lcd.LCD;
@@ -22,9 +22,14 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.EV3MediumRegulatedMotor;
 import lejos.hardware.motor.Motor;
 import lejos.hardware.port.MotorPort;
+import lejos.hardware.port.SensorPort;
+import lejos.hardware.sensor.EV3GyroSensor;
 import lejos.remote.ev3.RMIRegulatedMotor;
 import lejos.remote.ev3.RMIRemoteRegulatedMotor;
+import lejos.remote.ev3.RMISampleProvider;
+import lejos.robotics.GyroscopeAdapter;
 import lejos.robotics.RegulatedMotor;
+import lejos.robotics.SampleProvider;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
 
@@ -37,7 +42,7 @@ public class main {
 	protected Shell shell;
 	private static Logger logger = LogManager.getLogger(main.class);
 	private JoystickController jsController = new JoystickController(); 
-	private EvController evC = new EvController();
+	private BrickController evC = new BrickController();
 	
 	/**
 	 * Launch the application.
@@ -60,11 +65,11 @@ public class main {
 	public void open() {
 		// Verbinden mit dem Controller und EV3
 		try {
-			jsController.connectToHardware();
-			evC.connectToHardware();
+			jsController.connect();
+			evC.connect();
 			evC.getEv3().getLED().setPattern(1);
-			RMIRegulatedMotor motor = evC.getEv3().createRegulatedMotor("C", 'M');
-
+			RMIRegulatedMotor motor = evC.getEv3().createRegulatedMotor("C", 'L');
+			RMISampleProvider gyrosSample = evC.getEv3().createSampleProvider("S1", "lejos.hardware.sensor.EV3TouchSensor","Touch");
 			
 			evC.getEv3().getGraphicsLCD().clear();
 			evC.getEv3().getGraphicsLCD().drawString("Projekt RAB", 2, 20, 5);
@@ -72,10 +77,11 @@ public class main {
 			evC.getEv3().getGraphicsLCD().drawString("Ready...", 2, 50, 5);
 			evC.getEv3().getLED().setPattern(4);
 			
-			motor.setAcceleration(300);
+			motor.setAcceleration(200);
 			float conCur = 0;
 			int speed = 0;
-			int maxSpeed = 200;
+			int maxSpeed = 300;
+			
 			while(true) {
 				jsController.getConnectectedController().poll();
 				conCur = jsController.getConnectectedController().getComponents()[2].getPollData();
@@ -86,7 +92,6 @@ public class main {
 					System.out.println("stop: " + speed);
 					motor.stop(true);
 				} else  if(conCur >= -1 && conCur <= 1){
-					;
 					if(speed > 0) {
 						System.out.println("forward: " + speed);
 						motor.forward();
@@ -101,9 +106,24 @@ public class main {
 				if(jsController.getConnectectedController().getComponents()[6].getPollData() == 1.0f) {
 					break;
 				}
+				
+				System.out.println("Tacho:\t"+motor.getTachoCount());
+				
+				
+				float[] sample = gyrosSample.fetchSample();
+				
+				System.out.println("GyrosSensor:"+sample[0]);
+				
+				if(sample[0] == 1.0) {
+					motor.setAcceleration(2000);
+					motor.stop(true);
+					break;
+				}
 			}
 			
 			motor.close();
+			gyrosSample.close();
+			
 			evC.getEv3().getLED().setPattern(1);
 			System.exit(0);;
 
