@@ -31,7 +31,7 @@ public class BrickController {
 			brick.isLocal();
 		} catch (Exception e) {
 			logger.error("Fehler beim verbinden.");
-			logger.error(e);
+			e.printStackTrace();
 			throw e;
 		}
 	}

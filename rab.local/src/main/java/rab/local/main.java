@@ -41,8 +41,8 @@ public class main {
 
 	protected Shell shell;
 	private static Logger logger = LogManager.getLogger(main.class);
-	private JoystickController jsController = new JoystickController(); 
-	private BrickController evC = new BrickController();
+	private JoystickController joystick;
+	private BrickController brick;
 	
 	/**
 	 * Launch the application.
@@ -65,17 +65,20 @@ public class main {
 	public void open() {
 		// Verbinden mit dem Controller und EV3
 		try {
-			jsController.connect();
-			evC.connect();
-			evC.getEv3().getLED().setPattern(1);
-			RMIRegulatedMotor motor = evC.getEv3().createRegulatedMotor("C", 'L');
-			RMISampleProvider gyrosSample = evC.getEv3().createSampleProvider("S1", "lejos.hardware.sensor.EV3TouchSensor","Touch");
+			joystick = new JoystickController(0);
+			brick = new BrickController("10.0.10.0");
 			
-			evC.getEv3().getGraphicsLCD().clear();
-			evC.getEv3().getGraphicsLCD().drawString("Projekt RAB", 2, 20, 5);
-			evC.getEv3().getGraphicsLCD().drawString("Juri,Isaac,Pascal", 2, 35, 5);
-			evC.getEv3().getGraphicsLCD().drawString("Ready...", 2, 50, 5);
-			evC.getEv3().getLED().setPattern(4);
+			joystick.connect(0);
+			brick.connect();
+			brick.getBrick().getLED().setPattern(1);
+			RMIRegulatedMotor motor = brick.getBrick().createRegulatedMotor("C", 'L');
+			RMISampleProvider gyrosSample = brick.getBrick().createSampleProvider("S1", "lejos.hardware.sensor.EV3TouchSensor","Touch");
+			
+			brick.getBrick().getGraphicsLCD().clear();
+			brick.getBrick().getGraphicsLCD().drawString("Projekt RAB", 2, 20, 5);
+			brick.getBrick().getGraphicsLCD().drawString("Juri,Isaac,Pascal", 2, 35, 5);
+			brick.getBrick().getGraphicsLCD().drawString("Ready...", 2, 50, 5);
+			brick.getBrick().getLED().setPattern(4);
 			
 			motor.setAcceleration(200);
 			float conCur = 0;
@@ -83,8 +86,8 @@ public class main {
 			int maxSpeed = 300;
 			
 			while(true) {
-				jsController.getConnectectedController().poll();
-				conCur = jsController.getConnectectedController().getComponents()[2].getPollData();
+				joystick.getController().poll();
+				conCur = joystick.getController().getComponents()[2].getPollData();
 				speed = (int) (maxSpeed * conCur);
 				
 				
@@ -103,7 +106,7 @@ public class main {
 					}
 				}
 				
-				if(jsController.getConnectectedController().getComponents()[6].getPollData() == 1.0f) {
+				if(joystick.getController().getComponents()[6].getPollData() == 1.0f) {
 					break;
 				}
 				
@@ -124,7 +127,7 @@ public class main {
 			motor.close();
 			gyrosSample.close();
 			
-			evC.getEv3().getLED().setPattern(1);
+			brick.getBrick().getLED().setPattern(1);
 			System.exit(0);;
 
 		} catch (MultipleObjects e) {
@@ -152,7 +155,6 @@ public class main {
 		shell = new Shell();
 		shell.setSize(635, 450);
 		shell.setText("SWT Application");
-
 	}
 	
 	public static int getAxisValueInPercentage(float axisValue)
