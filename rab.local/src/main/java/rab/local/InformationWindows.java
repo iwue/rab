@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+
+import com.jcabi.log.Logger;
+
 import java.awt.BorderLayout;
 
 public class InformationWindows {
@@ -34,6 +37,9 @@ public class InformationWindows {
 	public InformationWindows() {
 		initialize();
 			
+		System.out.println("Angle 1: " + CalculationAngels.calcAngle1(150, 0, 150));
+		System.out.println("Angle 2: " + CalculationAngels.calcAngle2(150, 0, 150));
+		System.out.println("Angle 3: " + CalculationAngels.calcAngle3(150, 0, 150));
 		
 		while(true) {
 			try {
