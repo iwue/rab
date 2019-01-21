@@ -2,24 +2,20 @@ package controller.rab.local;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.jcabi.aspects.Timeable;
-
 import exceptions.rab.local.MultipleObjects;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
 
-public class JoystickController {
+public class DualshockController {
 
 	private Controller controller;
-	private static Logger logger = LogManager.getLogger(JoystickController.class);
+	private static Logger logger = LogManager.getLogger(DualshockController.class);
 
 	/**
 	 * Wartet bis sich ein Controller vom Typ Controller.Type.STICK,
@@ -30,7 +26,7 @@ public class JoystickController {
 	 * @throws MultipleObjects Es wurden mehere Controller gefunden.
 	 * @throws Exception Restlichen Fehler
 	 */
-	public JoystickController(int position) throws MultipleObjects, TimeoutException, InterruptedException{
+	public DualshockController(int position) throws TimeoutException, InterruptedException{
 
 		System.out.print("Searching for Controller.");
 		for(int i = 0; i <= 10; i++) {
@@ -56,7 +52,7 @@ public class JoystickController {
      * Controller.Type.GAMEPAD, Controller.Type.WHEEL and Controller.Type.FINGERSTICK.
      */
 	private List<Controller> searchJoysticks() {
-		List<Controller> foundControllers = new ArrayList<>();
+		List<Controller> foundControllers = new ArrayList<Controller>();
 		Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
 		
         for(int i = 0; i < controllers.length; i++){
