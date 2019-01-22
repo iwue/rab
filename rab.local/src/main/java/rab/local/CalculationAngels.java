@@ -1,13 +1,11 @@
 package rab.local;
 
-import java.text.Normalizer.Form;
-
 public class CalculationAngels {
 	
 	// Länge der Achsen in mm
-	private static double a1 = 100;
-	private static double a2 = 100;
-	private static double a5 = 100;
+	private static double a1 = 235;
+	private static double a2 = 150;
+	private static double a5 = 150;
 	private static double a6 = 100;
 	
 	
@@ -57,8 +55,6 @@ public class CalculationAngels {
 		double r3;
 		
 		// Teilwinkel
-		double fi1;
-		double fi2;
 		double fi3;
 		
 		// In z Richutng
@@ -92,7 +88,7 @@ public class CalculationAngels {
 		double x4 = x;
 		double y4 = y;
 		
-		finalAngle = Math.atan(x4 / y4);
+		finalAngle = Math.toDegrees(Math.atan(x4 / y4));
 		
 		return finalAngle;
 	}

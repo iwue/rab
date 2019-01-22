@@ -24,7 +24,7 @@ public class Controller {
 	private static RMIRegulatedMotor hingA3;
 	private static RMIRegulatedMotor hingRotation;
 	
-	private static int acceleration		= 500;
+	private static int acceleration		= 2500;
 	
 	private String iPBrickLeft 			= "192.168.0.10";
 	private String iPBrickRight 		= "192.168.0.20";
@@ -40,15 +40,23 @@ public class Controller {
 			// Verbinung zum Dualshock
 			dualshock 			= new DualshockController(dualshockID);
 			dualshockSimple		= new DualshockSimple(dualshock.getController());
-			
+		} catch(Exception e) {
+			logger.error(e);
+		}
+		
+		try {
 			// Verbindung zu linken Brick
 			brickLeft 			= new BrickController(iPBrickLeft);
-			brickLeft.connect();
-			
+			brickLeft.connect();			
+		} catch (Exception e) {
+			logger.error(e);
+		}
+		
+		try {
 			// Verbindung zu rechen Brick
 			//brickRight 			= new BrickController(iPBrickRight);
 			//brickRight.connect();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			logger.error(e);
 		}
 	}
@@ -60,13 +68,12 @@ public class Controller {
 			hingA2 			= brickLeft.getBrick().createRegulatedMotor("B", 'L');
 			hingA3 			= brickLeft.getBrick().createRegulatedMotor("C", 'L');
 			hingRotation 	= brickLeft.getBrick().createRegulatedMotor("D", 'L');
-
+			
 			// Setzen der Beschleunigung für alle Achsen/Motoren
 			hingA1.setAcceleration(acceleration);
 			hingA2.setAcceleration(acceleration);
 			hingA3.setAcceleration(acceleration);
 			hingRotation.setAcceleration(acceleration);
-			
 		} catch(Exception e) {
 			logger.error(e);
 			e.printStackTrace();

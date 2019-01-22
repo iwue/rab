@@ -65,16 +65,21 @@ public class DualshockController {
                     controller.getType() == Controller.Type.FINGERSTICK
                )
             {
-            		foundControllers.add(controller);
-                               
-//                foundControllers.forEach(
-//                		(con) -> Arrays.asList(con.getComponents()).forEach(
-//                				(component) -> logger.info(con.getName()
-//                						+"\n\tComponent:\t"+component.getName()
-//                						+"\n\tID:\t\t"+component.getIdentifier()
-//                						+"\n\tDeadzone:\t"+component.getDeadZone()
-//                						+"\n\tPolldata:\t"+component.getPollData())));
-            }
+            	foundControllers.add(controller);
+/*	            while(true) {
+	        
+	            	foundControllers.forEach(
+	                		(con) -> con.poll());
+	            	foundControllers.forEach(
+	                		(con) -> Arrays.asList(con.getComponents()).forEach(
+	                				(component) -> System.out.print(
+	                						component.getName()
+	                						+", "+component.getPollData()
+	                						+" -- ")));
+	            	
+	            	System.out.println();
+	            }
+*/            }
         }
         
         // Ausgabe alles Controller in Log
