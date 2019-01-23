@@ -1,17 +1,14 @@
-package rab.local;
+package controller.rab.local;
 
 import java.rmi.RemoteException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import controller.rab.local.BrickController;
-import controller.rab.local.DualshockController;
-import controller.rab.local.DualshockSimple;
 import lejos.remote.ev3.RMIRegulatedMotor;
 
-public class Controller {
-	private static Logger logger = LogManager.getLogger(Controller.class);
+public class MainController {
+	private static Logger logger = LogManager.getLogger(MainController.class);
 	
 	private DualshockController dualshock;
 	private static DualshockSimple dualshockSimple;
@@ -19,23 +16,31 @@ public class Controller {
 	private BrickController brickLeft;
 	private BrickController brickRight;
 	
+	// Achsenmotoren
 	private static RMIRegulatedMotor hingA1;
 	private static RMIRegulatedMotor hingA2;
 	private static RMIRegulatedMotor hingA3;
 	private static RMIRegulatedMotor hingRotation;
 	
-	private static int acceleration		= 2500;
+	private static int maxAcceleration		= 6000;
 	
 	private String iPBrickLeft 			= "192.168.0.10";
 	private String iPBrickRight 		= "192.168.0.20";
 	private int dualshockID				= 0;
 	
-	public Controller() {
-		init();
+	/**
+	 * Instanzieren des Objekts
+	 */
+	public MainController() {
+		initialize();
 		setupHings();
 	}
 	
-	private void init() {
+	
+	/**
+	 * Vebinden mit dem Joystick und Bricks
+	 */
+	private void initialize() {
 		try {
 			// Verbinung zum Dualshock
 			dualshock 			= new DualshockController(dualshockID);
@@ -45,7 +50,7 @@ public class Controller {
 		}
 		
 		try {
-			// Verbindung zu linken Brick
+			// Verbindung zu linkem Brick
 			brickLeft 			= new BrickController(iPBrickLeft);
 			brickLeft.connect();			
 		} catch (Exception e) {
@@ -53,7 +58,7 @@ public class Controller {
 		}
 		
 		try {
-			// Verbindung zu rechen Brick
+			// Verbindung zu rechem Brick
 			//brickRight 			= new BrickController(iPBrickRight);
 			//brickRight.connect();
 		} catch (Exception e) {
@@ -61,25 +66,34 @@ public class Controller {
 		}
 	}
 	
+	/**
+	 * Datenstream öffnen und konfigurieren der Motoren
+	 */
 	private void setupHings(){
 		try {
-			// Erste Achse
+			// Erster Achsenmotor mit Port A konfigurieren
 			hingA1 			= brickLeft.getBrick().createRegulatedMotor("A", 'L');
+			// Zweite Achsenmotor mit Port B konfigurieren
 			hingA2 			= brickLeft.getBrick().createRegulatedMotor("B", 'L');
+			// Dritte Achsenmotor mit Port C konfigurieren
 			hingA3 			= brickLeft.getBrick().createRegulatedMotor("C", 'L');
+			// Rotationsmotor mit Port D konfigurieren
 			hingRotation 	= brickLeft.getBrick().createRegulatedMotor("D", 'L');
 			
-			// Setzen der Beschleunigung für alle Achsen/Motoren
-			hingA1.setAcceleration(acceleration);
-			hingA2.setAcceleration(acceleration);
-			hingA3.setAcceleration(acceleration);
-			hingRotation.setAcceleration(acceleration);
+			// Setzen der Beschleunigung für alle Motoren
+			hingA1.setAcceleration(maxAcceleration);
+			hingA2.setAcceleration(maxAcceleration);
+			hingA3.setAcceleration(maxAcceleration);
+			hingRotation.setAcceleration(maxAcceleration);
 		} catch(Exception e) {
 			logger.error(e);
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * Verbindung zu allen Motoren schliessen
+	 */
 	public static void closeHings() {
 		try {
 			hingA1.close();

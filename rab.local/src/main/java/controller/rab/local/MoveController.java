@@ -1,18 +1,19 @@
 package controller.rab.local;
 
-import rab.local.CalculationAngels;
-import rab.local.Controller;
+import calculation.rab.local.CalculationAngels;
 
 public class MoveController {
+	
+	// 
 	private double translationAngle1 = 1;
 	private double translationAngle2 = 2;
 	private double translationAngle3 = 3;
 	private double translationAngleRotation = 0.4;
 	
-	private double speedRotation = 0.0;
-	private double speedAngle1 = 0.0;
-	private double speedAngle2 = 0.0;
-	private double speedAngle3 = 0.0;
+	private double calculatedSpeedRotation = 0.0;
+	private double calculatedSpeedAngle1 = 0.0;
+	private double calculatedSpeedAngle2 = 0.0;
+	private double calculatedSpeedAngle3 = 0.0;
 	
 	private double currentX = 0.0;
 	private double currentY = 0.0;
@@ -28,36 +29,37 @@ public class MoveController {
 		this.interval = interval;
 	}
 	
-	public void setAll(double newX, double newY, double newZ) {
+	public void setSpeedForAllAngles(double newX, double newY, double newZ) {
 		setSpeedAngle1(currentX, currentY, currentZ, newX, newY, newZ);
 		setSpeedAngle2(currentX, currentY, currentZ, newX, newY, newZ);
 		setSpeedAngle3(currentX, currentY, currentZ, newX, newY, newZ);
 		setSpeedRotation(currentX, currentY, newX, newY);
 		
-		System.out.println("Anglespeed 1: " + speedAngle1 
-						+ ", Anglespeed 2: " + speedAngle2
-						+ ", Anglespeed 3: " + speedAngle3
-						+ ", Rotationspeed: " + speedRotation);
+		System.out.println("Anglespeed 1: " + calculatedSpeedAngle1 
+						+ ", Anglespeed 2: " + calculatedSpeedAngle2
+						+ ", Anglespeed 3: " + calculatedSpeedAngle3
+						+ ", Rotationspeed: " + calculatedSpeedRotation);
 		
 		currentX = newX;
 		currentY = newY;
 		currentZ = newZ;
 	}
 	
-	public void goAll() {
+	public void goAllAngels() {
 		goAngle1();
 		goAngle2();
 		goAngle3();
 		goRotation();
-		System.out.println("All stop");
+		System.out.println("All Go");
 	}
 	
-	public void stopAll() {
+	public void stopAllAngels() {
 		try {
-			Controller.getHingA1().stop(true);
-			Controller.getHingA2().stop(true);
-			Controller.getHingA3().stop(true);
-			Controller.getHingRotation().stop(true);
+			MainController.getHingA1().stop(true);
+			MainController.getHingA2().stop(true);
+			MainController.getHingA3().stop(true);
+			MainController.getHingRotation().stop(true);
+			System.out.println("All stop");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -67,11 +69,11 @@ public class MoveController {
 		double oldAngle = CalculationAngels.calcAngle1(oldX, oldY, oldZ);
 		double newAngle = CalculationAngels.calcAngle1(newX, newY, newZ);
 		
-		speedAngle1 = oldAngle - newAngle;
+		calculatedSpeedAngle1 = oldAngle - newAngle;
 		
 		try {
-			double speed = Math.abs(speedAngle1 / translationAngle1 / interval);
-			Controller.getHingA1().setSpeed((int) speed);
+			double speed = Math.abs(calculatedSpeedAngle1 / translationAngle1 / interval);
+			MainController.getHingA1().setSpeed((int) speed);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -81,11 +83,11 @@ public class MoveController {
 		double oldAngle = CalculationAngels.calcAngle2(oldX, oldY, oldZ);
 		double newAngle = CalculationAngels.calcAngle2(newX, newY, newZ);
 		
-		speedAngle2 = oldAngle - newAngle;
+		calculatedSpeedAngle2 = oldAngle - newAngle;
 		
 		try {
-			double speed = Math.abs(speedAngle2 / translationAngle2 / interval);
-			Controller.getHingA2().setSpeed((int) speed);
+			double speed = Math.abs(calculatedSpeedAngle2 / translationAngle2 / interval);
+			MainController.getHingA2().setSpeed((int) speed);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -95,11 +97,11 @@ public class MoveController {
 		double oldAngle = CalculationAngels.calcAngle3(oldX, oldY, oldZ);
 		double newAngle = CalculationAngels.calcAngle3(newX, newY, newZ);
 		
-		speedAngle3 = oldAngle - newAngle;
+		calculatedSpeedAngle3 = oldAngle - newAngle;
 		
 		try {
-			double speed = Math.abs(speedAngle3 / translationAngle3 / interval);
-			Controller.getHingA3().setSpeed((int) speed);
+			double speed = Math.abs(calculatedSpeedAngle3 / translationAngle3 / interval);
+			MainController.getHingA3().setSpeed((int) speed);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -109,34 +111,22 @@ public class MoveController {
 		double oldAngleRotation = CalculationAngels.calcAngleRotation(oldX, oldY);
 		double newAngleRotation = CalculationAngels.calcAngleRotation(newX, newY);
 		
-		speedRotation = oldAngleRotation - newAngleRotation;
+		calculatedSpeedRotation = oldAngleRotation - newAngleRotation;
 		
 		try {
-			double speed = Math.abs(speedRotation / translationAngleRotation / interval);
-			Controller.getHingRotation().setSpeed((int) speed);
+			double speed = Math.abs(calculatedSpeedRotation / translationAngleRotation / interval);
+			MainController.getHingRotation().setSpeed((int) speed);
 		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void goRotation() {
-		try {
-			if(speedRotation < 0) {
-				Controller.getHingRotation().forward();
-			} else {
-				Controller.getHingRotation().backward();
-			}
-		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	private void goAngle1() {
 		try {
-			if(speedRotation < 0) {
-				Controller.getHingRotation().forward();
+			if(calculatedSpeedRotation < 0) {
+				MainController.getHingRotation().forward();
 			} else {
-				Controller.getHingRotation().backward();
+				MainController.getHingRotation().backward();
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -145,10 +135,10 @@ public class MoveController {
 	
 	private void goAngle2() {
 		try {
-			if(speedRotation < 0) {
-				Controller.getHingRotation().forward();
+			if(calculatedSpeedRotation < 0) {
+				MainController.getHingRotation().forward();
 			} else {
-				Controller.getHingRotation().backward();
+				MainController.getHingRotation().backward();
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -157,10 +147,23 @@ public class MoveController {
 	
 	private void goAngle3() {
 		try {
-			if(speedRotation < 0) {
-				Controller.getHingRotation().forward();
+			if(calculatedSpeedRotation < 0) {
+				MainController.getHingRotation().forward();
 			} else {
-				Controller.getHingRotation().backward();
+				MainController.getHingRotation().backward();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void goRotation() {
+		try {
+			//MainController.getHingRotation().rotateTo((int)(calculatedSpeedRotation / translationAngleRotation), true);
+			if(calculatedSpeedRotation < 0) {
+				MainController.getHingRotation().forward();
+			} else {
+				MainController.getHingRotation().backward();
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

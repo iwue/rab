@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 
+import controller.rab.local.MainController;
 import controller.rab.local.MoveController;
 
 import java.awt.BorderLayout;
@@ -13,15 +14,21 @@ public class InformationWindows {
 	private JFrame frame;
 	private JTable table;
 	private MoveController moveController;
-	private Controller controller = new Controller();
+	private MainController controller = new MainController();
 	
+	// Startposition des Effektors
 	private double currentX = 0;
 	private double currentY = 150;
 	private double currentZ = 235;
 	
+	// Stopbereich von Joystick
 	private double joystickStopRange = 0.1;
-	private double coordinateMaxSpeed = 50;
-	private double interval = 1; // in s
+	
+	// Maximale Zunahme der Geschwindigkeit auf dem Koordinatensystem
+	private double coordinateMaxSpeed = 25;
+	
+	// Interval für die Geschwindidkeit
+	private double interval = 0.25; // in s
 	
 	/**
 	 * Launch the application.
@@ -44,53 +51,46 @@ public class InformationWindows {
 	 * Create the application.
 	 */
 	public InformationWindows() {
+		// Controller für die Steuerung der Bewegung
 		moveController = new MoveController(currentX, currentY, currentZ, interval);
 		
-		int i = 1;
-		while(i == 1) {
-			try {
-				moveController.setAll(150, 0, 235);
-				moveController.goAll();
-				Thread.sleep((int) (1000 * interval));
-				moveController.setAll(0, 150, 235);
-				moveController.goAll();
-				Thread.sleep((int) (1000 * interval));
-				moveController.stopAll();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 		
 		boolean run = true;
 		while(run) {
-			try {
-				move();
-				Thread.sleep((int) (1000 * interval));
-				
-				if(Controller.getDualshockSimple().isPressedActionCross()) {
-					Controller.closeHings();
-					break;
-				}
-			} catch(Exception e) {
-				e.printStackTrace();
+			move();
+			
+			if(MainController.getDualshockSimple().isPressedActionCross()) {
+				break;
 			}
 		}
 
-		Controller.closeHings();
+		MainController.closeHings();
 		System.exit(0);
 	}
 	
+	/**
+	 * Umrechnung von Koordinatensystem zu Roboterachsen und Ausführen der Bewegung.
+	 */
 	public void move() {		
-		double joystickCurrentX = Controller.getDualshockSimple().getLeftStickX();
-		double joystickCurrentY = Controller.getDualshockSimple().getLeftStickY();
-		double joystickCurrentZ = Controller.getDualshockSimple().getRightStickY();
+		// Dualstock Stickwerte 
+		double joystickCurrentX = MainController.getDualshockSimple().getLeftStickX();
+		double joystickCurrentY = MainController.getDualshockSimple().getLeftStickY();
+		double joystickCurrentZ = MainController.getDualshockSimple().getRightStickY();
 		
+		
+		System.out.println("X: " + moveController.getCurrentX()
+						+ ", Y: " + moveController.getCurrentY()
+						+ ", Z: " + moveController.getCurrentZ());
+		
+		// Prüfen ob die Sticks sich im Stopbereich befinden
 		if (joystickCurrentX > (joystickStopRange * -1)
-				&& joystickCurrentX < joystickStopRange
-				&& joystickCurrentY > (joystickStopRange * -1)
-				&& joystickCurrentY < joystickStopRange
-				&& joystickCurrentZ > (joystickStopRange * -1)) {
-			moveController.stopAll();
+		&& joystickCurrentX < joystickStopRange
+		&& joystickCurrentY > (joystickStopRange * -1)
+		&& joystickCurrentY < joystickStopRange
+		&& joystickCurrentZ > (joystickStopRange * -1)) {
+			
+			moveController.stopAllAngels();
+		
 		} else {
 			double moveX = coordinateMaxSpeed * joystickCurrentX;
 			double moveY = coordinateMaxSpeed * joystickCurrentY;
@@ -104,8 +104,14 @@ public class InformationWindows {
 							+ ", Y: " + newY
 							+ ", Z: " + newZ);
 			
-			moveController.setAll(newX, newY, newZ);
-			moveController.goAll();
+			moveController.setSpeedForAllAngles(newX, newY, newZ);
+			moveController.goAllAngels();
+			
+			try {
+				Thread.sleep((int) (1000 * interval));
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

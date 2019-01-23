@@ -33,97 +33,83 @@ public class DualshockSimple {
 	public float getLeftStickX() {
 		poll();
 		float data = controller.getComponents()[3].getPollData();
-		logger.info("Left Stick X Data: " + data);
 		return data;
 	}
 
 	public float getLeftStickY() {
 		poll();
 		float data = controller.getComponents()[2].getPollData();
-		logger.info("Left Stick Y Data:\t" + data);
 		return data;
 	}
 
 	public float getRightStickX() {
 		poll();
 		float data = controller.getComponents()[1].getPollData();
-		logger.info("Right Stick X Data:\t" + data);
 		return data;
 	}
 
 	public float getRightStickY() {
 		poll();
 		float data = controller.getComponents()[0].getPollData();
-		logger.info("Right Stick Y Data:\t" + data);
 		return data;
 	}
 
 	public float getR1() {
 		poll();
 		float data = controller.getComponents()[10].getPollData();
-		logger.info("R1 Data:\t\t" + data);
 		return data;
 	}
 
 	public float getR2() {
 		poll();
 		float data = controller.getComponents()[19].getPollData();
-		logger.info("R2 Data:\t\t" + data);
 		return data;
 	}
 
 	public float getR3() {
 		poll();
 		float data = controller.getComponents()[16].getPollData();
-		logger.info("R3 Data:\t\t" + data);
 		return data;
 	}
 
 	public float getL1() {
 		poll();
 		float data = controller.getComponents()[9].getPollData();
-		logger.info("L1 Data:\t\t" + data);
 		return data;
 	}
 
 	public float getL2() {
 		poll();
 		float data = controller.getComponents()[20].getPollData();
-		logger.info("L2 Data:\t\t" + data);
 		return data;
 	}
 
 	public float getL3() {
 		poll();
 		float data = controller.getComponents()[15].getPollData();
-		logger.info("L3 Data:\t\t" + data);
 		return data;
 	}
 
 	public boolean isPressedActionCross() {
 		poll();
 		boolean status = controller.getComponents()[6].getPollData() == isPressed;
-		logger.info("Button Cross:\t\t" + status);
 		return status;
 	}
 
 	public boolean isPressedActionSquare() {
 		poll();
 		boolean status = controller.getComponents()[5].getPollData() == isPressed;
-		logger.info("Button Sqaure:\t\t" + status);
 		return status;
 	}
 
 	public boolean isPressedActionCirle() {
 		poll();
 		boolean status = controller.getComponents()[7].getPollData() == isPressed;
-		logger.info("Button Circle:\t\t" + status);
 		return status;	}
 
 	public boolean isPressedActionTriangle() {
 		poll();
 		boolean status = controller.getComponents()[8].getPollData() == isPressed;
-		logger.info("Button Triangle:\t\t" + status);
 		return status;
 		}
 
@@ -137,7 +123,6 @@ public class DualshockSimple {
 				|| data == 0.125) {
 			status = true;
 		}
-		logger.info("Button DPad Left:\t\t" + status);
 		return status;	
 	}
 
@@ -152,7 +137,6 @@ public class DualshockSimple {
 			status = true;
 		}
 		
-		logger.info("Button DPad Up:\t\t" + status);
 		return status;	
 	}
 
@@ -167,7 +151,6 @@ public class DualshockSimple {
 			status = true;
 		}
 		
-		logger.info("Button DPad Right:\t\t" + status);
 		return status;
 	}
 
@@ -180,28 +163,24 @@ public class DualshockSimple {
 				|| data == 0.625) {
 			status = true;
 		}
-		logger.info("Button DPad Down:\t\t" + status);
 		return status;	
 	}
 
 	public boolean isPressedButtonShare() {
 		poll();
 		boolean status = controller.getComponents()[13].getPollData() == isPressed;
-		logger.info("Button Share:\t\t" + status);
 		return status;	
 	}
 
 	public boolean isPressedButtonPS() {
 		poll();
 		boolean status = controller.getComponents()[12].getPollData() == isPressed;
-		logger.info("Button PS:\t\t" + status);
 		return status;	
 	}
 
 	public boolean isPressedButtonOption() {
 		poll();
 		boolean status = controller.getComponents()[14].getPollData() == isPressed;
-		logger.info("Button Option:\t\t" + status);
 		return status;	
 	}
 }
