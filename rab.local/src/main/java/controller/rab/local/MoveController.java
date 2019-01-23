@@ -5,9 +5,9 @@ import calculation.rab.local.CalculationAngels;
 public class MoveController {
 	
 	// 
-	private double translationAngle1 = 1;
-	private double translationAngle2 = 2;
-	private double translationAngle3 = 3;
+	private double translationAngle1 = 0.1;
+	private double translationAngle2 = 0.1;
+	private double translationAngle3 = 0.1;
 	private double translationAngleRotation = 0.4;
 	
 	private double calculatedSpeedRotation = 0.0;
@@ -30,19 +30,23 @@ public class MoveController {
 	}
 	
 	public void setSpeedForAllAngles(double newX, double newY, double newZ) {
-		setSpeedAngle1(currentX, currentY, currentZ, newX, newY, newZ);
-		setSpeedAngle2(currentX, currentY, currentZ, newX, newY, newZ);
-		setSpeedAngle3(currentX, currentY, currentZ, newX, newY, newZ);
-		setSpeedRotation(currentX, currentY, newX, newY);
-		
-		System.out.println("Anglespeed 1: " + calculatedSpeedAngle1 
-						+ ", Anglespeed 2: " + calculatedSpeedAngle2
-						+ ", Anglespeed 3: " + calculatedSpeedAngle3
-						+ ", Rotationspeed: " + calculatedSpeedRotation);
-		
-		currentX = newX;
-		currentY = newY;
-		currentZ = newZ;
+		if(!Double.isNaN(CalculationAngels.calcAngle1(newX, newY, newZ))) {
+			setSpeedAngle1(currentX, currentY, currentZ, newX, newY, newZ);
+			setSpeedAngle2(currentX, currentY, currentZ, newX, newY, newZ);
+			setSpeedAngle3(currentX, currentY, currentZ, newX, newY, newZ);
+			setSpeedRotation(currentX, currentY, newX, newY);
+			
+			System.out.println("Anglespeed 1: " + calculatedSpeedAngle1 
+							+ ", Anglespeed 2: " + calculatedSpeedAngle2
+							+ ", Anglespeed 3: " + calculatedSpeedAngle3
+							+ ", Rotationspeed: " + calculatedSpeedRotation);
+			
+			currentX = newX;
+			currentY = newY;
+			currentZ = newZ;
+		} else {
+			System.out.println("Out of range");
+		}
 	}
 	
 	public void goAllAngels() {
@@ -114,7 +118,7 @@ public class MoveController {
 		calculatedSpeedRotation = oldAngleRotation - newAngleRotation;
 		
 		try {
-			double speed = Math.abs(calculatedSpeedRotation / translationAngleRotation / interval);
+			double speed = Math.abs((calculatedSpeedRotation / translationAngleRotation) / interval);
 			MainController.getHingRotation().setSpeed((int) speed);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,9 +128,9 @@ public class MoveController {
 	private void goAngle1() {
 		try {
 			if(calculatedSpeedRotation < 0) {
-				MainController.getHingRotation().forward();
+				MainController.getHingA1().forward();
 			} else {
-				MainController.getHingRotation().backward();
+				MainController.getHingA1().backward();
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -136,9 +140,9 @@ public class MoveController {
 	private void goAngle2() {
 		try {
 			if(calculatedSpeedRotation < 0) {
-				MainController.getHingRotation().forward();
+				MainController.getHingA2().forward();
 			} else {
-				MainController.getHingRotation().backward();
+				MainController.getHingA2().backward();
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -148,9 +152,9 @@ public class MoveController {
 	private void goAngle3() {
 		try {
 			if(calculatedSpeedRotation < 0) {
-				MainController.getHingRotation().forward();
+				MainController.getHingA3().forward();
 			} else {
-				MainController.getHingRotation().backward();
+				MainController.getHingA3().backward();
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

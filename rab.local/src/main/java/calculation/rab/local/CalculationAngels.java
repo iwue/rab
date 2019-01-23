@@ -6,7 +6,7 @@ public class CalculationAngels {
 	private static double a1 = 235;
 	private static double a2 = 150;
 	private static double a5 = 150;
-	private static double a6 = 100;	
+	private static double a6 = 100;
 	
 	/**
 	 * Umrechnung vom kartesischen Koordinatensystem

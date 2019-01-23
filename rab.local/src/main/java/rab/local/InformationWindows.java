@@ -16,10 +16,10 @@ public class InformationWindows {
 	private MoveController moveController;
 	private MainController controller = new MainController();
 	
-	// Startposition des Effektors
-	private double currentX = 0;
-	private double currentY = 150;
-	private double currentZ = 235;
+	// Startposition des TCP
+	private double currentX = 100;
+	private double currentY = 0;
+	private double currentZ = 535;
 	
 	// Stopbereich von Joystick
 	private double joystickStopRange = 0.1;
@@ -28,7 +28,7 @@ public class InformationWindows {
 	private double coordinateMaxSpeed = 25;
 	
 	// Interval für die Geschwindidkeit
-	private double interval = 0.25; // in s
+	private double interval = 4; // in s
 	
 	/**
 	 * Launch the application.
@@ -54,15 +54,31 @@ public class InformationWindows {
 		// Controller für die Steuerung der Bewegung
 		moveController = new MoveController(currentX, currentY, currentZ, interval);
 		
-		
-		boolean run = true;
+		try {
+			moveController.setSpeedForAllAngles(200, 200, 300);
+			moveController.goAllAngels();
+			Thread.sleep((int)(1000 * interval));
+			moveController.setSpeedForAllAngles(100, 100, 200);
+			moveController.goAllAngels();
+			Thread.sleep((int)(1000 * interval));
+			moveController.setSpeedForAllAngles(200, 100, 250);
+			moveController.goAllAngels();
+			Thread.sleep((int)(1000 * interval));
+			moveController.setSpeedForAllAngles(100, 0, 535);
+			moveController.goAllAngels();
+			Thread.sleep((int)(1000 * interval));
+			moveController.stopAllAngels();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		/*boolean run = true;
 		while(run) {
 			move();
 			
 			if(MainController.getDualshockSimple().isPressedActionCross()) {
 				break;
 			}
-		}
+		}*/
 
 		MainController.closeHings();
 		System.exit(0);
@@ -87,7 +103,8 @@ public class InformationWindows {
 		&& joystickCurrentX < joystickStopRange
 		&& joystickCurrentY > (joystickStopRange * -1)
 		&& joystickCurrentY < joystickStopRange
-		&& joystickCurrentZ > (joystickStopRange * -1)) {
+		&& joystickCurrentZ > (joystickStopRange * -1)
+		&& joystickCurrentZ < joystickStopRange) {
 			
 			moveController.stopAllAngels();
 		

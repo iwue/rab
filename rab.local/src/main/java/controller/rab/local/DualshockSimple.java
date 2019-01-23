@@ -15,8 +15,7 @@ import net.java.games.input.Controller;
 public class DualshockSimple {
 	private Controller controller;
 	private float isPressed = 1f;
-	private static Logger logger = LogManager.getLogger(DualshockSimple.class);
-
+	
 	public DualshockSimple(Controller joystick) {
 		super();
 		this.controller = joystick;
