@@ -23,6 +23,10 @@ public class InformationWindows {
 	
 	
 	// Juri
+	
+	
+	
+	
 	// Stopbereich von Joystick
 	private double joystickStopRange = 0.1;
 	
