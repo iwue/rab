@@ -8,11 +8,20 @@ import controller.rab.local.MainController;
 import controller.rab.local.MoveController;
 
 import java.awt.BorderLayout;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import java.awt.Color;
+import javax.swing.JButton;
+import java.awt.Font;
 
 public class InformationWindows {
 
 	private JFrame frame;
-	private JTable table;
 	private MoveController moveController;
 	private MainController controller = new MainController();
 	
@@ -29,6 +38,8 @@ public class InformationWindows {
 	
 	// Interval für die Geschwindidkeit
 	private double interval = 6; // in s
+	private JPasswordField passwordField;
+	private JTextField Benutzer;
 	
 	/**
 	 * Launch the application.
@@ -142,14 +153,46 @@ public class InformationWindows {
 	
 	/**
 	 * Initialize the contents of the frame.
+	 * @wbp.parser.entryPoint
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(Color.BLACK);
+		frame.getContentPane().setForeground(Color.GREEN);
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		
-		table = new JTable();
-		frame.getContentPane().add(table, BorderLayout.CENTER);
+		passwordField = new JPasswordField();
+		passwordField.setBackground(Color.GRAY);
+		passwordField.setBounds(142, 161, 138, 20);
+		frame.getContentPane().add(passwordField);
+		
+		Benutzer = new JTextField();
+		Benutzer.setBackground(Color.GRAY);
+		Benutzer.setBounds(142, 130, 138, 20);
+		frame.getContentPane().add(Benutzer);
+		Benutzer.setColumns(10);
+		
+		JLabel Benutzername = new JLabel("Benutzername:");
+		Benutzername.setForeground(Color.GREEN);
+		Benutzername.setBackground(Color.BLACK);
+		Benutzername.setBounds(56, 133, 76, 14);
+		frame.getContentPane().add(Benutzername);
+		
+		JLabel Passwort = new JLabel("Passwort:");
+		Passwort.setForeground(Color.GREEN);
+		Passwort.setBounds(56, 164, 48, 14);
+		frame.getContentPane().add(Passwort);
+		
+		JButton Weiter = new JButton("Weiter");
+		Weiter.setBounds(314, 218, 91, 23);
+		frame.getContentPane().add(Weiter);
+		
+		JLabel lblNewLabel = new JLabel("RAB project \"ebe\"");
+		lblNewLabel.setFont(new Font("Yu Gothic", Font.BOLD | Font.ITALIC, 14));
+		lblNewLabel.setForeground(Color.CYAN);
+		lblNewLabel.setBounds(10, 11, 152, 31);
+		frame.getContentPane().add(lblNewLabel);
 	}
-
 }
