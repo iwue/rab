@@ -82,8 +82,6 @@ public class DualshockController {
         }
         
         // Ausgabe alles Controller in Log
-        foundControllers.forEach(
-        		controller -> logger.info("Matching Joytick: " + controller.getName()));
         
         return foundControllers;
     }
