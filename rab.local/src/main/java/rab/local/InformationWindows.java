@@ -160,34 +160,34 @@ public class InformationWindows {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.BLACK);
 		frame.getContentPane().setForeground(Color.GREEN);
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 800, 551);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		passwordField = new JPasswordField();
 		passwordField.setBackground(Color.GRAY);
-		passwordField.setBounds(142, 161, 138, 20);
+		passwordField.setBounds(311, 279, 138, 20);
 		frame.getContentPane().add(passwordField);
 		
 		Benutzer = new JTextField();
 		Benutzer.setBackground(Color.GRAY);
-		Benutzer.setBounds(142, 130, 138, 20);
+		Benutzer.setBounds(311, 215, 138, 20);
 		frame.getContentPane().add(Benutzer);
 		Benutzer.setColumns(10);
 		
 		JLabel Benutzername = new JLabel("Benutzername:");
 		Benutzername.setForeground(Color.GREEN);
 		Benutzername.setBackground(Color.BLACK);
-		Benutzername.setBounds(56, 133, 76, 14);
+		Benutzername.setBounds(210, 218, 76, 14);
 		frame.getContentPane().add(Benutzername);
 		
 		JLabel Passwort = new JLabel("Passwort:");
 		Passwort.setForeground(Color.GREEN);
-		Passwort.setBounds(56, 164, 48, 14);
+		Passwort.setBounds(210, 282, 48, 14);
 		frame.getContentPane().add(Passwort);
 		
 		JButton Weiter = new JButton("Weiter");
-		Weiter.setBounds(314, 218, 91, 23);
+		Weiter.setBounds(640, 461, 91, 23);
 		frame.getContentPane().add(Weiter);
 		
 		JLabel lblNewLabel = new JLabel("RAB project \"ebe\"");
