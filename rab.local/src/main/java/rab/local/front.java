@@ -24,6 +24,11 @@ public class front extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
+	private JLabel Baserotation;
+	private JLabel Angel1;
+	private JLabel Angel2;
+	private JLabel Angel3;
+	private JLabel Effector;
 
 	/**
 	 * Launch the application.
@@ -99,7 +104,7 @@ public class front extends JFrame {
 		JLabel choose = new JLabel("choose the position");
 		choose.setFont(new Font("Yu Gothic", Font.BOLD | Font.ITALIC, 16));
 		choose.setForeground(Color.CYAN);
-		choose.setBounds(267, 14, 161, 23);
+		choose.setBounds(356, 14, 161, 23);
 		contentPane.add(choose);
 		
 		JLabel Motorcontrol = new JLabel("Motorcontrol Speed");
@@ -137,5 +142,30 @@ public class front extends JFrame {
 		textField_3.setColumns(10);
 		textField_3.setBounds(411, 276, 106, 20);
 		contentPane.add(textField_3);
+		
+		Baserotation = new JLabel("Baserotation:");
+		Baserotation.setForeground(Color.ORANGE);
+		Baserotation.setBounds(322, 166, 79, 14);
+		contentPane.add(Baserotation);
+		
+		Angel1 = new JLabel("Angel 1:");
+		Angel1.setForeground(Color.ORANGE);
+		Angel1.setBounds(322, 197, 79, 14);
+		contentPane.add(Angel1);
+		
+		Angel2 = new JLabel("Angel 2:");
+		Angel2.setForeground(Color.ORANGE);
+		Angel2.setBounds(322, 224, 48, 14);
+		contentPane.add(Angel2);
+		
+		Angel3 = new JLabel("Angel 3:");
+		Angel3.setForeground(Color.ORANGE);
+		Angel3.setBounds(322, 250, 48, 14);
+		contentPane.add(Angel3);
+		
+		Effector = new JLabel("Effector:");
+		Effector.setForeground(Color.ORANGE);
+		Effector.setBounds(322, 279, 48, 14);
+		contentPane.add(Effector);
 	}
 }
