@@ -122,8 +122,53 @@ public class CalculationAngels {
 		double x4 = x;
 		double y4 = y;
 		
-		finalAngle = Math.toDegrees(Math.atan(x4 / y4));
+		if (x4 != 0 
+		&& y4 != 0) {
+			// X oder Y sind ungleich 0
+			
+			if (x4 > 0) {
+				if (y4 > 0) {
+					 // I Quadrant (x>0 & y>0)
+					finalAngle = Math.toDegrees(Math.atan(y4 / x4));
+				} else {
+					// IV Quadrant (x>0 & y<0)
+					finalAngle = 360 + Math.toDegrees(Math.atan(y4 / x4));
+				}
+			} else {
+				if (y4 > 0) {
+					// II Quadrant (x<0 & y>0)
+					finalAngle = 180 + Math.toDegrees(Math.atan(y4 / x4));
+				} else {
+					// III Quadrant (x<0 & y<0)
+					finalAngle = 180 + Math.toDegrees(Math.atan(y4 / x4));
+				}
+			} 
+		} else {
+			// X oder Y gleich 0
+			if (x4 == 0) {
+				// x ist gleich 0
+				if (y4 == 0) {
+					// x = 0 und y = 0
+					finalAngle = 0;
+				} else if (y4 > 0) {
+					// x = 0 und y > 0
+					finalAngle = 90;
+				} else {
+					// x = 0 und y < 0
+					finalAngle = 270;
+				}
+			} else {
+				// Y ist gleich 0
+				if (x4 > 0) {
+					// x > 0 und y = 0
+					finalAngle = 0;
+				} else {
+					// x < 0 und y = 0
+					finalAngle = 180;
+				}
+			}
+		}
 		
 		return finalAngle;
 	}
-}
+ }

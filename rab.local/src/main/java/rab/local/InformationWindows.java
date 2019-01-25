@@ -28,7 +28,7 @@ public class InformationWindows {
 	private double coordinateMaxSpeed = 25;
 	
 	// Interval für die Geschwindidkeit
-	private double interval = 4; // in s
+	private double interval = 6; // in s
 	
 	/**
 	 * Launch the application.
@@ -62,6 +62,15 @@ public class InformationWindows {
 			moveController.goAllAngels();
 			Thread.sleep((int)(1000 * interval));
 			moveController.setSpeedForAllAngles(200, 100, 250);
+			moveController.goAllAngels();
+			Thread.sleep((int)(1000 * interval));
+			moveController.setSpeedForAllAngles(100, 0, 535);
+			moveController.goAllAngels();
+			Thread.sleep((int)(1000 * interval));
+			moveController.setSpeedForAllAngles(-100, -150, 150);
+			moveController.goAllAngels();
+			Thread.sleep((int)(1000 * interval));
+			moveController.setSpeedForAllAngles(-150, -200, 300);
 			moveController.goAllAngels();
 			Thread.sleep((int)(1000 * interval));
 			moveController.setSpeedForAllAngles(100, 0, 535);

@@ -115,7 +115,8 @@ public class MoveController {
 		double oldAngleRotation = CalculationAngels.calcAngleRotation(oldX, oldY);
 		double newAngleRotation = CalculationAngels.calcAngleRotation(newX, newY);
 		
-		calculatedSpeedRotation = oldAngleRotation - newAngleRotation;
+		//calculatedSpeedRotation = oldAngleRotation - newAngleRotation;
+		
 		
 		try {
 			double speed = Math.abs((calculatedSpeedRotation / translationAngleRotation) / interval);

@@ -18,9 +18,11 @@ public class MainController {
 	
 	// Achsenmotoren
 	private static RMIRegulatedMotor hingA1;
+	private static RMIRegulatedMotor hingA11;
 	private static RMIRegulatedMotor hingA2;
 	private static RMIRegulatedMotor hingA3;
 	private static RMIRegulatedMotor hingRotation;
+	private static RMIRegulatedMotor effector;
 	
 	private static int maxAcceleration		= 6000;
 	
@@ -59,8 +61,8 @@ public class MainController {
 		
 		try {
 			// Verbindung zu rechem Brick
-			//brickRight 			= new BrickController(iPBrickRight);
-			//brickRight.connect();
+			brickRight 			= new BrickController(iPBrickRight);
+			brickRight.connect();
 		} catch (Exception e) {
 			logger.error(e);
 		}
@@ -72,19 +74,24 @@ public class MainController {
 	private void setupHings(){
 		try {
 			// Erster Achsenmotor mit Port A konfigurieren
-			hingA1 			= brickLeft.getBrick().createRegulatedMotor("A", 'L');
+			hingA1 			= brickLeft.getBrick().createRegulatedMotor("B", 'L');
+			hingA11 		= brickLeft.getBrick().createRegulatedMotor("C", 'L');
 			// Zweite Achsenmotor mit Port B konfigurieren
-			hingA2 			= brickLeft.getBrick().createRegulatedMotor("B", 'L');
+			hingA2 			= brickLeft.getBrick().createRegulatedMotor("D", 'L');
 			// Dritte Achsenmotor mit Port C konfigurieren
-			hingA3 			= brickLeft.getBrick().createRegulatedMotor("C", 'L');
+				hingA3 			= brickRight.getBrick().createRegulatedMotor("A", 'M');
 			// Rotationsmotor mit Port D konfigurieren
-			hingRotation 	= brickLeft.getBrick().createRegulatedMotor("D", 'L');
+			hingRotation 	= brickLeft.getBrick().createRegulatedMotor("A", 'L');
+			// Effektor
+			effector 		= brickRight.getBrick().createRegulatedMotor("B", 'M');
 			
 			// Setzen der Beschleunigung für alle Motoren
 			hingA1.setAcceleration(maxAcceleration);
+			hingA11.setAcceleration(maxAcceleration);
 			hingA2.setAcceleration(maxAcceleration);
 			hingA3.setAcceleration(maxAcceleration);
 			hingRotation.setAcceleration(maxAcceleration);
+			effector.setAcceleration(maxAcceleration);
 		} catch(Exception e) {
 			logger.error(e);
 			e.printStackTrace();
@@ -97,9 +104,11 @@ public class MainController {
 	public static void closeHings() {
 		try {
 			hingA1.close();
+			hingA11.close();
 			hingA2.close();
 			hingA3.close();
 			hingRotation.close();
+			effector.close();
 		} catch(RemoteException e) {
 			logger.error(e);
 		}
@@ -112,6 +121,10 @@ public class MainController {
 	public static RMIRegulatedMotor getHingA1() {
 		return hingA1;
 	}
+	
+	public static RMIRegulatedMotor getHingA11() {
+		return hingA11;
+	}
 
 	public static RMIRegulatedMotor getHingA2() {
 		return hingA2;
@@ -123,5 +136,9 @@ public class MainController {
 
 	public static RMIRegulatedMotor getHingRotation() {
 		return hingRotation;
+	}
+
+	public static RMIRegulatedMotor getEffector() {
+		return effector;
 	}
 }
