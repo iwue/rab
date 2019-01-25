@@ -35,7 +35,6 @@ public class InformationWindows {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
-			@Override
 			public void run() {
 				try {
 					InformationWindows window = new InformationWindows();
@@ -143,6 +142,7 @@ public class InformationWindows {
 	
 	/**
 	 * Initialize the contents of the frame.
+	 * @wbp.parser.entryPoint
 	 */
 	private void initialize() {
 		frame = new JFrame();
