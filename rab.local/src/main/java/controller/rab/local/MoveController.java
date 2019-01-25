@@ -112,28 +112,28 @@ public class MoveController {
 	private void setSpeedRotation(double oldX, double oldY, double newX, double newY) {
 		double oldAngleRotation = CalculationAngels.calcAngleRotation(oldX, oldY);
 		double newAngleRotation = CalculationAngels.calcAngleRotation(newX, newY);
-		
+		double diffNewOldRotation = oldAngleRotation - newAngleRotation;
 		// Berechnugn des kürzesten Wegs für Rotation mit Grösse der Bewegung
-		if (oldAngleRotation - newAngleRotation == 0) {
+		if (diffNewOldRotation == 0) {
 			// keine Rotation
 			calculatedSpeedRotation = 0;
-		} else if (oldAngleRotation - newAngleRotation > 0) {
+		} else if (diffNewOldRotation > 0) {
 			// Neuer Winkel ist kleiner als alter Winkel
-			if (Math.abs(oldAngleRotation - newAngleRotation - 360) < Math.abs(oldAngleRotation - newAngleRotation)) {
+			if (Math.abs(diffNewOldRotation - 360) < Math.abs(diffNewOldRotation)) {
 				// Wenn Bewegung in Uhrzeigersinn (negativ) kürzer ist
-				calculatedSpeedRotation = oldAngleRotation - newAngleRotation - 360;
+				calculatedSpeedRotation = diffNewOldRotation - 360;
 			} else {
 				// Wenn Bewegung in Gegenuhrzeigersinn (positiv) kürzer ist
-				calculatedSpeedRotation = oldAngleRotation - newAngleRotation;
+				calculatedSpeedRotation = diffNewOldRotation;
 			}
 		} else {
 			// Neuer Winkel ist grösser als alter Winkel
-			if (Math.abs(oldAngleRotation - newAngleRotation + 360) < Math.abs(oldAngleRotation - newAngleRotation)) {
+			if (Math.abs(diffNewOldRotation + 360) < Math.abs(diffNewOldRotation)) {
 				// Wenn Bewegung in Gegenuhrzeigersinn (positiv) kürzer ist
-				calculatedSpeedRotation = oldAngleRotation - newAngleRotation + 360;
+				calculatedSpeedRotation = diffNewOldRotation + 360;
 			} else {
 				// Wenn Bewegung in Uhrzeigersinn (negativ) kürzer ist
-				calculatedSpeedRotation = oldAngleRotation - newAngleRotation;
+				calculatedSpeedRotation = diffNewOldRotation;
 			}
 		}
 		
