@@ -21,12 +21,6 @@ public class InformationWindows {
 	private double currentY = 0;
 	private double currentZ = 535;
 	
-	
-	// Juri
-	
-	
-	
-	
 	// Stopbereich von Joystick
 	private double joystickStopRange = 0.1;
 	
