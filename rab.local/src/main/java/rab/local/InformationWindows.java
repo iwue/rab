@@ -36,6 +36,7 @@ public class InformationWindows {
 	// Maximale Zunahme der Geschwindigkeit auf dem Koordinatensystem
 	private double coordinateMaxSpeed = 25;
 	
+	
 	// Interval für die Geschwindidkeit
 	private double interval = 6; // in s
 	private JPasswordField passwordField;
