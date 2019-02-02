@@ -31,7 +31,6 @@ public class BrickController {
 	public void connect() throws Exception{
 		try {
 			brick = new RemoteEV3(this.ip);
-			brick.isLocal();
 		} catch (Exception e) {
 			logger.error("Fehler beim verbinden.");
 			e.printStackTrace();

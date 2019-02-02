@@ -5,10 +5,10 @@ import calculation.rab.local.CalculationAngels;
 public class MoveController {
 
 	//
-	private double translationAngle1 = 0.4;
-	private double translationAngle2 = 0.4;
-	private double translationAngle3 = 0.5;
-	private double translationAngleRotation = 0.4;
+	private double translationAngle1 = 0.1;
+	private double translationAngle2 = 0.1;
+	private double translationAngle3 = 0.33333333;
+	private double translationAngleRotation = 0.2;
 
 	private double calculatedSpeedRotationWithoutTranslation = 0.0;
 	private double calculatedSpeedAngle1WithoutTranslation = 0.0;
@@ -42,10 +42,10 @@ public class MoveController {
 			setSpeedAngle3(currentX, currentY, currentZ, newX, newY, newZ);
 			setSpeedRotation(currentX, currentY, newX, newY);
 
-			System.out.println("Motor 1: " + calculatedSpeedAngle1Motor 
-					+ ", Motor 2: " + calculatedSpeedAngle2Motor
-					+ ", Motor 3: " + calculatedSpeedAngle3Motor 
-					+ ", RotationMotor: " + calculatedSpeedRotationMotor);
+			System.out.println("Motor 1: " + calculatedSpeedAngle1WithoutTranslation
+					+ ", Motor 2: " + calculatedSpeedAngle2WithoutTranslation
+					+ ", Motor 3: " + calculatedSpeedAngle3WithoutTranslation
+					+ ", RotationMotor: " + calculatedSpeedRotationWithoutTranslation);
 			
 			currentX = newX;
 			currentY = newY;
@@ -159,7 +159,7 @@ public class MoveController {
 
 	private void goAngle1() {
 		try {
-			if (calculatedSpeedAngle1WithoutTranslation < 0) {
+			if (calculatedSpeedAngle1WithoutTranslation > 0) {
 				MainController.getHingA11().forward();
 				MainController.getHingA1().forward();
 			} else {
