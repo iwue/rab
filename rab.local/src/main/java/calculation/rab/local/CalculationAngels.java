@@ -44,9 +44,18 @@ public class CalculationAngels {
 		
 		phi2 = Formel.getAngleAnyTriangle(a5, r3, a2);
 		phi1 = Math.toDegrees(Math.atan(r1 / r2));
+		// r2 kann negativ sein, deshalb kann phi1 negativ sein
 		
-		finalAngle = phi1 + phi2;
-		
+		if (r2 > 0) {
+			// wenn r2 grösser als 0 ist
+			finalAngle = phi1 + phi2;
+		} else if (r2 == 0) {
+			// wenn r2 genau gleich 0 ist
+			finalAngle = 90 + phi2;
+		} else {
+			// wenn r2 kleiner als 0 ist
+			finalAngle = 180 + phi1 + phi2;
+		}
 		return finalAngle;
 	}
 	
