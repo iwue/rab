@@ -22,6 +22,8 @@ public class frontpscontroller extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
+	private JTextField Akkulevel1;
+	private JTextField Akkulevel2;
 
 	/**
 	 * Launch the application.
@@ -160,6 +162,36 @@ public class frontpscontroller extends JFrame {
 		lblEffector.setForeground(Color.ORANGE);
 		lblEffector.setBounds(324, 262, 87, 14);
 		contentPane.add(lblEffector);
+		
+		JLabel Akku1 = new JLabel("Akku 1");
+		Akku1.setForeground(Color.RED);
+		Akku1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		Akku1.setBounds(636, 110, 91, 14);
+		contentPane.add(Akku1);
+		
+		JLabel Akku2 = new JLabel("Akku 2");
+		Akku2.setForeground(Color.RED);
+		Akku2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		Akku2.setBounds(636, 169, 91, 14);
+		contentPane.add(Akku2);
+		
+		Akkulevel1 = new JTextField();
+		Akkulevel1.setForeground(Color.ORANGE);
+		Akkulevel1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		Akkulevel1.setBackground(Color.BLACK);
+		Akkulevel1.setEditable(false);
+		Akkulevel1.setColumns(10);
+		Akkulevel1.setBounds(636, 135, 106, 20);
+		contentPane.add(Akkulevel1);
+		
+		Akkulevel2 = new JTextField();
+		Akkulevel2.setBackground(new Color(0, 0, 0));
+		Akkulevel2.setForeground(Color.ORANGE);
+		Akkulevel2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		Akkulevel2.setEditable(false);
+		Akkulevel2.setColumns(10);
+		Akkulevel2.setBounds(636, 197, 106, 20);
+		contentPane.add(Akkulevel2);
 	}
 
 }

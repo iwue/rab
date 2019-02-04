@@ -26,8 +26,8 @@ public class MainController {
 	
 	private static int maxAcceleration		= 6000;
 	
-	private String iPBrickLeft 			= "192.168.0.10";
-	private String iPBrickRight 		= "192.168.0.20";
+	private String iPBrickLeft 			= "192.168.0.20";
+	private String iPBrickRight 		= "192.168.0.10";
 	private int dualshockID				= 0;
 	
 	/**
@@ -37,7 +37,6 @@ public class MainController {
 		initialize();
 		setupHings();
 	}
-	
 	
 	/**
 	 * Vebinden mit dem Joystick und Bricks
@@ -74,16 +73,16 @@ public class MainController {
 	private void setupHings(){
 		try {
 			// Erster Achsenmotor mit Port A konfigurieren
-			hingA1 			= brickLeft.getBrick().createRegulatedMotor("B", 'L');
-			hingA11 		= brickLeft.getBrick().createRegulatedMotor("C", 'L');
+			hingA1 			= brickRight.getBrick().createRegulatedMotor("A", 'L');
+			hingA11 		= brickRight.getBrick().createRegulatedMotor("B", 'L');
 			// Zweite Achsenmotor mit Port B konfigurieren
-			hingA2 			= brickLeft.getBrick().createRegulatedMotor("D", 'L');
+			hingA2 			= brickLeft.getBrick().createRegulatedMotor("C", 'L');
 			// Dritte Achsenmotor mit Port C konfigurieren
-				hingA3 			= brickRight.getBrick().createRegulatedMotor("A", 'M');
+			hingA3 			= brickLeft.getBrick().createRegulatedMotor("B", 'M');
 			// Rotationsmotor mit Port D konfigurieren
-			hingRotation 	= brickLeft.getBrick().createRegulatedMotor("A", 'L');
+			hingRotation 	= brickRight.getBrick().createRegulatedMotor("C", 'L');
 			// Effektor
-			effector 		= brickRight.getBrick().createRegulatedMotor("B", 'M');
+			effector 		= brickLeft.getBrick().createRegulatedMotor("A", 'M');
 			
 			// Setzen der Beschleunigung für alle Motoren
 			hingA1.setAcceleration(maxAcceleration);

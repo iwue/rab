@@ -29,6 +29,8 @@ public class front extends JFrame {
 	private JLabel Angel2;
 	private JLabel Angel3;
 	private JLabel Effector;
+	private JTextField Akkulevel1;
+	private JTextField Akkulevel2;
 
 	/**
 	 * Launch the application.
@@ -167,5 +169,35 @@ public class front extends JFrame {
 		Effector.setForeground(Color.ORANGE);
 		Effector.setBounds(322, 279, 48, 14);
 		contentPane.add(Effector);
+		
+		Akkulevel1 = new JTextField();
+		Akkulevel1.setEditable(false);
+		Akkulevel1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		Akkulevel1.setForeground(Color.ORANGE);
+		Akkulevel1.setBackground(Color.BLACK);
+		Akkulevel1.setBounds(651, 163, 91, 20);
+		contentPane.add(Akkulevel1);
+		Akkulevel1.setColumns(10);
+		
+		JLabel Akku1 = new JLabel("Akku 1");
+		Akku1.setForeground(Color.RED);
+		Akku1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		Akku1.setBounds(651, 136, 91, 14);
+		contentPane.add(Akku1);
+		
+		Akkulevel2 = new JTextField();
+		Akkulevel2.setEditable(false);
+		Akkulevel2.setForeground(Color.ORANGE);
+		Akkulevel2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		Akkulevel2.setColumns(10);
+		Akkulevel2.setBackground(Color.BLACK);
+		Akkulevel2.setBounds(651, 224, 91, 20);
+		contentPane.add(Akkulevel2);
+		
+		JLabel Akku = new JLabel("Akku 2");
+		Akku.setForeground(Color.RED);
+		Akku.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		Akku.setBounds(651, 197, 91, 14);
+		contentPane.add(Akku);
 	}
 }

@@ -26,9 +26,9 @@ public class InformationWindows {
 	private MainController controller = new MainController();
 	
 	// Startposition des TCP
-	private double currentX = 100;
+	private double currentX = 140;
 	private double currentY = 0;
-	private double currentZ = 535;
+	private double currentZ = 590;
 	
 	// Stopbereich von Joystick
 	private double joystickStopRange = 0.1;
@@ -38,9 +38,13 @@ public class InformationWindows {
 	
 	
 	// Interval für die Geschwindidkeit
+<<<<<<< HEAD
 	private double interval = 6; // in s
 	private JPasswordField passwordField;
 	private JTextField Benutzer;
+=======
+	private double interval = 1; // in s
+>>>>>>> branch 'master' of https://ftpitwuerth24c6@it-wuerth.ch/plesk-git/rab
 	
 	/**
 	 * Launch the application.
@@ -65,10 +69,12 @@ public class InformationWindows {
 		// Controller für die Steuerung der Bewegung
 		moveController = new MoveController(currentX, currentY, currentZ, interval);
 		
-		try {
-			moveController.setSpeedForAllAngles(200, 200, 300);
+		try {			
+			moveController.setSpeedForAllAngles(0, 400, 100);
 			moveController.goAllAngels();
 			Thread.sleep((int)(1000 * interval));
+			moveController.stopAllAngels();
+
 			moveController.setSpeedForAllAngles(100, 100, 200);
 			moveController.goAllAngels();
 			Thread.sleep((int)(1000 * interval));

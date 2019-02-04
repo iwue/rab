@@ -79,10 +79,14 @@ public class DualshockController {
 	            	System.out.println();
 	            }
 */            }
+<<<<<<< HEAD
         }
         
         // Ausgabe alles Controller in Log
         
+=======
+        }        
+>>>>>>> branch 'master' of https://ftpitwuerth24c6@it-wuerth.ch/plesk-git/rab
         return foundControllers;
     }
 

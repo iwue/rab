@@ -3,10 +3,10 @@ package calculation.rab.local;
 public class CalculationAngels {
 	
 	// Länge der Achsen in mm
-	private static double a1 = 235;
-	private static double a2 = 150;
-	private static double a5 = 150;
-	private static double a6 = 100;
+	private static double a1 = 260;
+	private static double a2 = 168;
+	private static double a5 = 162;
+	private static double a6 = 140;
 	
 	/**
 	 * Umrechnung vom kartesischen Koordinatensystem

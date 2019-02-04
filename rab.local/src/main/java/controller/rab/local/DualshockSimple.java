@@ -1,8 +1,5 @@
 package controller.rab.local;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.java.games.input.Controller;
 
 
