@@ -26,25 +26,22 @@ public class InformationWindows {
 	private MainController controller = new MainController();
 	
 	// Startposition des TCP
-	private double currentX = 140;
+	private double currentX = 304;
 	private double currentY = 0;
-	private double currentZ = 590;
+	private double currentZ = 428;
 	
 	// Stopbereich von Joystick
-	private double joystickStopRange = 0.1;
+	private double joystickStopRange = 1;
 	
 	// Maximale Zunahme der Geschwindigkeit auf dem Koordinatensystem
 	private double coordinateMaxSpeed = 25;
 	
 	
-	// Interval für die Geschwindidkeit
-<<<<<<< HEAD
-	private double interval = 6; // in s
 	private JPasswordField passwordField;
 	private JTextField Benutzer;
-=======
-	private double interval = 1; // in s
->>>>>>> branch 'master' of https://ftpitwuerth24c6@it-wuerth.ch/plesk-git/rab
+
+	// Interval für die Geschwindidkeit
+	private double interval = 2; // in s
 	
 	/**
 	 * Launch the application.
@@ -70,26 +67,36 @@ public class InformationWindows {
 		moveController = new MoveController(currentX, currentY, currentZ, interval);
 		
 		try {			
-			moveController.setSpeedForAllAngles(0, 400, 100);
+			moveController.setSpeedForAllAngles(0, 304, 428);
 			moveController.goAllAngels();
 			Thread.sleep((int)(1000 * interval));
 			moveController.stopAllAngels();
 
-			moveController.setSpeedForAllAngles(100, 100, 200);
+			moveController.setSpeedForAllAngles(350, 0, 300);
 			moveController.goAllAngels();
 			Thread.sleep((int)(1000 * interval));
-			moveController.setSpeedForAllAngles(200, 100, 250);
+			moveController.stopAllAngels();
+			
+			moveController.setSpeedForAllAngles(0, 350, 300);
 			moveController.goAllAngels();
 			Thread.sleep((int)(1000 * interval));
+			moveController.stopAllAngels();
+			
 			moveController.setSpeedForAllAngles(100, 0, 535);
 			moveController.goAllAngels();
 			Thread.sleep((int)(1000 * interval));
+			moveController.stopAllAngels();
+			
 			moveController.setSpeedForAllAngles(-100, -150, 150);
 			moveController.goAllAngels();
 			Thread.sleep((int)(1000 * interval));
+			moveController.stopAllAngels();
+
 			moveController.setSpeedForAllAngles(-150, -200, 300);
 			moveController.goAllAngels();
 			Thread.sleep((int)(1000 * interval));
+			moveController.stopAllAngels();
+			
 			moveController.setSpeedForAllAngles(100, 0, 535);
 			moveController.goAllAngels();
 			Thread.sleep((int)(1000 * interval));

@@ -26,8 +26,8 @@ public class MainController {
 	
 	private static int maxAcceleration		= 6000;
 	
-	private String iPBrickLeft 			= "192.168.0.20";
-	private String iPBrickRight 		= "192.168.0.10";
+	private String iPBrickLeft 			= "10.0.1.2";
+	private String iPBrickRight 		= "10.0.1.1";
 	private int dualshockID				= 0;
 	
 	/**
@@ -72,10 +72,10 @@ public class MainController {
 	 */
 	private void setupHings(){
 		try {
-			// Erster Achsenmotor mit Port A konfigurieren
+			// Erster Achsenmotor mit Port A und B konfigurieren
 			hingA1 			= brickRight.getBrick().createRegulatedMotor("A", 'L');
 			hingA11 		= brickRight.getBrick().createRegulatedMotor("B", 'L');
-			// Zweite Achsenmotor mit Port B konfigurieren
+			// Zweite Achsenmotor mit Port C konfigurieren
 			hingA2 			= brickLeft.getBrick().createRegulatedMotor("C", 'L');
 			// Dritte Achsenmotor mit Port C konfigurieren
 			hingA3 			= brickLeft.getBrick().createRegulatedMotor("B", 'M');
