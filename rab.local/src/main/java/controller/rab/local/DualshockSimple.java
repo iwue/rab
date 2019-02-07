@@ -21,10 +21,6 @@ public class DualshockSimple {
 	private void poll() {
 		controller.poll();
 	}
-	
-	private int getAxisValueInPercentage(float axisValue) {
-        return (int)(((2 - (1 - axisValue)) * 100) / 2);
-    }
 
 	public float getLeftStickX() {
 		poll();

@@ -8,17 +8,17 @@ public class MoveController {
 	private double translationAngle1 = 0.1;
 	private double translationAngle2 = 0.1;
 	private double translationAngle3 = 0.33333333;
-	private double translationAngleRotation = 0.2;
+	private double translationRotation = 0.2;
 
-	private double calculatedSpeedRotationWithoutTranslation = 0.0;
-	private double calculatedSpeedAngle1WithoutTranslation = 0.0;
-	private double calculatedSpeedAngle2WithoutTranslation = 0.0;
-	private double calculatedSpeedAngle3WithoutTranslation = 0.0;
+	private double speedRotationWithoutTranslation = 0.0;
+	private double speedAngle1WithoutTranslation = 0.0;
+	private double speedAngle2WithoutTranslation = 0.0;
+	private double speedAngle3WithoutTranslation = 0.0;
 	
-	private double calculatedSpeedRotationMotor = 0.0;
-	private double calculatedSpeedAngle1Motor = 0.0;
-	private double calculatedSpeedAngle2Motor = 0.0;
-	private double calculatedSpeedAngle3Motor = 0.0;
+	private double speedRotationWithTranslation = 0.0;
+	private double speedAngle1WithTranslation = 0.0;
+	private double speedAngle2WithTranslation = 0.0;
+	private double speedAngle3WithTranslation = 0.0;
 	
 	
 	private double currentX = 0.0;
@@ -42,10 +42,10 @@ public class MoveController {
 			setSpeedAngle3(currentX, currentY, currentZ, newX, newY, newZ);
 			setSpeedRotation(currentX, currentY, newX, newY);
 
-			System.out.println("Motor 1: " + calculatedSpeedAngle1WithoutTranslation
-					+ ", Motor 2: " + calculatedSpeedAngle2WithoutTranslation
-					+ ", Motor 3: " + calculatedSpeedAngle3WithoutTranslation
-					+ ", RotationMotor: " + calculatedSpeedRotationWithoutTranslation);
+			System.out.println("Motor 1: " + speedAngle1WithoutTranslation
+					+ ", Motor 2: " + speedAngle2WithoutTranslation
+					+ ", Motor 3: " + speedAngle3WithoutTranslation
+					+ ", RotationMotor: " + speedRotationWithoutTranslation);
 			
 			currentX = newX;
 			currentY = newY;
@@ -80,13 +80,13 @@ public class MoveController {
 		double oldAngle = CalculationAngels.calcAngle1(oldX, oldY, oldZ);
 		double newAngle = CalculationAngels.calcAngle1(newX, newY, newZ);
 
-		calculatedSpeedAngle1WithoutTranslation = oldAngle - newAngle;
+		speedAngle1WithoutTranslation = oldAngle - newAngle;
 
 		try {
-			calculatedSpeedAngle1Motor = Math.abs(calculatedSpeedAngle1WithoutTranslation / translationAngle1 / interval);
+			speedAngle1WithTranslation = Math.abs(speedAngle1WithoutTranslation / translationAngle1 / interval);
 			
-			MainController.getHingA1().setSpeed((int) calculatedSpeedAngle1Motor);
-			MainController.getHingA11().setSpeed((int) calculatedSpeedAngle1Motor);
+			MainController.getHingA1().setSpeed((int) speedAngle1WithTranslation);
+			MainController.getHingA11().setSpeed((int) speedAngle1WithTranslation);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -96,11 +96,11 @@ public class MoveController {
 		double oldAngle = CalculationAngels.calcAngle2(oldX, oldY, oldZ);
 		double newAngle = CalculationAngels.calcAngle2(newX, newY, newZ);
 
-		calculatedSpeedAngle2WithoutTranslation = oldAngle - newAngle;
+		speedAngle2WithoutTranslation = oldAngle - newAngle;
 
 		try {
-			calculatedSpeedAngle2Motor = Math.abs(calculatedSpeedAngle2WithoutTranslation / translationAngle2 / interval);
-			MainController.getHingA2().setSpeed((int) calculatedSpeedAngle2Motor);
+			speedAngle2WithTranslation = Math.abs(speedAngle2WithoutTranslation / translationAngle2 / interval);
+			MainController.getHingA2().setSpeed((int) speedAngle2WithTranslation);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -110,11 +110,11 @@ public class MoveController {
 		double oldAngle = CalculationAngels.calcAngle3(oldX, oldY, oldZ);
 		double newAngle = CalculationAngels.calcAngle3(newX, newY, newZ);
 
-		calculatedSpeedAngle3WithoutTranslation = oldAngle - newAngle;
+		speedAngle3WithoutTranslation = oldAngle - newAngle;
 
 		try {
-			calculatedSpeedAngle3Motor = Math.abs(calculatedSpeedAngle3WithoutTranslation / translationAngle3 / interval);
-			MainController.getHingA3().setSpeed((int) calculatedSpeedAngle3Motor);
+			speedAngle3WithTranslation = Math.abs(speedAngle3WithoutTranslation / translationAngle3 / interval);
+			MainController.getHingA3().setSpeed((int) speedAngle3WithTranslation);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -128,30 +128,30 @@ public class MoveController {
 		// Berechnugn des kürzesten Wegs für Rotation mit Grösse der Bewegung
 		if (diffNewOldRotation == 0) {
 			// keine Rotation
-			calculatedSpeedRotationWithoutTranslation = 0;
+			speedRotationWithoutTranslation = 0;
 		} else if (diffNewOldRotation > 0) {
 			// Neuer Winkel ist kleiner als alter Winkel
 			if (Math.abs(diffNewOldRotation - 360) < Math.abs(diffNewOldRotation)) {
 				// Wenn Bewegung in Uhrzeigersinn (negativ) kürzer ist
-				calculatedSpeedRotationWithoutTranslation = diffNewOldRotation - 360;
+				speedRotationWithoutTranslation = diffNewOldRotation - 360;
 			} else {
 				// Wenn Bewegung in Gegenuhrzeigersinn (positiv) kürzer ist
-				calculatedSpeedRotationWithoutTranslation = diffNewOldRotation;
+				speedRotationWithoutTranslation = diffNewOldRotation;
 			}
 		} else {
 			// Neuer Winkel ist grösser als alter Winkel
 			if (Math.abs(diffNewOldRotation + 360) < Math.abs(diffNewOldRotation)) {
 				// Wenn Bewegung in Gegenuhrzeigersinn (positiv) kürzer ist
-				calculatedSpeedRotationWithoutTranslation = diffNewOldRotation + 360;
+				speedRotationWithoutTranslation = diffNewOldRotation + 360;
 			} else {
 				// Wenn Bewegung in Uhrzeigersinn (negativ) kürzer ist
-				calculatedSpeedRotationWithoutTranslation = diffNewOldRotation;
+				speedRotationWithoutTranslation = diffNewOldRotation;
 			}
 		}
 		
 		try {
-			calculatedSpeedRotationMotor = Math.abs((calculatedSpeedRotationWithoutTranslation / translationAngleRotation) / interval);
-			MainController.getHingRotation().setSpeed((int) calculatedSpeedRotationMotor);
+			speedRotationWithTranslation = Math.abs((speedRotationWithoutTranslation / translationRotation) / interval);
+			MainController.getHingRotation().setSpeed((int) speedRotationWithTranslation);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -159,7 +159,7 @@ public class MoveController {
 
 	private void goAngle1() {
 		try {
-			if (calculatedSpeedAngle1WithoutTranslation > 0) {
+			if (speedAngle1WithoutTranslation > 0) {
 				MainController.getHingA11().forward();
 				MainController.getHingA1().forward();
 			} else {
@@ -173,7 +173,7 @@ public class MoveController {
 
 	private void goAngle2() {
 		try {
-			if (calculatedSpeedAngle2WithoutTranslation > 0) {
+			if (speedAngle2WithoutTranslation > 0) {
 				MainController.getHingA2().forward();
 			} else {
 				MainController.getHingA2().backward();
@@ -185,7 +185,7 @@ public class MoveController {
 
 	private void goAngle3() {
 		try {
-			if (calculatedSpeedAngle3WithoutTranslation > 0) {
+			if (speedAngle3WithoutTranslation > 0) {
 				MainController.getHingA3().forward();
 			} else {
 				MainController.getHingA3().backward();
@@ -199,7 +199,7 @@ public class MoveController {
 		try {
 			// MainController.getHingRotation().rotateTo((int)(calculatedSpeedRotation /
 			// translationAngleRotation), true);
-			if (calculatedSpeedRotationWithoutTranslation > 0) {
+			if (speedRotationWithoutTranslation > 0) {
 				MainController.getHingRotation().forward();
 			} else {
 				MainController.getHingRotation().backward();
