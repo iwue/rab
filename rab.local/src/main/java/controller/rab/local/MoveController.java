@@ -36,7 +36,7 @@ public class MoveController {
 	}
 
 	public void setSpeedForAllAngles(double newX, double newY, double newZ) {
-		if (!Double.isNaN(CalculationAngels.calcAngle1(newX, newY, newZ))) {
+		if (!Double.isNaN(CalculationAngels.calcTheta2(newX, newY, newZ))) {
 			setSpeedAngle1(currentX, currentY, currentZ, newX, newY, newZ);
 			setSpeedAngle2(currentX, currentY, currentZ, newX, newY, newZ);
 			setSpeedAngle3(currentX, currentY, currentZ, newX, newY, newZ);
@@ -77,8 +77,8 @@ public class MoveController {
 	}
 
 	private void setSpeedAngle1(double oldX, double oldY, double oldZ, double newX, double newY, double newZ) {
-		double oldAngle = CalculationAngels.calcAngle1(oldX, oldY, oldZ);
-		double newAngle = CalculationAngels.calcAngle1(newX, newY, newZ);
+		double oldAngle = CalculationAngels.calcTheta2(oldX, oldY, oldZ);
+		double newAngle = CalculationAngels.calcTheta2(newX, newY, newZ);
 
 		speedAngle1WithoutTranslation = oldAngle - newAngle;
 
@@ -93,8 +93,8 @@ public class MoveController {
 	}
 
 	private void setSpeedAngle2(double oldX, double oldY, double oldZ, double newX, double newY, double newZ) {
-		double oldAngle = CalculationAngels.calcAngle2(oldX, oldY, oldZ);
-		double newAngle = CalculationAngels.calcAngle2(newX, newY, newZ);
+		double oldAngle = CalculationAngels.calcTheta3(oldX, oldY, oldZ);
+		double newAngle = CalculationAngels.calcTheta3(newX, newY, newZ);
 
 		speedAngle2WithoutTranslation = oldAngle - newAngle;
 
@@ -107,8 +107,8 @@ public class MoveController {
 	}
 
 	private void setSpeedAngle3(double oldX, double oldY, double oldZ, double newX, double newY, double newZ) {
-		double oldAngle = CalculationAngels.calcAngle3(oldX, oldY, oldZ);
-		double newAngle = CalculationAngels.calcAngle3(newX, newY, newZ);
+		double oldAngle = CalculationAngels.calcTheta4(oldX, oldY, oldZ);
+		double newAngle = CalculationAngels.calcTheta4(newX, newY, newZ);
 
 		speedAngle3WithoutTranslation = oldAngle - newAngle;
 
@@ -121,8 +121,8 @@ public class MoveController {
 	}
 
 	private void setSpeedRotation(double oldX, double oldY, double newX, double newY) {
-		double oldAngleRotation = CalculationAngels.calcAngleRotation(oldX, oldY);
-		double newAngleRotation = CalculationAngels.calcAngleRotation(newX, newY);
+		double oldAngleRotation = CalculationAngels.calcTheta1(oldX, oldY);
+		double newAngleRotation = CalculationAngels.calcTheta1(newX, newY);
 		double diffNewOldRotation = oldAngleRotation - newAngleRotation;
 		
 		// Berechnugn des kürzesten Wegs für Rotation mit Grösse der Bewegung
