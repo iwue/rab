@@ -12,18 +12,20 @@ public class CheckCoordinates {
 		double a5 = CalculationAngels.getA5();
 		double a6 = CalculationAngels.getA6();
 		
-		double r1 = a2; // Radius 1 ist gleich Achsenlaenge 2
-		double r2 = 0;// Radius 2 gemessen aus Roboter
-		double r3 = a2 + a5; // Radius 3 ist gleich Summe Achsenlaenge 2 und 3
+		// TODO Ausmessen von dem Radius r2 aus Roboter
+		double r1 = a2;			// Radius 1 ist gleich Achsenlaenge 2
+		double r2 = 0;			// Radius 2 gemessen aus Roboter
+		double r3 = a2 + a5; 	// Radius 3 ist gleich Summe Achsenlaenge 2 und 3
 		
 		double b4 = Math.sqrt(Math.pow(x4, 2) + Math.pow(y4, 2));
+		//b4 ist die "länge" des Arms aus der Vogelperspektive (Pythagoras aus x4 und y4)
 		
 		// TODO Ausmessen von den Variablen aus Roboter
-		double d1 =	0;// Verschiebung d1 gemessen aus Roboter
-		double d2 =	0;// Verschiebung d2 gemessen aus Roboter	
+		double d1 =	0;	// Verschiebung d1 gemessen aus Roboter
+		double d2 =	0;	// Verschiebung d2 gemessen aus Roboter	
 		double d3 =	a6; // Verschiebung d3 ist gleich Achsenlaenge a6	
-		double d4 =	0;// Gemessen aus Roboter 	
-		double d5 =	0;// Gemessen aus Roboter 	
+		double d4 =	0;	// überhalb Basis tiefstes Niveau gemessen aus Roboter 	
+		double d5 =	0;	// überhalb Boden tiefstes Niveau gemessen aus Roboter 	
 
 				// system
 		double centreA1D3 = Math.pow((z4 - a1), 2) + Math.pow((b4 - d3), 2);
