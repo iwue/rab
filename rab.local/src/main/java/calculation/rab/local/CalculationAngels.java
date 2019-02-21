@@ -134,6 +134,9 @@ public class CalculationAngels {
 		if (x4 != 0 
 		&& y4 != 0) {
 			// X oder Y sind ungleich 0
+			/*
+			 * TODO Einfügen in Doc
+			 */
 			
 			if (x4 > 0) {
 				if (y4 > 0) {

@@ -41,7 +41,7 @@ public class MoveController {
 			setSpeedAngle2(currentX, currentY, currentZ, newX, newY, newZ);
 			setSpeedAngle3(currentX, currentY, currentZ, newX, newY, newZ);
 			setSpeedRotation(currentX, currentY, newX, newY);
-
+			
 			System.out.println("Motor 1: " + speedAngle1WithoutTranslation
 					+ ", Motor 2: " + speedAngle2WithoutTranslation
 					+ ", Motor 3: " + speedAngle3WithoutTranslation
