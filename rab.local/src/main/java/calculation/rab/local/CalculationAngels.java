@@ -180,4 +180,20 @@ public class CalculationAngels {
 
 		return finalAngle;
 	}
+
+	public static double getA1() {
+		return a1;
+	}
+
+	public static double getA2() {
+		return a2;
+	}
+
+	public static double getA5() {
+		return a5;
+	}
+
+	public static double getA6() {
+		return a6;
+	}
 }
