@@ -41,7 +41,7 @@ public class InformationWindows {
 	private JTextField Benutzer;
 
 	// Interval für die Geschwindidkeit
-	private double interval = 2; // in s
+	private double intervall = 2; // in s
 	
 	/**
 	 * Launch the application.
@@ -64,42 +64,42 @@ public class InformationWindows {
 	 */
 	public InformationWindows() {
 		// Controller für die Steuerung der Bewegung
-		moveController = new MoveController(currentX, currentY, currentZ, interval);
+		moveController = new MoveController(currentX, currentY, currentZ, intervall);
 		
 		try {			
 			moveController.setSpeedForAllAngles(0, 304, 428);
 			moveController.goAllAngels();
-			Thread.sleep((int)(1000 * interval));
+			Thread.sleep((int)(1000 * intervall));
 			moveController.stopAllAngels();
 
 			moveController.setSpeedForAllAngles(350, 0, 300);
 			moveController.goAllAngels();
-			Thread.sleep((int)(1000 * interval));
+			Thread.sleep((int)(1000 * intervall));
 			moveController.stopAllAngels();
 			
 			moveController.setSpeedForAllAngles(0, 350, 300);
 			moveController.goAllAngels();
-			Thread.sleep((int)(1000 * interval));
+			Thread.sleep((int)(1000 * intervall));
 			moveController.stopAllAngels();
 			
 			moveController.setSpeedForAllAngles(100, 0, 535);
 			moveController.goAllAngels();
-			Thread.sleep((int)(1000 * interval));
+			Thread.sleep((int)(1000 * intervall));
 			moveController.stopAllAngels();
 			
 			moveController.setSpeedForAllAngles(-100, -150, 150);
 			moveController.goAllAngels();
-			Thread.sleep((int)(1000 * interval));
+			Thread.sleep((int)(1000 * intervall));
 			moveController.stopAllAngels();
 
 			moveController.setSpeedForAllAngles(-150, -200, 300);
 			moveController.goAllAngels();
-			Thread.sleep((int)(1000 * interval));
+			Thread.sleep((int)(1000 * intervall));
 			moveController.stopAllAngels();
 			
 			moveController.setSpeedForAllAngles(100, 0, 535);
 			moveController.goAllAngels();
-			Thread.sleep((int)(1000 * interval));
+			Thread.sleep((int)(1000 * intervall));
 			moveController.stopAllAngels();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -121,44 +121,59 @@ public class InformationWindows {
 	 * Umrechnung von Koordinatensystem zu Roboterachsen und Ausführen der Bewegung.
 	 */
 	public void move() {		
-		// Dualstock Stickwerte 
+		// Auslesen der X-Richtung auf dem Joystick
 		double joystickCurrentX = MainController.getDualshockSimple().getLeftStickX();
+		// Auslesen der Y-Richtung auf dem Joystick
 		double joystickCurrentY = MainController.getDualshockSimple().getLeftStickY();
+		// Auslesen der Z-Richtung auf dem Joystick
 		double joystickCurrentZ = MainController.getDualshockSimple().getRightStickY();
 		
-		
+		// Ausgabe auf CLI
 		System.out.println("X: " + moveController.getCurrentX()
 						+ ", Y: " + moveController.getCurrentY()
 						+ ", Z: " + moveController.getCurrentZ());
 		
-		// Prüfen ob die Sticks sich im Stopbereich befinden
+		
+		// Prüfen ob die Joystickdaten von X, Y und Z sich im Stoppbereich befinden,
+		// weil sich diese Signale nicht genau am 0 Punkt sind
 		if (joystickCurrentX > (joystickStopRange * -1)
-		&& joystickCurrentX < joystickStopRange
-		&& joystickCurrentY > (joystickStopRange * -1)
-		&& joystickCurrentY < joystickStopRange
-		&& joystickCurrentZ > (joystickStopRange * -1)
-		&& joystickCurrentZ < joystickStopRange) {
+				&& joystickCurrentX < joystickStopRange
+				&& joystickCurrentY > (joystickStopRange * -1)
+				&& joystickCurrentY < joystickStopRange
+				&& joystickCurrentZ > (joystickStopRange * -1)
+				&& joystickCurrentZ < joystickStopRange) {
 			
+			// Falls sich alle im Stoppbereich befinden,
+			// werden alle Motoren gestoppt
 			moveController.stopAllAngels();
 		
 		} else {
+			// Berechnung der Bewegung in X-Richtung
 			double moveX = coordinateMaxSpeed * joystickCurrentX;
+			// Berechnung der Bewegung in Y-Richtung
 			double moveY = coordinateMaxSpeed * joystickCurrentY;
+			// Berechnung der Bewegung in Z-Richtung
 			double moveZ = coordinateMaxSpeed * joystickCurrentZ;
 			
+			// Addieren der Bewegung zur Akuellen Position
+			// Es ensteht die neue Position
 			double newX = moveController.getCurrentX() + moveX;
 			double newY = moveController.getCurrentY() + moveY;
 			double newZ = moveController.getCurrentZ() + moveZ;
 			
+			// Ausgabe in CLI
 			System.out.println("X: " + newX 
 							+ ", Y: " + newY
 							+ ", Z: " + newZ);
 			
+			// Festlegen der Geschwindigkeit für die Achsen
 			moveController.setSpeedForAllAngles(newX, newY, newZ);
+			// Alle Motoren starten
 			moveController.goAllAngels();
 			
 			try {
-				Thread.sleep((int) (1000 * interval));
+				// Programm pausieren für Bewegung
+				Thread.sleep((int) (1000 * intervall));
 			} catch(Exception e) {
 				e.printStackTrace();
 			}

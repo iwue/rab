@@ -36,7 +36,7 @@ public class MoveController {
 	}
 
 	public void setSpeedForAllAngles(double newX, double newY, double newZ) {
-		if (!Double.isNaN(CalculationAngels.calcTheta2(newX, newY, newZ))) {
+		if (CheckCoordinates.isCoordinateValid(newX, newY, newZ)) {
 			setSpeedAngle1(currentX, currentY, currentZ, newX, newY, newZ);
 			setSpeedAngle2(currentX, currentY, currentZ, newX, newY, newZ);
 			setSpeedAngle3(currentX, currentY, currentZ, newX, newY, newZ);
