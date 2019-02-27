@@ -16,12 +16,13 @@ public class MainController {
 	private BrickController brickLeft;
 	private BrickController brickRight;
 	
+	private static RMIRegulatedMotor hingTheta1;
+
 	// Achsenmotoren
-	private static RMIRegulatedMotor hingA1;
-	private static RMIRegulatedMotor hingA11;
-	private static RMIRegulatedMotor hingA2;
-	private static RMIRegulatedMotor hingA3;
-	private static RMIRegulatedMotor hingRotation;
+	private static RMIRegulatedMotor hingTheta20;
+	private static RMIRegulatedMotor hingTheta21;
+	private static RMIRegulatedMotor hingTheta3;
+	private static RMIRegulatedMotor hingTheta4;
 	private static RMIRegulatedMotor effector;
 	
 	private static int maxAcceleration		= 6000;
@@ -73,23 +74,23 @@ public class MainController {
 	private void setupHings(){
 		try {
 			// Erster Achsenmotor mit Port A und B konfigurieren
-			hingA1 			= brickRight.getBrick().createRegulatedMotor("A", 'L');
-			hingA11 		= brickRight.getBrick().createRegulatedMotor("B", 'L');
+			hingTheta20 		= brickRight.getBrick().createRegulatedMotor("A", 'L');
+			hingTheta21 		= brickRight.getBrick().createRegulatedMotor("B", 'L');
 			// Zweite Achsenmotor mit Port C konfigurieren
-			hingA2 			= brickLeft.getBrick().createRegulatedMotor("C", 'L');
+			hingTheta3 			= brickLeft.getBrick().createRegulatedMotor("C", 'L');
 			// Dritte Achsenmotor mit Port C konfigurieren
-			hingA3 			= brickLeft.getBrick().createRegulatedMotor("B", 'M');
+			hingTheta4 			= brickLeft.getBrick().createRegulatedMotor("B", 'M');
 			// Rotationsmotor mit Port D konfigurieren
-			hingRotation 	= brickRight.getBrick().createRegulatedMotor("C", 'L');
+			hingTheta1 	= brickRight.getBrick().createRegulatedMotor("C", 'L');
 			// Effektor
 			effector 		= brickLeft.getBrick().createRegulatedMotor("A", 'M');
 			
 			// Setzen der Beschleunigung für alle Motoren
-			hingA1.setAcceleration(maxAcceleration);
-			hingA11.setAcceleration(maxAcceleration);
-			hingA2.setAcceleration(maxAcceleration);
-			hingA3.setAcceleration(maxAcceleration);
-			hingRotation.setAcceleration(maxAcceleration);
+			hingTheta20.setAcceleration(maxAcceleration);
+			hingTheta21.setAcceleration(maxAcceleration);
+			hingTheta3.setAcceleration(maxAcceleration);
+			hingTheta4.setAcceleration(maxAcceleration);
+			hingTheta1.setAcceleration(maxAcceleration);
 			effector.setAcceleration(maxAcceleration);
 		} catch(Exception e) {
 			logger.error(e);
@@ -102,11 +103,11 @@ public class MainController {
 	 */
 	public static void closeHings() {
 		try {
-			hingA1.close();
-			hingA11.close();
-			hingA2.close();
-			hingA3.close();
-			hingRotation.close();
+			hingTheta20.close();
+			hingTheta21.close();
+			hingTheta3.close();
+			hingTheta4.close();
+			hingTheta1.close();
 			effector.close();
 		} catch(RemoteException e) {
 			logger.error(e);
@@ -117,24 +118,24 @@ public class MainController {
 		return dualshockSimple;
 	}
 
-	public static RMIRegulatedMotor getHingA1() {
-		return hingA1;
+	public static RMIRegulatedMotor getHingTheta1() {
+		return hingTheta1;
+	}
+
+	public static RMIRegulatedMotor getHingTheta20() {
+		return hingTheta20;
 	}
 	
-	public static RMIRegulatedMotor getHingA11() {
-		return hingA11;
+	public static RMIRegulatedMotor getHingTheta21() {
+		return hingTheta21;
 	}
 
-	public static RMIRegulatedMotor getHingA2() {
-		return hingA2;
+	public static RMIRegulatedMotor getHingTheta3() {
+		return hingTheta3;
 	}
 
-	public static RMIRegulatedMotor getHingA3() {
-		return hingA3;
-	}
-
-	public static RMIRegulatedMotor getHingRotation() {
-		return hingRotation;
+	public static RMIRegulatedMotor getHingTheta4() {
+		return hingTheta4;
 	}
 
 	public static RMIRegulatedMotor getEffector() {
