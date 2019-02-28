@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
 

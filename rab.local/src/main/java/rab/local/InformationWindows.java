@@ -2,16 +2,9 @@ package rab.local;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
-import javax.swing.JTable;
-
 import controller.rab.local.MainController;
 import controller.rab.local.MoveController;
 
-import java.awt.BorderLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;

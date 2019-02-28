@@ -4,20 +4,19 @@ import calculation.rab.local.CalculationAngels;
 
 public class MoveController {
 
-	private double translationAngle1 = 0.1;
-	private double translationAngle2 = 0.1;
-	private double translationAngle3 = 0.33333333;
-	private double translationRotation = 0.2;
-
-	private double speedRotationWithoutTranslation = 0.0;
-	private double speedAngle1WithoutTranmission = 0.0;
-	private double speedAngle2WithoutTransmission = 0.0;
-	private double speedAngle3WithoutTransmission = 0.0;
+	private double transmissionTheta1 = 0.2;
+	private double transmissionTheta2 = 0.1;
+	private double transmissionTheta3 = 0.1;
+	private double transmissionTheta4 = 0.33333333;
+	private double speedTheta1WithoutTransmission = 0.0;
+	private double speedTheta2WithoutTransmission = 0.0;
+	private double speedTheta3WithoutTransmission = 0.0;
+	private double speedTheta4WithoutTransmission = 0.0;
 	
-	private double speedRotationWithTransmission = 0.0;
-	private double speedAngle1WithTransmission = 0.0;
-	private double speedAngle2WithTransmission = 0.0;
-	private double speedAngle3WithTransmission = 0.0;
+	private double speedTheta1WithTransmission = 0.0;
+	private double speedTheta2WithTransmission = 0.0;
+	private double speedTheta3WithTransmission = 0.0;
+	private double speedTheta4WithTransmission = 0.0;
 	
 	
 	private double currentX = 0.0;
@@ -47,10 +46,10 @@ public class MoveController {
 			setSpeedTheta4(currentX, currentY, currentZ, newX, newY, newZ);
 
 			// Ausgabe auf CLI
-			System.out.println("Theta 1: " + speedRotationWithoutTranslation
-					+ ", Theta 2: " + speedAngle1WithoutTranmission
-					+ ", Theta 3: " + speedAngle2WithoutTransmission
-					+ ", Theta 4: " + speedAngle3WithoutTransmission);
+			System.out.println("Theta 1: " + speedTheta1WithoutTransmission
+					+ ", Theta 2: " + speedTheta2WithoutTransmission
+					+ ", Theta 3: " + speedTheta3WithoutTransmission
+					+ ", Theta 4: " + speedTheta4WithoutTransmission);
 			// Neue Position als aktuelle Position setzen
 			currentX = newX;
 			currentY = newY;
@@ -62,10 +61,10 @@ public class MoveController {
 	}
 
 	public void goAllAngels() {
-		goAngle1();
-		goAngle2();
-		goAngle3();
-		goRotation();
+		goTheta1();
+		goTheta2();
+		goTheta3();
+		goTheta4();
 		System.out.println("All Go");
 	}
 
@@ -86,13 +85,13 @@ public class MoveController {
 		double oldAngle = CalculationAngels.calcTheta2(oldX, oldY, oldZ);
 		double newAngle = CalculationAngels.calcTheta2(newX, newY, newZ);
 
-		speedAngle1WithoutTranmission = oldAngle - newAngle;
+		speedTheta2WithoutTransmission = oldAngle - newAngle;
 
 		try {
-			speedAngle1WithTransmission = Math.abs(speedAngle1WithoutTranmission / translationAngle1 / interval);
+			speedTheta2WithTransmission = Math.abs(speedTheta2WithoutTransmission / transmissionTheta2 / interval);
 			
-			MainController.getHingTheta20().setSpeed((int) speedAngle1WithTransmission);
-			MainController.getHingTheta21().setSpeed((int) speedAngle1WithTransmission);
+			MainController.getHingTheta20().setSpeed((int) speedTheta2WithTransmission);
+			MainController.getHingTheta21().setSpeed((int) speedTheta2WithTransmission);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -102,11 +101,11 @@ public class MoveController {
 		double oldAngle = CalculationAngels.calcTheta3(oldX, oldY, oldZ);
 		double newAngle = CalculationAngels.calcTheta3(newX, newY, newZ);
 
-		speedAngle2WithoutTransmission = oldAngle - newAngle;
+		speedTheta3WithoutTransmission = oldAngle - newAngle;
 
 		try {
-			speedAngle2WithTransmission = Math.abs(speedAngle2WithoutTransmission / translationAngle2 / interval);
-			MainController.getHingTheta3().setSpeed((int) speedAngle2WithTransmission);
+			speedTheta3WithTransmission = Math.abs(speedTheta3WithoutTransmission / transmissionTheta3 / interval);
+			MainController.getHingTheta3().setSpeed((int) speedTheta3WithTransmission);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -116,11 +115,11 @@ public class MoveController {
 		double oldAngle = CalculationAngels.calcTheta4(oldX, oldY, oldZ);
 		double newAngle = CalculationAngels.calcTheta4(newX, newY, newZ);
 
-		speedAngle3WithoutTransmission = oldAngle - newAngle;
+		speedTheta4WithoutTransmission = oldAngle - newAngle;
 
 		try {
-			speedAngle3WithTransmission = Math.abs(speedAngle3WithoutTransmission / translationAngle3 / interval);
-			MainController.getHingTheta4().setSpeed((int) speedAngle3WithTransmission);
+			speedTheta4WithTransmission = Math.abs(speedTheta4WithoutTransmission / transmissionTheta4 / interval);
+			MainController.getHingTheta4().setSpeed((int) speedTheta4WithTransmission);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -134,38 +133,38 @@ public class MoveController {
 		// Berechnugn des kürzesten Wegs für Rotation mit Grösse der Bewegung
 		if (diffNewOldRotation == 0) {
 			// keine Rotation
-			speedRotationWithoutTranslation = 0;
+			speedTheta1WithoutTransmission = 0;
 		} else if (diffNewOldRotation > 0) {
 			// Neuer Winkel ist kleiner als alter Winkel
 			if (Math.abs(diffNewOldRotation - 360) < Math.abs(diffNewOldRotation)) {
 				// Wenn Bewegung in Uhrzeigersinn (negativ) kürzer ist
-				speedRotationWithoutTranslation = diffNewOldRotation - 360;
+				speedTheta1WithoutTransmission = diffNewOldRotation - 360;
 			} else {
 				// Wenn Bewegung in Gegenuhrzeigersinn (positiv) kürzer ist
-				speedRotationWithoutTranslation = diffNewOldRotation;
+				speedTheta1WithoutTransmission = diffNewOldRotation;
 			}
 		} else {
 			// Neuer Winkel ist grösser als alter Winkel
 			if (Math.abs(diffNewOldRotation + 360) < Math.abs(diffNewOldRotation)) {
 				// Wenn Bewegung in Gegenuhrzeigersinn (positiv) kürzer ist
-				speedRotationWithoutTranslation = diffNewOldRotation + 360;
+				speedTheta1WithoutTransmission = diffNewOldRotation + 360;
 			} else {
 				// Wenn Bewegung in Uhrzeigersinn (negativ) kürzer ist
-				speedRotationWithoutTranslation = diffNewOldRotation;
+				speedTheta1WithoutTransmission = diffNewOldRotation;
 			}
 		}
 		
 		try {
-			speedRotationWithTransmission = Math.abs((speedRotationWithoutTranslation / translationRotation) / interval);
-			MainController.getHingTheta1().setSpeed((int) speedRotationWithTransmission);
+			speedTheta1WithTransmission = Math.abs((speedTheta1WithoutTransmission / transmissionTheta1) / interval);
+			MainController.getHingTheta1().setSpeed((int) speedTheta1WithTransmission);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void goAngle1() {
+	private void goTheta2() {
 		try {
-			if (speedAngle1WithoutTranmission > 0) {
+			if (speedTheta2WithoutTransmission > 0) {
 				MainController.getHingTheta21().forward();
 				MainController.getHingTheta20().forward();
 			} else {
@@ -177,9 +176,9 @@ public class MoveController {
 		}
 	}
 
-	private void goAngle2() {
+	private void goTheta3() {
 		try {
-			if (speedAngle2WithoutTransmission > 0) {
+			if (speedTheta3WithoutTransmission > 0) {
 				MainController.getHingTheta3().forward();
 			} else {
 				MainController.getHingTheta3().backward();
@@ -189,9 +188,9 @@ public class MoveController {
 		}
 	}
 
-	private void goAngle3() {
+	private void goTheta4() {
 		try {
-			if (speedAngle3WithoutTransmission > 0) {
+			if (speedTheta4WithoutTransmission > 0) {
 				MainController.getHingTheta4().forward();
 			} else {
 				MainController.getHingTheta4().backward();
@@ -201,11 +200,11 @@ public class MoveController {
 		}
 	}
 
-	private void goRotation() {
+	private void goTheta1() {
 		try {
 			// MainController.getHingRotation().rotateTo((int)(calculatedSpeedRotation /
 			// translationAngleRotation), true);
-			if (speedRotationWithoutTranslation > 0) {
+			if (speedTheta1WithoutTransmission > 0) {
 				MainController.getHingTheta1().forward();
 			} else {
 				MainController.getHingTheta1().backward();

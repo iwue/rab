@@ -1,6 +1,5 @@
 package rab.local;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
