@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import controller.rab.local.MainController;
 import controller.rab.local.MoveController;
+import lejos.hardware.Brick;
 
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
@@ -24,17 +25,15 @@ public class InformationWindows {
 	private double currentZ = 428;
 	
 	// Stopbereich von Joystick
-	private double joystickStopRange = 1;
+	private double joystickStopRange = 0.2;
 	
 	// Maximale Zunahme der Geschwindigkeit auf dem Koordinatensystem
-	private double coordinateMaxSpeed = 25;
-	
-	
+	private double coordinateMaxSpeed = 20;
 	private JPasswordField passwordField;
 	private JTextField Benutzer;
 
 	// Interval für die Geschwindidkeit
-	private double intervall = 2; // in s
+	private double interval = 0.5; // in s
 	
 	/**
 	 * Launch the application.
@@ -57,54 +56,142 @@ public class InformationWindows {
 	 */
 	public InformationWindows() {
 		// Controller für die Steuerung der Bewegung
-		moveController = new MoveController(currentX, currentY, currentZ, intervall);
+		moveController = new MoveController(currentX, currentY, currentZ, interval);
 		
-		try {			
-			moveController.setSpeedForAllAngles(0, 304, 428);
-			moveController.goAllAngels();
-			Thread.sleep((int)(1000 * intervall));
+		try {
+			/*
+			// Rotation Links
+			if (moveController.setSpeedForAllAngles(0, 304, 428)){
+				moveController.goAllAngels();
+			};
+			Thread.sleep((int)(1000 * interval));
+			moveController.stopAllAngels();
+			
+			// Ausgangposition
+			if (moveController.setSpeedForAllAngles(304, 0, 428)){
+				moveController.goAllAngels();
+			};
+			Thread.sleep((int)(1000 * interval));
 			moveController.stopAllAngels();
 
-			moveController.setSpeedForAllAngles(350, 0, 300);
-			moveController.goAllAngels();
-			Thread.sleep((int)(1000 * intervall));
+			// Rotation Rechts
+			if (moveController.setSpeedForAllAngles(0, -304, 428)){
+				moveController.goAllAngels();
+			};
+			Thread.sleep((int)(1000 * interval));
 			moveController.stopAllAngels();
 			
-			moveController.setSpeedForAllAngles(0, 350, 300);
-			moveController.goAllAngels();
-			Thread.sleep((int)(1000 * intervall));
-			moveController.stopAllAngels();
-			
-			moveController.setSpeedForAllAngles(100, 0, 535);
-			moveController.goAllAngels();
-			Thread.sleep((int)(1000 * intervall));
-			moveController.stopAllAngels();
-			
-			moveController.setSpeedForAllAngles(-100, -150, 150);
-			moveController.goAllAngels();
-			Thread.sleep((int)(1000 * intervall));
+			// Ausgangposition
+			if (moveController.setSpeedForAllAngles(304, 0, 428)){
+				moveController.goAllAngels();
+			};
+			Thread.sleep((int)(1000 * interval));
 			moveController.stopAllAngels();
 
-			moveController.setSpeedForAllAngles(-150, -200, 300);
-			moveController.goAllAngels();
-			Thread.sleep((int)(1000 * intervall));
+			// Gerade Links
+			if (moveController.setSpeedForAllAngles(304, 250, 428)){
+				moveController.goAllAngels();
+			};
+			Thread.sleep((int)(1000 * interval));
 			moveController.stopAllAngels();
 			
-			moveController.setSpeedForAllAngles(100, 0, 535);
-			moveController.goAllAngels();
-			Thread.sleep((int)(1000 * intervall));
+			// Ausgangposition
+			if (moveController.setSpeedForAllAngles(304, 0, 428)){
+				moveController.goAllAngels();
+			};
+			Thread.sleep((int)(1000 * interval));
 			moveController.stopAllAngels();
+			
+			
+			// Gerade Rechts
+			if (moveController.setSpeedForAllAngles(304, -250, 428)){
+				moveController.goAllAngels();
+			};
+			Thread.sleep((int)(1000 * interval));
+			moveController.stopAllAngels();
+			
+			// Ausgangposition
+			if (moveController.setSpeedForAllAngles(304, 0, 428)){
+				moveController.goAllAngels();
+			};
+			Thread.sleep((int)(1000 * interval));
+			moveController.stopAllAngels();
+			
+			// OOR HEHE
+			if (moveController.setSpeedForAllAngles(0, 0, 0)){
+				moveController.goAllAngels();
+			};
+			Thread.sleep((int)(1000 * interval));
+			moveController.stopAllAngels();
+			
+			
+			// Runter
+			if(moveController.setSpeedForAllAngles(304, 0, 250)){
+				moveController.goAllAngels();
+			};
+			Thread.sleep((int)(1000 * interval));
+			moveController.stopAllAngels();
+			
+			// Ausgangposition
+			if(moveController.setSpeedForAllAngles(304, 0, 428)){
+				moveController.goAllAngels();
+			};
+			Thread.sleep((int)(1000 * interval));
+			moveController.stopAllAngels();
+			
+			// Oben
+			if (moveController.setSpeedForAllAngles(304, 0, 500)){
+				moveController.goAllAngels();
+			};
+			Thread.sleep((int)(1000 * interval));
+			moveController.stopAllAngels();
+			
+			// Ausgangposition
+			if (moveController.setSpeedForAllAngles(304, 0, 428)) {
+				moveController.goAllAngels();
+			};
+			Thread.sleep((int)(1000 * interval));
+			moveController.stopAllAngels();
+			
+			// Vorne
+			if(moveController.setSpeedForAllAngles(400, 0, 428)){
+				moveController.goAllAngels();
+			};
+			Thread.sleep((int)(1000 * interval));
+			moveController.stopAllAngels();
+			
+			// Ausgangposition
+			if (moveController.setSpeedForAllAngles(304, 0, 428)){
+				moveController.goAllAngels();
+			};
+			Thread.sleep((int)(1000 * interval));
+			moveController.stopAllAngels();
+			
+			// Hinten
+			if (moveController.setSpeedForAllAngles(200, 0, 428)){
+				moveController.goAllAngels();
+			};
+			Thread.sleep((int)(1000 * interval));
+			moveController.stopAllAngels();
+			
+			// Ausgangposition
+			if (moveController.setSpeedForAllAngles(304, 0, 428)){
+				moveController.goAllAngels();
+			};
+			Thread.sleep((int)(1000 * interval));
+			moveController.stopAllAngels();
+			*/
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		/*boolean run = true;
+		boolean run = true;
 		while(run) {
 			move();
 			
 			if(MainController.getDualshockSimple().isPressedActionCross()) {
 				break;
 			}
-		}*/
+		}
 
 		MainController.closeHings();
 		System.exit(0);
@@ -117,16 +204,10 @@ public class InformationWindows {
 		// Auslesen der X-Richtung auf dem Joystick
 		double joystickCurrentX = MainController.getDualshockSimple().getLeftStickX();
 		// Auslesen der Y-Richtung auf dem Joystick
-		double joystickCurrentY = MainController.getDualshockSimple().getLeftStickY();
+		double joystickCurrentY = MainController.getDualshockSimple().getLeftStickY() * -1;
 		// Auslesen der Z-Richtung auf dem Joystick
-		double joystickCurrentZ = MainController.getDualshockSimple().getRightStickY();
-		
-		// Ausgabe auf CLI
-		System.out.println("X: " + moveController.getCurrentX()
-						+ ", Y: " + moveController.getCurrentY()
-						+ ", Z: " + moveController.getCurrentZ());
-		
-		
+		double joystickCurrentZ = MainController.getDualshockSimple().getRightStickY() * -1;
+
 		// Prüfen ob die Joystickdaten von X, Y und Z sich im Stoppbereich befinden,
 		// weil sich diese Signale nicht genau am 0 Punkt sind
 		if (joystickCurrentX > (joystickStopRange * -1)
@@ -153,20 +234,16 @@ public class InformationWindows {
 			double newX = moveController.getCurrentX() + moveX;
 			double newY = moveController.getCurrentY() + moveY;
 			double newZ = moveController.getCurrentZ() + moveZ;
-			
-			// Ausgabe in CLI
-			System.out.println("X: " + newX 
-							+ ", Y: " + newY
-							+ ", Z: " + newZ);
-			
+						
 			// Festlegen der Geschwindigkeit für die Achsen
-			moveController.setSpeedForAllAngles(newX, newY, newZ);
-			// Alle Motoren starten
-			moveController.goAllAngels();
+			if(moveController.setSpeedForAllAngles(newX, newY, newZ)) {
+				// Alle Motoren starten
+				moveController.goAllAngels();
+			}
 			
 			try {
 				// Programm pausieren für Bewegung
-				Thread.sleep((int) (1000 * intervall));
+				Thread.sleep((int) (1000 * interval));
 			} catch(Exception e) {
 				e.printStackTrace();
 			}

@@ -5,7 +5,14 @@ import java.rmi.RemoteException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import lejos.hardware.sensor.EV3GyroSensor;
 import lejos.remote.ev3.RMIRegulatedMotor;
+import lejos.remote.ev3.RMISampleProvider;
+import lejos.robotics.Gyroscope;
+import sun.rmi.runtime.NewThreadAction;
+import threads.rab.local.threadCoordinateInformations;
+import threads.rab.local.threadMotorInformation;
+import threads.rab.local.threadPower;
 
 public class MainController {
 	private static Logger logger = LogManager.getLogger(MainController.class);
@@ -13,8 +20,8 @@ public class MainController {
 	private DualshockController dualshock;
 	private static DualshockSimple dualshockSimple;
 	
-	private BrickController brickLeft;
-	private BrickController brickRight;
+	private static BrickController brickLeft;
+	private static BrickController brickRight;
 	
 	private static RMIRegulatedMotor hingTheta1;
 
@@ -25,11 +32,19 @@ public class MainController {
 	private static RMIRegulatedMotor hingTheta4;
 	private static RMIRegulatedMotor effector;
 	
+	// Sensoren
+	private static RMISampleProvider sampleGyros;
+	
 	private static int maxAcceleration		= 6000;
 	
-	private String iPBrickLeft 			= "10.0.1.2";
-	private String iPBrickRight 		= "10.0.1.1";
+	private String iPBrickLeft 			= "192.168.0.10";
+	private String iPBrickRight 		= "192.168.0.20";
 	private int dualshockID				= 0;
+	
+	// Threads
+	private Thread tPower;
+	private Thread tBrickInfo;
+	private Thread tMotorInfo;
 	
 	/**
 	 * Instanzieren des Objekts
@@ -66,6 +81,20 @@ public class MainController {
 		} catch (Exception e) {
 			logger.error(e);
 		}
+		
+		
+		// Setup für die Ausgabe
+		tBrickInfo = new Thread(new threadCoordinateInformations());
+		tBrickInfo.setName("Koordinaten");
+		tBrickInfo.start();
+		
+		tPower = new Thread(new threadPower());
+		tPower.setName("Brick Power");
+		//tPower.start();
+		
+		tMotorInfo = new Thread(new threadMotorInformation());
+		tMotorInfo.setName("Motor Information");
+		//tMotorInfo.start();
 	}
 	
 	/**
@@ -81,9 +110,9 @@ public class MainController {
 			// Dritte Achsenmotor mit Port C konfigurieren
 			hingTheta4 			= brickLeft.getBrick().createRegulatedMotor("B", 'M');
 			// Rotationsmotor mit Port D konfigurieren
-			hingTheta1 	= brickRight.getBrick().createRegulatedMotor("C", 'L');
+			hingTheta1 			= brickRight.getBrick().createRegulatedMotor("C", 'L');
 			// Effektor
-			effector 		= brickLeft.getBrick().createRegulatedMotor("A", 'M');
+			effector 			= brickLeft.getBrick().createRegulatedMotor("A", 'M');
 			
 			// Setzen der Beschleunigung für alle Motoren
 			hingTheta20.setAcceleration(maxAcceleration);
@@ -113,6 +142,10 @@ public class MainController {
 			logger.error(e);
 		}
 	}
+	
+	public void setupsSensors() {
+		sampleGyros = brickLeft.getBrick().createSampleProvider("1", "EV3GyroSensor", "Rate and Angle"); 
+	}
 
 	public static DualshockSimple getDualshockSimple() {
 		return dualshockSimple;
@@ -140,5 +173,17 @@ public class MainController {
 
 	public static RMIRegulatedMotor getEffector() {
 		return effector;
+	}
+
+	public static RMISampleProvider getSampleGyros() {
+		return sampleGyros;
+	}
+	
+	public static BrickController getBrickLeft() {
+		return brickLeft;
+	}
+
+	public static BrickController getBrickRight() {
+		return brickRight;
 	}
 }
