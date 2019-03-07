@@ -1,4 +1,4 @@
-package rab.local;
+package windows.rab.local;
 
 import java.awt.EventQueue;
 

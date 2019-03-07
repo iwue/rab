@@ -1,4 +1,4 @@
-package rab.local;
+package windows.rab.local;
 
 import java.awt.EventQueue;
 
@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 
-public class frontpscontroller extends JFrame {
+public class Frontpscontroller extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField YcoordinatePS;
@@ -31,7 +31,7 @@ public class frontpscontroller extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frontpscontroller frame = new frontpscontroller();
+					Frontpscontroller frame = new Frontpscontroller();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,7 +43,7 @@ public class frontpscontroller extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public frontpscontroller() {
+	public Frontpscontroller() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 551);
 		contentPane = new JPanel();

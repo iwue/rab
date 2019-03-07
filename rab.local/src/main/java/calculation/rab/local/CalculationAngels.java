@@ -1,13 +1,14 @@
 package calculation.rab.local;
 
+import rab.local.RabStatics;
+
 public class CalculationAngels {
-
-	// Länge der Achsen in mm
-	private static double a1 = 260;
-	private static double a2 = 168;
-	private static double a5 = 162;
-	private static double a6 = 140;
-
+	
+	private static double a1 = RabStatics.getA1();
+	private static double a2 = RabStatics.getA2();
+	private static double a5 = RabStatics.getA5();
+	private static double a6 = RabStatics.getA6();
+	
 	/**
 	 * Umrechnung vom kartesischen Koordinatensystem in Winkel für die dritte Achse.
 	 * 
@@ -179,21 +180,5 @@ public class CalculationAngels {
 		finalAngle = (theta2 + theta3) * -1;
 
 		return finalAngle;
-	}
-
-	public static double getA1() {
-		return a1;
-	}
-
-	public static double getA2() {
-		return a2;
-	}
-
-	public static double getA5() {
-		return a5;
-	}
-
-	public static double getA6() {
-		return a6;
 	}
 }

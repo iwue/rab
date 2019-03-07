@@ -1,4 +1,4 @@
-package controller.rab.local;
+package dualshock.rab.local;
 
 import net.java.games.input.Controller;
 

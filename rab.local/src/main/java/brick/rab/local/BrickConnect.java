@@ -1,23 +1,23 @@
-package controller.rab.local;
+package brick.rab.local;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import lejos.remote.ev3.RemoteEV3;
 
-public class BrickController {
+public class BrickConnect {
 
 	private RemoteEV3 brick;
 	private String ip;
-	private static Logger logger = LogManager.getLogger(BrickController.class);
+	private static Logger logger = LogManager.getLogger(BrickConnect.class);
 	
 	/**
-	 * Instanzieren des Brick Objekts
+	 * Erstellen die Verindung zum EV3 Brick
 	 * 
 	 * @param IP-Adresse des Bricks
 	 * @throws Exception
 	 */
-	public BrickController(String ip) throws Exception{
+	public BrickConnect(String ip) throws Exception{
 		this.ip = ip;
 		
 		this.connect();
@@ -28,7 +28,7 @@ public class BrickController {
 	 *
 	 * @throws Exception 
 	 */
-	public void connect() throws Exception{
+	private void connect() throws Exception{
 		try {
 			brick = new RemoteEV3(this.ip);
 		} catch (Exception e) {

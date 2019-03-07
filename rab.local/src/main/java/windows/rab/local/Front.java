@@ -1,4 +1,4 @@
-package rab.local;
+package windows.rab.local;
 
 import java.awt.EventQueue;
 
@@ -11,7 +11,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-public class front extends JFrame {
+public class Front extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField Y;
@@ -37,7 +37,7 @@ public class front extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					front frame = new front();
+					Front frame = new Front();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,7 +49,7 @@ public class front extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public front() {
+	public Front() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 551);
 		contentPane = new JPanel();
