@@ -1,8 +1,6 @@
 package rab.local;
 
 import java.util.LinkedList;
-import java.util.List;
-
 import javafx.geometry.Point3D;
 
 public class MoveTest {

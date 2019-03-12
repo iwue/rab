@@ -3,8 +3,6 @@
  */
 package brick.rab.local;
 
-import org.bytedeco.javacpp.opencv_core.Point3d;
-
 import calculation.rab.local.CalculationAngels;
 import controller.rab.local.CheckCoordinatesHandler;
 import javafx.geometry.Point3D;

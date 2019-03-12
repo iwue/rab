@@ -6,7 +6,6 @@ import controller.rab.local.MoveSimpleController;
 import controller.rab.local.RabMainController;
 import dualshock.rab.local.DualshockController;
 import dualshock.rab.local.DualshockSimple;
-import javafx.geometry.Point3D;
 import threads.rab.local.ThreadEffector;
 import threads.rab.local.ThreadGyros;
 
