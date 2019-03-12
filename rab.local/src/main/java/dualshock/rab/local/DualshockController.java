@@ -12,6 +12,8 @@ public class DualshockController {
 
 	private Controller controller;
 	
+	
+	
 	/**
 	 * Wartet bis sich ein Controller vom Typ Controller.Type.STICK,
 	 * Controller.Type.GAMEPAD, Controller.Type.WHEEL oder
