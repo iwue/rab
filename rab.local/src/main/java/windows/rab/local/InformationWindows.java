@@ -7,32 +7,31 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import brick.rab.local.BrickController;
-import brick.rab.local.MoveBrickController;
-import controller.rab.local.MoveSimple;
-import controller.rab.local.RabController;
+import brick.rab.local.BrickComponentHandler;
+import brick.rab.local.BrickMoveController;
+import controller.rab.local.MoveSimpleController;
+import controller.rab.local.RabMainController;
 import dualshock.rab.local.DualshockController;
 import dualshock.rab.local.DualshockSimple;
-import rab.local.RabStatics;
+import rab.local.Statics;
 import threads.rab.local.ThreadEffector;
 import threads.rab.local.ThreadGyros;
 
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.Font;
-import java.io.File;
 
 public class InformationWindows {
 
 	private JFrame frame;
 	private JPasswordField passwordField;
 	private JTextField Benutzer;
-	private RabController rabController;
+	private RabMainController rabController;
 	private DualshockController dualshockController;
 	private DualshockSimple dualshockSimple;
-	private BrickController brickController;
-	private MoveBrickController moveBrickController;
-	private MoveSimple moveSimple;
+	private BrickComponentHandler brickController;
+	private BrickMoveController moveBrickController;
+	private MoveSimpleController moveSimple;
 	private Thread tAutoTheta4;
 	private Thread tEffector;
 	
@@ -58,15 +57,15 @@ public class InformationWindows {
 	 */
 	public InformationWindows() {
 		try {
-			RabStatics.initProperties();
+			Statics.initProperties();
 			dualshockController = new DualshockController(0);
 			dualshockSimple = new DualshockSimple(dualshockController.getController());
-			brickController = new BrickController();
-			moveBrickController = new MoveBrickController(RabStatics.getStartX(), RabStatics.getStartY(), RabStatics.getStartZ(), brickController);
-			rabController = new RabController(dualshockSimple, moveBrickController);
-			moveSimple = new MoveSimple(dualshockSimple, brickController, moveBrickController);
+			brickController = new BrickComponentHandler();
+			moveBrickController = new BrickMoveController(Statics.getStartX(), Statics.getStartY(), Statics.getStartZ(), brickController);
+			rabController = new RabMainController(dualshockSimple, moveBrickController);
+			moveSimple = new MoveSimpleController(dualshockSimple, brickController);
 			
-			if (RabStatics.isTheta4Automatic()) {
+			if (Statics.isTheta4Automatic()) {
 				tAutoTheta4 = new Thread(new ThreadGyros(moveBrickController.getBrickController()));
 				tAutoTheta4.setName("Effector Correction");
 				tAutoTheta4.start();
@@ -83,7 +82,7 @@ public class InformationWindows {
 		//moveBrickController.goTo(304, 0, 300, 5);
 		//moveBrickController.goTo(304, 0, 428, 5);
 		
-		if (RabStatics.getMode() == 1) {
+		if (Statics.getMode() == 1) {
 			while(true) {
 				rabController.move();
 				
@@ -91,7 +90,7 @@ public class InformationWindows {
 					break;
 				}
 			}
-		} else if (RabStatics.getMode() == 2){
+		} else if (Statics.getMode() == 2){
 			while(true) {
 				moveSimple.move();
 				

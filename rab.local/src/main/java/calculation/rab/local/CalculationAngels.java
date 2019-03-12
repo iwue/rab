@@ -1,13 +1,13 @@
 package calculation.rab.local;
 
-import rab.local.RabStatics;
+import rab.local.Statics;
 
 public class CalculationAngels {
 	
-	private static double a1 = RabStatics.getA1();
-	private static double a2 = RabStatics.getA2();
-	private static double a5 = RabStatics.getA5();
-	private static double a6 = RabStatics.getA6();
+	private static double a1 = Statics.getA1();
+	private static double a2 = Statics.getA2();
+	private static double a5 = Statics.getA5();
+	private static double a6 = Statics.getA6();
 	
 	/**
 	 * Umrechnung vom kartesischen Koordinatensystem in Winkel für die dritte Achse.
@@ -20,13 +20,10 @@ public class CalculationAngels {
 		double finalAngle = 0.0;
 		double x4 = x;
 		double y4 = y;
-
+	
 		if (x4 != 0 && y4 != 0) {
 			// X oder Y sind ungleich 0
-			/*
-			 * TODO Einfügen in Doc
-			 */
-
+	
 			if (x4 > 0) {
 				if (y4 > 0) {
 					// I Quadrant (x>0 & y>0)
@@ -69,7 +66,7 @@ public class CalculationAngels {
 				}
 			}
 		}
-
+	
 		return finalAngle;
 	}
 

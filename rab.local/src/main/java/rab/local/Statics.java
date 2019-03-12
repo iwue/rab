@@ -1,6 +1,6 @@
 package rab.local;
 
-public class RabStatics {
+public class Statics {
 	
 	private static String propertyFile = "rab.properties";
 	// Länge der Achsen in mm
@@ -48,45 +48,45 @@ public class RabStatics {
 	
 	
 	public static void initProperties() {
-		a1 = Double.parseDouble(RabConfigs.getProperty("a1"));
-		a2 = Double.parseDouble(RabConfigs.getProperty("a2"));
-		a5 = Double.parseDouble(RabConfigs.getProperty("a5"));
-		a6 = Double.parseDouble(RabConfigs.getProperty("a6"));
+		a1 = Double.parseDouble(ConfigHandler.getProperty("a1"));
+		a2 = Double.parseDouble(ConfigHandler.getProperty("a2"));
+		a5 = Double.parseDouble(ConfigHandler.getProperty("a5"));
+		a6 = Double.parseDouble(ConfigHandler.getProperty("a6"));
 		
-		maxAcceleration = Integer.parseInt(RabConfigs.getProperty("maxAcceleration"));
-		iPBrickLeft = RabConfigs.getProperty("iPBrickLeft");
-		iPBrickRight = RabConfigs.getProperty("iPBrickRight");
+		maxAcceleration = Integer.parseInt(ConfigHandler.getProperty("maxAcceleration"));
+		iPBrickLeft = ConfigHandler.getProperty("iPBrickLeft");
+		iPBrickRight = ConfigHandler.getProperty("iPBrickRight");
 		
 		// Startposition des TCP
-		startX = Double.parseDouble(RabConfigs.getProperty("startX"));
-		startY = Double.parseDouble(RabConfigs.getProperty("startY"));
-		startZ = Double.parseDouble(RabConfigs.getProperty("startZ"));
+		startX = Double.parseDouble(ConfigHandler.getProperty("startX"));
+		startY = Double.parseDouble(ConfigHandler.getProperty("startY"));
+		startZ = Double.parseDouble(ConfigHandler.getProperty("startZ"));
 		
-		transmissionTheta1 = Double.parseDouble(RabConfigs.getProperty("transmissionTheta1"));
-		transmissionTheta2 = Double.parseDouble(RabConfigs.getProperty("transmissionTheta2"));
-		transmissionTheta3 = Double.parseDouble(RabConfigs.getProperty("transmissionTheta3"));
-		transmissionTheta4 = Double.parseDouble(RabConfigs.getProperty("transmissionTheta4"));
+		transmissionTheta1 = Double.parseDouble(ConfigHandler.getProperty("transmissionTheta1"));
+		transmissionTheta2 = Double.parseDouble(ConfigHandler.getProperty("transmissionTheta2"));
+		transmissionTheta3 = Double.parseDouble(ConfigHandler.getProperty("transmissionTheta3"));
+		transmissionTheta4 = Double.parseDouble(ConfigHandler.getProperty("transmissionTheta4"));
 		
-		interval = Double.parseDouble(RabConfigs.getProperty("interval"));
+		interval = Double.parseDouble(ConfigHandler.getProperty("interval"));
 		
-		maxSpeedOnCoordinateSystem = Double.parseDouble(RabConfigs.getProperty("maxSpeedOnCoordinateSystem"));
-		maxSpeedEffector = Double.parseDouble(RabConfigs.getProperty("maxSpeedEffector"));
+		maxSpeedOnCoordinateSystem = Double.parseDouble(ConfigHandler.getProperty("maxSpeedOnCoordinateSystem"));
+		maxSpeedEffector = Double.parseDouble(ConfigHandler.getProperty("maxSpeedEffector"));
 		
-		dualshockStopRange = Double.parseDouble(RabConfigs.getProperty("dualshockStopRange"));
+		dualshockStopRange = Double.parseDouble(ConfigHandler.getProperty("dualshockStopRange"));
 		
-		theta4Automatic = Boolean.parseBoolean(RabConfigs.getProperty("theta4Automatic"));
+		theta4Automatic = Boolean.parseBoolean(ConfigHandler.getProperty("theta4Automatic"));
 		
 		// Pro Sekunde
-		maxSpeedMotor = Double.parseDouble(RabConfigs.getProperty("maxSpeedMotor"));
+		maxSpeedMotor = Double.parseDouble(ConfigHandler.getProperty("maxSpeedMotor"));
 		
-		mode = Integer.parseInt(RabConfigs.getProperty("mode"));
+		mode = Integer.parseInt(ConfigHandler.getProperty("mode"));
 	}
 	public static double getA1() {
 		return a1;
 	}
 	
 	public static void setA1(double a1) {
-		RabStatics.a1 = a1;
+		Statics.a1 = a1;
 	}
 	
 	public static double getA2() {
@@ -94,7 +94,7 @@ public class RabStatics {
 	}
 	
 	public static void setA2(double a2) {
-		RabStatics.a2 = a2;
+		Statics.a2 = a2;
 	}
 	
 	public static double getA5() {
@@ -102,14 +102,14 @@ public class RabStatics {
 	}
 	
 	public static void setA5(double a5) {
-		RabStatics.a5 = a5;
+		Statics.a5 = a5;
 	}
 	public static double getA6() {
 		return a6;
 	}
 	
 	public static void setA6(double a6) {
-		RabStatics.a6 = a6;
+		Statics.a6 = a6;
 	}
 
 	public static double getTransmissionTheta1() {
@@ -117,7 +117,7 @@ public class RabStatics {
 	}
 
 	public static void setTransmissionTheta1(double transmissionTheta1) {
-		RabStatics.transmissionTheta1 = transmissionTheta1;
+		Statics.transmissionTheta1 = transmissionTheta1;
 	}
 
 	public static double getTransmissionTheta2() {
@@ -125,7 +125,7 @@ public class RabStatics {
 	}
 
 	public static void setTransmissionTheta2(double transmissionTheta2) {
-		RabStatics.transmissionTheta2 = transmissionTheta2;
+		Statics.transmissionTheta2 = transmissionTheta2;
 	}
 
 	public static double getTransmissionTheta3() {
@@ -133,7 +133,7 @@ public class RabStatics {
 	}
 
 	public static void setTransmissionTheta3(double transmissionTheta3) {
-		RabStatics.transmissionTheta3 = transmissionTheta3;
+		Statics.transmissionTheta3 = transmissionTheta3;
 	}
 
 	public static double getTransmissionTheta4() {
@@ -141,7 +141,7 @@ public class RabStatics {
 	}
 
 	public static void setTransmissionTheta4(double transmissionTheta4) {
-		RabStatics.transmissionTheta4 = transmissionTheta4;
+		Statics.transmissionTheta4 = transmissionTheta4;
 	}
 
 	public static double getInterval() {
@@ -149,7 +149,7 @@ public class RabStatics {
 	}
 
 	public static void setInterval(double interval) {
-		RabStatics.interval = interval;
+		Statics.interval = interval;
 	}
 
 	public static double getMaxSpeedOnCoordinateSystem() {
@@ -157,7 +157,7 @@ public class RabStatics {
 	}
 
 	public static void setMaxSpeedOnCoordinateSystem(double maxSpeedOnCoordinateSystem) {
-		RabStatics.maxSpeedOnCoordinateSystem = maxSpeedOnCoordinateSystem;
+		Statics.maxSpeedOnCoordinateSystem = maxSpeedOnCoordinateSystem;
 	}
 
 	public static double getDualshockStopRange() {
@@ -165,7 +165,7 @@ public class RabStatics {
 	}
 
 	public static void setDualshockStopRange(double dualshockStopRange) {
-		RabStatics.dualshockStopRange = dualshockStopRange;
+		Statics.dualshockStopRange = dualshockStopRange;
 	}
 
 	public static int getMaxAcceleration() {
@@ -173,7 +173,7 @@ public class RabStatics {
 	}
 
 	public static void setMaxAcceleration(int maxAcceleration) {
-		RabStatics.maxAcceleration = maxAcceleration;
+		Statics.maxAcceleration = maxAcceleration;
 	}
 
 	public static String getiPBrickLeft() {
@@ -181,7 +181,7 @@ public class RabStatics {
 	}
 
 	public static void setiPBrickLeft(String iPBrickLeft) {
-		RabStatics.iPBrickLeft = iPBrickLeft;
+		Statics.iPBrickLeft = iPBrickLeft;
 	}
 
 	public static String getiPBrickRight() {
@@ -189,7 +189,7 @@ public class RabStatics {
 	}
 
 	public static void setiPBrickRight(String iPBrickRight) {
-		RabStatics.iPBrickRight = iPBrickRight;
+		Statics.iPBrickRight = iPBrickRight;
 	}
 
 	public static double getStartX() {
@@ -197,7 +197,7 @@ public class RabStatics {
 	}
 
 	public static void setStartX(double startX) {
-		RabStatics.startX = startX;
+		Statics.startX = startX;
 	}
 
 	public static double getStartY() {
@@ -205,7 +205,7 @@ public class RabStatics {
 	}
 
 	public static void setStartY(double startY) {
-		RabStatics.startY = startY;
+		Statics.startY = startY;
 	}
 
 	public static double getStartZ() {
@@ -213,7 +213,7 @@ public class RabStatics {
 	}
 
 	public static void setStartZ(double startZ) {
-		RabStatics.startZ = startZ;
+		Statics.startZ = startZ;
 	}
 
 	public static double getCurrentX() {
@@ -221,7 +221,7 @@ public class RabStatics {
 	}
 
 	public static void setCurrentX(double currentX) {
-		RabStatics.currentX = currentX;
+		Statics.currentX = currentX;
 	}
 
 	public static double getCurrentY() {
@@ -229,7 +229,7 @@ public class RabStatics {
 	}
 
 	public static void setCurrentY(double currentY) {
-		RabStatics.currentY = currentY;
+		Statics.currentY = currentY;
 	}
 
 	public static double getCurrentZ() {
@@ -237,7 +237,7 @@ public class RabStatics {
 	}
 
 	public static void setCurrentZ(double currentZ) {
-		RabStatics.currentZ = currentZ;
+		Statics.currentZ = currentZ;
 	}
 
 	public static boolean isTheta4Automatic() {
@@ -245,7 +245,7 @@ public class RabStatics {
 	}
 
 	public static void setTheta4Automatic(boolean theta4Automatic) {
-		RabStatics.theta4Automatic = theta4Automatic;
+		Statics.theta4Automatic = theta4Automatic;
 	}
 
 	public static double getMaxSpeedMotor() {
@@ -253,7 +253,7 @@ public class RabStatics {
 	}
 
 	public static void setMaxSpeedMotor(double maxSpeedMotor) {
-		RabStatics.maxSpeedMotor = maxSpeedMotor;
+		Statics.maxSpeedMotor = maxSpeedMotor;
 	}
 
 	public static int getMode() {
@@ -261,7 +261,7 @@ public class RabStatics {
 	}
 
 	public static void setMode(int mode) {
-		RabStatics.mode = mode;
+		Statics.mode = mode;
 	}
 
 	public static double getMaxSpeedEffector() {
@@ -269,7 +269,7 @@ public class RabStatics {
 	}
 
 	public static void setMaxSpeedEffector(double maxSpeedEffector) {
-		RabStatics.maxSpeedEffector = maxSpeedEffector;
+		Statics.maxSpeedEffector = maxSpeedEffector;
 	}
 
 	public static String getPropertyFile() {
@@ -277,6 +277,6 @@ public class RabStatics {
 	}
 
 	public static void setPropertyFile(String propertyFile) {
-		RabStatics.propertyFile = propertyFile;
+		Statics.propertyFile = propertyFile;
 	}
 }

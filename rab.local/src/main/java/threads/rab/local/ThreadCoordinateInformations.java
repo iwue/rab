@@ -1,15 +1,15 @@
 package threads.rab.local;
 
-import rab.local.RabStatics;
+import rab.local.Statics;
 
 public class ThreadCoordinateInformations implements Runnable{
 
 	public void run() {
 		while(true) {
 			// Ausgabe auf CLI
-			System.out.println("X: " + RabStatics.getCurrentX()
-							+ ", Y: " +  RabStatics.getCurrentY()
-							+ ", Z: " +  RabStatics.getCurrentZ());
+			System.out.println("X: " + Statics.getCurrentX()
+							+ ", Y: " +  Statics.getCurrentY()
+							+ ", Z: " +  Statics.getCurrentZ());
 			
 			try {
 				Thread.sleep(500);

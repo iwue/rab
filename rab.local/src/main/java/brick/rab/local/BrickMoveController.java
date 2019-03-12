@@ -3,15 +3,18 @@
  */
 package brick.rab.local;
 
+import org.bytedeco.javacpp.opencv_core.Point3d;
+
 import calculation.rab.local.CalculationAngels;
-import controller.rab.local.CheckCoordinates;
-import rab.local.RabStatics;
+import controller.rab.local.CheckCoordinatesHandler;
+import javafx.geometry.Point3D;
+import rab.local.Statics;
 
 /**
  * @author IsaacWürth
  *
  */
-public class MoveBrickController {
+public class BrickMoveController {
 
 	private double speedTheta1WithoutTransmission = 0.0;
 	private double speedTheta2WithoutTransmission = 0.0;
@@ -23,16 +26,16 @@ public class MoveBrickController {
 	private double speedTheta3WithTransmission = 0.0;
 	private double speedTheta4WithTransmission = 0.0;
 
-	private BrickController brickController;
+	private BrickComponentHandler brickController;
 
-	private CheckCoordinates checkCoordinates;
+	private CheckCoordinatesHandler checkCoordinates;
 
-	public MoveBrickController(double currentX, double currentY, double currentZ, BrickController brickController) {
-		checkCoordinates = new CheckCoordinates();
+	public BrickMoveController(double currentX, double currentY, double currentZ, BrickComponentHandler brickController) {
+		checkCoordinates = new CheckCoordinatesHandler();
 		this.brickController = brickController;
-		RabStatics.setCurrentX(currentX);
-		RabStatics.setCurrentY(currentY);
-		RabStatics.setCurrentZ(currentZ);
+		Statics.setCurrentX(currentX);
+		Statics.setCurrentY(currentY);
+		Statics.setCurrentZ(currentZ);
 	}
 
 	/**
@@ -44,16 +47,25 @@ public class MoveBrickController {
 	 * @param timeForMove Zeit für die Bewegung
 	 */
 	public void goTo(double newX, double newY, double newZ, double timeForMove) {
+		
+		double oldIntervall = Statics.getInterval();
+		Statics.setInterval(timeForMove);
 		try {
 			if (setSpeedForAllAngles(newX, newY, newZ)) {
 				goAllAngels();
 			}
-			;
-			goAllAngels();
-			Thread.sleep((long) (1000 * RabStatics.getInterval()));
+			
+			Thread.sleep((long) timeForMove);
+			stopAllAngels();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		Statics.setInterval(oldIntervall);
+	}
+	
+	public void goTo(Point3D point3d, double timeForMove) {
+		goTo(point3d.getX(), point3d.getY(), point3d.getZ(), timeForMove);
 	}
 
 	/**
@@ -66,7 +78,7 @@ public class MoveBrickController {
 	 */
 	public boolean setSpeedForAllAngles(double newX, double newY, double newZ) {
 		// Prüfen der Koordinaten
-		if (checkCoordinates.isCoordinateValid(newX, newY, newZ)) {
+		if (checkCoordinates.isCoordinateValid(newX, newY, 	newZ)) {
 			// Geschwindigkeit der 1. Achse berechnen
 			setSpeedTheta1(newX, newY);
 			// Geschwindigkeit der 2. Achse berechnen
@@ -74,23 +86,20 @@ public class MoveBrickController {
 			// Geschwindigkeit der 3. Achse berechnen
 			setSpeedTheta3(newX, newY, newZ);
 			// Geschwindigkeit der 4.Achse berechnen
-			if (!RabStatics.isTheta4Automatic()) {
+			if (!Statics.isTheta4Automatic()) {
 				setSpeedTheta4(newX, newY, newZ);
 			}
-
+	
 			// Neue Position als aktuelle Position setzen
-			RabStatics.setCurrentX(newX);
-			;
-			RabStatics.setCurrentY(newY);
-			;
-			RabStatics.setCurrentZ(newZ);
-			;
-
+			Statics.setCurrentX(newX);
+			Statics.setCurrentY(newY);
+			Statics.setCurrentZ(newZ);
 			return true;
 		} else {
 			// Falls sich die Koordinaten ausserhalbt der Bewegung befinden
 			System.out.println("Out of range");
-			brickController.getBrickLeft().getBrick().getAudio().playTone(10000, 1500);
+			brickController.getBrickLeft().
+				getBrick().getAudio().playTone(10000, 1500);
 			return false;
 		}
 	}
@@ -102,7 +111,7 @@ public class MoveBrickController {
 		goTheta1();
 		goTheta2();
 		goTheta3();
-		if (!RabStatics.isTheta4Automatic()) {
+		if (!Statics.isTheta4Automatic()) {
 			goTheta4();
 		}
 	}
@@ -117,7 +126,7 @@ public class MoveBrickController {
 			brickController.getHingTheta21().stop(true);
 			brickController.getHingTheta3().stop(true);
 
-			if (!RabStatics.isTheta4Automatic()) {
+			if (!Statics.isTheta4Automatic()) {
 				brickController.getHingTheta4().stop(true);
 			}
 
@@ -134,7 +143,7 @@ public class MoveBrickController {
 	 */
 	private void setSpeedTheta1(double newX, double newY) {
 		try {
-			double oldAngle = brickController.getHingTheta1().getTachoCount() * RabStatics.getTransmissionTheta1();
+			double oldAngle = brickController.getHingTheta1().getTachoCount() * Statics.getTransmissionTheta1();
 			double newAngle = CalculationAngels.calcTheta1(newX, newY);
 
 			if (oldAngle < 0) {
@@ -168,7 +177,7 @@ public class MoveBrickController {
 			}
 
 			speedTheta1WithTransmission = Math.abs(
-					(speedTheta1WithoutTransmission / RabStatics.getTransmissionTheta1()) / RabStatics.getInterval());
+					(speedTheta1WithoutTransmission / Statics.getTransmissionTheta1()) / Statics.getInterval());
 
 			brickController.getHingTheta1().setSpeed((int) speedTheta1WithTransmission);
 		} catch (Exception e) {
@@ -186,7 +195,7 @@ public class MoveBrickController {
 	private void setSpeedTheta2(double newX, double newY, double newZ) {
 		try {
 			// Auslesen des aktuellen Winkels bei Theta 2 vom Motor
-			double oldAngle = ((brickController.getHingTheta20().getTachoCount() * RabStatics.getTransmissionTheta2())
+			double oldAngle = ((brickController.getHingTheta20().getTachoCount() * Statics.getTransmissionTheta2())
 					* -1) + 90;
 			// Berechnen des neuen Winekel für Theta 2
 			double newAngle = CalculationAngels.calcTheta2(newX, newY, newZ);
@@ -196,7 +205,7 @@ public class MoveBrickController {
 
 			// Geschwindigkeit berechnen für Theta 2
 			speedTheta2WithTransmission = Math.abs(
-					speedTheta2WithoutTransmission / RabStatics.getTransmissionTheta2() / RabStatics.getInterval());
+					speedTheta2WithoutTransmission / Statics.getTransmissionTheta2() / Statics.getInterval());
 
 			// Setzen der Geschwindigkeit für Theta 2 am Motor 1
 			brickController.getHingTheta20().setSpeed((int) speedTheta2WithTransmission);
@@ -219,7 +228,7 @@ public class MoveBrickController {
 	private void setSpeedTheta3(double newX, double newY, double newZ) {
 		try {
 			// Auslesen des aktuellen Winkels bei Theta 3 vom Motor
-			double oldAngle = ((brickController.getHingTheta3().getTachoCount() * RabStatics.getTransmissionTheta3())
+			double oldAngle = ((brickController.getHingTheta3().getTachoCount() * Statics.getTransmissionTheta3())
 					* -1) - 90;
 			// Berechnen des neuen Winekel für Theta 3
 			double newAngle = CalculationAngels.calcTheta3(newX, newY, newZ);
@@ -229,7 +238,7 @@ public class MoveBrickController {
 
 			// Geschwindigkeit berechnen für Theta 3
 			speedTheta3WithTransmission = Math.abs(
-					speedTheta3WithoutTransmission / RabStatics.getTransmissionTheta3() / RabStatics.getInterval());
+					speedTheta3WithoutTransmission / Statics.getTransmissionTheta3() / Statics.getInterval());
 
 			// Setzen der Geschwindigkeit für Theta 3
 			brickController.getHingTheta3().setSpeed((int) speedTheta3WithTransmission);
@@ -245,26 +254,26 @@ public class MoveBrickController {
 	 * @param newY Y im Koordinatensystem, welcher erreicht werden soll
 	 * @param newZ Z im Koordinatensystem, welcher erreicht werden soll
 	 */
-	private void setSpeedTheta4(double newX, double newY, double newZ) {
-		try {
-			// Auslesen des aktuellen Winkels bei Theta 4 vom Motor
-			double oldAngle = brickController.getHingTheta4().getTachoCount() * RabStatics.getTransmissionTheta4() * -1;
-			// Berechnen des neuen Winekel für Theta 4
-			double newAngle = CalculationAngels.calcTheta4(newX, newY, newZ);
+private void setSpeedTheta4(double newX, double newY, double newZ) {
+	try {
+		// Auslesen des aktuellen Winkels bei Theta 4 vom Motor
+		double oldAngle = brickController.getHingTheta4().getTachoCount() * Statics.getTransmissionTheta4() * -1;
+		// Berechnen des neuen Winekel für Theta 4
+		double newAngle = CalculationAngels.calcTheta4(newX, newY, newZ);
 
-			// Differenz der Winkel für die Winkelgeschwindikgkeit
-			speedTheta4WithoutTransmission = oldAngle - newAngle;
+		// Differenz der Winkel für die Winkelgeschwindikgkeit
+		speedTheta4WithoutTransmission = oldAngle - newAngle;
 
-			// Geschwindigkeit berechnen für Theta 4
-			speedTheta4WithTransmission = Math.abs(
-					speedTheta4WithoutTransmission / RabStatics.getTransmissionTheta4() / RabStatics.getInterval());
+		// Geschwindigkeit berechnen für Theta 4
+		speedTheta4WithTransmission = Math.abs(
+				speedTheta4WithoutTransmission / Statics.getTransmissionTheta4() / Statics.getInterval());
 
-			// Setzen der Geschwindigkeit für Theta 4
-			brickController.getHingTheta4().setSpeed((int) speedTheta4WithTransmission);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		// Setzen der Geschwindigkeit für Theta 4
+		brickController.getHingTheta4().setSpeed((int) speedTheta4WithTransmission);
+	} catch (Exception e) {
+		e.printStackTrace();
 	}
+}
 
 	/**
 	 * Fahren der Bewegung für Theta 1 Vorher muss der Befehl
@@ -342,7 +351,7 @@ public class MoveBrickController {
 		}
 	}
 
-	public BrickController getBrickController() {
+	public BrickComponentHandler getBrickController() {
 		return brickController;
 	}
 }

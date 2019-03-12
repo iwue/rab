@@ -1,13 +1,13 @@
 package controller.rab.local;
 
 import calculation.rab.local.CalculationAngels;
-import rab.local.RabStatics;
+import rab.local.Statics;
 
-public class CheckCoordinates {
-	private  double a1 = RabStatics.getA1();
-	private  double a2 = RabStatics.getA2();
-	private  double a5 = RabStatics.getA5();
-	private  double a6 = RabStatics.getA6();
+public class CheckCoordinatesHandler {
+	private  double a1 = Statics.getA1();
+	private  double a2 = Statics.getA2();
+	private  double a5 = Statics.getA5();
+	private  double a6 = Statics.getA6();
 
 	// TODO Ausmessen von dem Radius r2 aus Roboter
 	private  double r1 = a2; // Radius 1 ist gleich Achsenlaenge 2

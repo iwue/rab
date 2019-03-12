@@ -5,11 +5,11 @@ import org.apache.logging.log4j.Logger;
 
 import lejos.remote.ev3.RemoteEV3;
 
-public class BrickConnect {
+public class BrickConnectionHandler {
 
 	private RemoteEV3 brick;
 	private String ip;
-	private static Logger logger = LogManager.getLogger(BrickConnect.class);
+	private static Logger logger = LogManager.getLogger(BrickConnectionHandler.class);
 	
 	/**
 	 * Erstellen die Verindung zum EV3 Brick
@@ -17,7 +17,7 @@ public class BrickConnect {
 	 * @param IP-Adresse des Bricks
 	 * @throws Exception
 	 */
-	public BrickConnect(String ip) throws Exception{
+	public BrickConnectionHandler(String ip) throws Exception{
 		this.ip = ip;
 		
 		this.connect();

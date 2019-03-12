@@ -1,23 +1,18 @@
 package controller.rab.local;
 
-import brick.rab.local.BrickController;
-import brick.rab.local.MoveBrickController;
+import brick.rab.local.BrickComponentHandler;
 import dualshock.rab.local.DualshockSimple;
-import rab.local.RabStatics;
-import threads.rab.local.ThreadGyros;
+import rab.local.Statics;
 
-public class MoveSimple {
+public class MoveSimpleController {
 
-	private BrickController brickController;
-	MoveBrickController moveBrickController;
+	private BrickComponentHandler brickController;
 	private DualshockSimple dualshockSimple;
 
-	public MoveSimple(DualshockSimple dualshockSimple, BrickController brickController,
-			MoveBrickController moveBrickController) {
+	public MoveSimpleController(DualshockSimple dualshockSimple, BrickComponentHandler brickController) {
 		try {
 			this.dualshockSimple = dualshockSimple;
 			this.brickController = brickController;
-			this.moveBrickController = moveBrickController;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -33,8 +28,8 @@ public class MoveSimple {
 		double joystickValueTheta3 = dualshockSimple.getRightStickY();
 
 		// Theta 1
-		if (joystickValueTheta1 > (RabStatics.getDualshockStopRange() * -1)
-				&& joystickValueTheta1 < RabStatics.getDualshockStopRange()) {
+		if (joystickValueTheta1 > (Statics.getDualshockStopRange() * -1)
+				&& joystickValueTheta1 < Statics.getDualshockStopRange()) {
 			try {
 				brickController.getHingTheta1().stop(true);
 			} catch (Exception e) {
@@ -43,7 +38,7 @@ public class MoveSimple {
 		} else {
 			try {
 				// Setzen der Geschwindigkeit
-				double speed = RabStatics.getMaxSpeedMotor() * joystickValueTheta1;
+				double speed = Statics.getMaxSpeedMotor() * joystickValueTheta1;
 				brickController.getHingTheta1().setSpeed((int) Math.abs(speed));
 
 				// Bestimmer der Drehrichtung
@@ -58,8 +53,8 @@ public class MoveSimple {
 		}
 
 		// Theta 2
-		if (joystickValueTheta2 > (RabStatics.getDualshockStopRange() * -1)
-				&& joystickValueTheta2 < RabStatics.getDualshockStopRange()) {
+		if (joystickValueTheta2 > (Statics.getDualshockStopRange() * -1)
+				&& joystickValueTheta2 < Statics.getDualshockStopRange()) {
 			try {
 				brickController.getHingTheta20().stop(true);
 				brickController.getHingTheta21().stop(true);	
@@ -69,7 +64,7 @@ public class MoveSimple {
 		} else {
 			try {
 				// Setzen der Geschwindigkeit
-				double speed = RabStatics.getMaxSpeedMotor() * joystickValueTheta2;
+				double speed = Statics.getMaxSpeedMotor() * joystickValueTheta2;
 				brickController.getHingTheta20().setSpeed((int) Math.abs(speed));
 				brickController.getHingTheta21().setSpeed((int) Math.abs(speed));
 
@@ -87,8 +82,8 @@ public class MoveSimple {
 		}
 
 		// Theta 3
-		if (joystickValueTheta3 > (RabStatics.getDualshockStopRange() * -1)
-				&& joystickValueTheta3 < RabStatics.getDualshockStopRange()) {
+		if (joystickValueTheta3 > (Statics.getDualshockStopRange() * -1)
+				&& joystickValueTheta3 < Statics.getDualshockStopRange()) {
 			try {
 				brickController.getHingTheta3().stop(true);
 			} catch (Exception e) {
@@ -97,7 +92,7 @@ public class MoveSimple {
 		} else {
 			try {
 				// Setzen der Geschwindigkeit
-				double speed = RabStatics.getMaxSpeedMotor() * joystickValueTheta3;
+				double speed = Statics.getMaxSpeedMotor() * joystickValueTheta3;
 				brickController.getHingTheta3().setSpeed((int) Math.abs(speed));
 
 				// Bestimmer der Drehrichtung

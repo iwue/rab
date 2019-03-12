@@ -3,15 +3,15 @@ package calculation.rab.local;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
-import controller.rab.local.CheckCoordinates;
+import controller.rab.local.CheckCoordinatesHandler;
 
 public class CheckCoordinatesTest {
 
-	private CheckCoordinates checkCoodiantes;
+	private CheckCoordinatesHandler checkCoodiantes;
 	
 	@Before
 	void init() {
-		checkCoodiantes = new CheckCoordinates();
+		checkCoodiantes = new CheckCoordinatesHandler();
 		
 	}
 	

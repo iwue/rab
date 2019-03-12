@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
-public class RabConfigs {
+public class ConfigHandler {
 	private static Properties prop;
 	private static OutputStream outputFileStream = null;
 	private static InputStream inputStream = null;
@@ -15,7 +15,7 @@ public class RabConfigs {
 	public static String getProperty(String valueName) {
 		try {
 			prop = new Properties();
-			File propertyFIle = new File(RabStatics.getPropertyFile());
+			File propertyFIle = new File(Statics.getPropertyFile());
 			
 			if (propertyFIle.exists()) {
 				inputStream = new FileInputStream(propertyFIle);
@@ -33,7 +33,7 @@ public class RabConfigs {
 	public static void saveProperty(String valueName, String value) {
 		try {
 			prop = new Properties();
-			File propertyFIle = new File(RabStatics.getPropertyFile());
+			File propertyFIle = new File(Statics.getPropertyFile());
 			
 			if (propertyFIle.exists()) {
 				inputStream = new FileInputStream(propertyFIle);

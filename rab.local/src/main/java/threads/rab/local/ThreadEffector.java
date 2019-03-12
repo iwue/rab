@@ -1,14 +1,14 @@
 package threads.rab.local;
 
-import brick.rab.local.BrickController;
+import brick.rab.local.BrickComponentHandler;
 import dualshock.rab.local.DualshockSimple;
-import rab.local.RabStatics;
+import rab.local.Statics;
 
 public class ThreadEffector implements Runnable{
-	private BrickController brickController;
+	private BrickComponentHandler brickController;
 	private DualshockSimple dualshockSimple;
 	
-	public ThreadEffector(DualshockSimple dualshockSimple, BrickController brickController){
+	public ThreadEffector(DualshockSimple dualshockSimple, BrickComponentHandler brickController){
 		this.brickController = brickController;
 		this.dualshockSimple = dualshockSimple;
 	}
@@ -23,18 +23,18 @@ public class ThreadEffector implements Runnable{
 			joystickL2 = (dualshockSimple.getL2() + 1)/2;
 			joystickR2 = (dualshockSimple.getR2() + 1)/2;
 			try {
-				if (!((joystickL2 > RabStatics.getDualshockStopRange() || joystickR2 > RabStatics.getDualshockStopRange())
-					&& !(joystickL2 > RabStatics.getDualshockStopRange() && joystickR2 > RabStatics.getDualshockStopRange()))) {
+				if (!((joystickL2 > Statics.getDualshockStopRange() || joystickR2 > Statics.getDualshockStopRange())
+					&& !(joystickL2 > Statics.getDualshockStopRange() && joystickR2 > Statics.getDualshockStopRange()))) {
 					 
 					brickController.getEffector().stop(true);
 				} else {
-					if  (joystickL2 > RabStatics.getDualshockStopRange()) {
-						speed = RabStatics.getMaxSpeedMotor() * -joystickL2;
+					if  (joystickL2 > Statics.getDualshockStopRange()) {
+						speed = Statics.getMaxSpeedMotor() * -joystickL2;
 						brickController.getEffector().setSpeed((int) Math.abs(speed));
 					}
 					
-					if (joystickR2 > RabStatics.getDualshockStopRange()){
-						speed = RabStatics.getMaxSpeedMotor() * joystickR2;
+					if (joystickR2 > Statics.getDualshockStopRange()){
+						speed = Statics.getMaxSpeedMotor() * joystickR2;
 						brickController.getEffector().setSpeed((int) Math.abs(speed));
 					}
 					

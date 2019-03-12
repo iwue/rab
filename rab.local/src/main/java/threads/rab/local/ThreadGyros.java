@@ -1,14 +1,12 @@
 package threads.rab.local;
 
-import brick.rab.local.BrickController;
-import rab.local.RabStatics;
+import brick.rab.local.BrickComponentHandler;
 
 public class ThreadGyros implements Runnable{
 	private float toleranz = 4; // in Grad 
-	private double interval = 0; // in Sekunden
-	private BrickController brickController;
+	private BrickComponentHandler brickController;
 	
-	public ThreadGyros(BrickController brickController) {
+	public ThreadGyros(BrickComponentHandler brickController) {
 		super();
 		
 		this.brickController = brickController;
@@ -20,9 +18,11 @@ public class ThreadGyros implements Runnable{
 			double gyrosCorrection = 0;
 			while (true) {
 				float[] gyrosSample = brickController.getSampleGyros().fetchSample();
+				
 				float gyrosAngle = gyrosSample[0];
 				
 				System.out.println("Gyros:  " + gyrosAngle + " degree");
+				
 				if(Math.abs(gyrosAngle- gyrosCorrection) > toleranz) {
 					
 					if (Math.abs(gyrosAngle) < 10){

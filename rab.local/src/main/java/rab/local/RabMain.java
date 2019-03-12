@@ -1,23 +1,25 @@
 package rab.local;
 
-import brick.rab.local.BrickController;
-import brick.rab.local.MoveBrickController;
-import controller.rab.local.MoveSimple;
-import controller.rab.local.RabController;
+import brick.rab.local.BrickComponentHandler;
+import brick.rab.local.BrickMoveController;
+import controller.rab.local.MoveSimpleController;
+import controller.rab.local.RabMainController;
 import dualshock.rab.local.DualshockController;
 import dualshock.rab.local.DualshockSimple;
+import javafx.geometry.Point3D;
 import threads.rab.local.ThreadEffector;
 import threads.rab.local.ThreadGyros;
 
 public class RabMain {
-	private RabController rabController;
+	private RabMainController rabController;
 	private DualshockController dualshockController;
 	private DualshockSimple dualshockSimple;
-	private BrickController brickController;
-	private MoveBrickController moveBrickController;
-	private MoveSimple moveSimple;
+	private BrickComponentHandler brickController;
+	private BrickMoveController moveBrickController;
+	private MoveSimpleController moveSimple;
 	private Thread tAutoTheta4;
 	private Thread tEffector;
+	private MoveTest moveTest;
 	
 	public static void main(String[] args) {
 		RabMain main = new RabMain();
@@ -26,17 +28,19 @@ public class RabMain {
 	
 	public void rab() {
 		try {
-			RabStatics.initProperties();
+			Statics.initProperties();
 			dualshockController = new DualshockController(0);
 			dualshockSimple = new DualshockSimple(dualshockController.getController());
-			brickController = new BrickController();
-			moveBrickController = new MoveBrickController(RabStatics.getStartX(), RabStatics.getStartY(), RabStatics.getStartZ(), brickController);
-			rabController = new RabController(dualshockSimple, moveBrickController);
-			moveSimple = new MoveSimple(dualshockSimple, brickController, moveBrickController);
+			brickController = new BrickComponentHandler();
+			moveBrickController = new BrickMoveController(Statics.getStartX(), Statics.getStartY(), Statics.getStartZ(), brickController);
+			rabController = new RabMainController(dualshockSimple, moveBrickController);
+			moveSimple = new MoveSimpleController(dualshockSimple, brickController);
+			moveTest = new MoveTest();
+			moveTest.generalTestList();
 			
-			if (RabStatics.isTheta4Automatic()) {
+			if (Statics.isTheta4Automatic()) {
 				tAutoTheta4 = new Thread(new ThreadGyros(moveBrickController.getBrickController()));
-				tAutoTheta4.setName("Effector Correction");
+				tAutoTheta4.setName("Effector correction");
 				tAutoTheta4.start();
 			}
 			
@@ -48,24 +52,28 @@ public class RabMain {
 			System.exit(1);
 		}
 		
-		//moveBrickController.goTo(304, 0, 428, 5);
-		//moveBrickController.goTo(304, 0, 300, 5);
-		//moveBrickController.goTo(304, 0, 428, 5);
-		
-		if (RabStatics.getMode() == 1) {
+		if (Statics.getMode() == 1) {
 			while(true) {
 				rabController.move();
 				
 				if (dualshockSimple.isPressedActionCross()) {
 					break;
 				}
+				
+				if (dualshockSimple.isPressedActionSquare()) {
+					rabController.choreography(moveTest.getPoint3ds(), 5000);
+				}
 			}
-		} else if (RabStatics.getMode() == 2){
+		} else if (Statics.getMode() == 2){
 			while(true) {
 				moveSimple.move();
 				
 				if (dualshockSimple.isPressedActionCross()) {
 					break;
+				}
+				
+				if (dualshockSimple.isPressedActionSquare()) {
+					rabController.choreography(moveTest.getPoint3ds(), 5000);
 				}
 			}
 		}
