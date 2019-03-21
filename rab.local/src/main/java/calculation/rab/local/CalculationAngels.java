@@ -1,5 +1,6 @@
 package calculation.rab.local;
 
+import javafx.geometry.Point3D;
 import rab.local.Statics;
 
 public class CalculationAngels {
@@ -8,6 +9,11 @@ public class CalculationAngels {
 	private static double a2 = Statics.getA2();
 	private static double a5 = Statics.getA5();
 	private static double a6 = Statics.getA6();
+	
+	
+	public static double calcTheta1(Point3D point) {
+		return calcTheta1(point.getX(), point.getY());
+	}
 	
 	/**
 	 * Umrechnung vom kartesischen Koordinatensystem in Winkel für die dritte Achse.
@@ -70,6 +76,11 @@ public class CalculationAngels {
 		return finalAngle;
 	}
 
+	
+	public static double calcTheta2(Point3D point) {
+		return calcTheta2(point.getX(), point.getY(), point.getZ());
+	}
+	
 	/**
 	 * Umrechnung vom kartesischen Koordinatensystem in Winkel für die erste Achse.
 	 * 
@@ -120,6 +131,10 @@ public class CalculationAngels {
 		return finalAngle;
 	}
 
+	public static double calcTheta3(Point3D point) {
+		return calcTheta3(point.getX(), point.getY(), point.getZ());
+	}
+	
 	/**
 	 * Umrechnung vom kartesischen Koordinatensystem in Winkel für die zweite Achse.
 	 * 
@@ -161,6 +176,11 @@ public class CalculationAngels {
 		return finalAngle;
 	}
 
+	
+	public static double calcTheta4(Point3D point) {
+		return calcTheta4(point.getX(), point.getY(), point.getZ());
+	}
+	
 	/**
 	 * Umrechnung vom kartesischen Koordinatensystem in Winkel für die dritte Achse.
 	 * 

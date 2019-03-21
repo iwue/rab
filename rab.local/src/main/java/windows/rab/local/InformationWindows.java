@@ -15,7 +15,7 @@ import dualshock.rab.local.DualshockController;
 import dualshock.rab.local.DualshockSimple;
 import rab.local.Statics;
 import threads.rab.local.ThreadEffector;
-import threads.rab.local.ThreadGyros;
+import threads.rab.local.ThreadTheta4;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -66,7 +66,7 @@ public class InformationWindows {
 			moveSimple = new MoveSimpleController(dualshockSimple, brickController);
 			
 			if (Statics.isTheta4Automatic()) {
-				tAutoTheta4 = new Thread(new ThreadGyros(moveBrickController.getBrickController()));
+				tAutoTheta4 = new Thread(new ThreadTheta4(moveBrickController.getBrickController()));
 				tAutoTheta4.setName("Effector Correction");
 				tAutoTheta4.start();
 			}

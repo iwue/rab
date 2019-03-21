@@ -1,5 +1,7 @@
 package rab.local;
 
+import javafx.geometry.Point3D;
+
 public class Statics {
 	
 	private static String propertyFile = "rab.properties";
@@ -18,6 +20,8 @@ public class Statics {
 	private static double startX = 304;
 	private static double startY = 0;
 	private static double startZ = 428;
+	
+	private static Point3D currentPosition = new Point3D(0, 0 ,0); 
 	
 	private static double currentX;
 	private static double currentY;
@@ -61,6 +65,7 @@ public class Statics {
 		startX = Double.parseDouble(ConfigHandler.getProperty("startX"));
 		startY = Double.parseDouble(ConfigHandler.getProperty("startY"));
 		startZ = Double.parseDouble(ConfigHandler.getProperty("startZ"));
+		currentPosition = new Point3D(startX, startY, startZ);
 		
 		transmissionTheta1 = Double.parseDouble(ConfigHandler.getProperty("transmissionTheta1"));
 		transmissionTheta2 = Double.parseDouble(ConfigHandler.getProperty("transmissionTheta2"));
@@ -240,6 +245,12 @@ public class Statics {
 		Statics.currentZ = currentZ;
 	}
 
+	public static Point3D getCurrentPosition() {
+		return currentPosition;
+	}
+	public static void setCurrentPosition(Point3D currentPosition) {
+		Statics.currentPosition = currentPosition;
+	}
 	public static boolean isTheta4Automatic() {
 		return theta4Automatic;
 	}

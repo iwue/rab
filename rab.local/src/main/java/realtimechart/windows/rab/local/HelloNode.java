@@ -7,6 +7,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
+import com.sun.xml.internal.ws.server.provider.ProviderInvokerTube;
 
 /** Sample 2 - How to use nodes as handles to manipulate objects in the scene.
  * You can rotate, translate, and scale objects by manipulating their parent nodes.
@@ -38,7 +39,16 @@ public class HelloNode extends SimpleApplication {
                 "Common/MatDefs/Misc/Unshaded.j3md");
         mat2.setColor("Color", ColorRGBA.Red);
         red.setMaterial(mat2);
-
+        
+        /** create a red box straight above the blue one at (1,3,1) */
+        Box box3 = new Box(1,1,1);
+        Geometry pink = new Geometry("Box3", box3);
+        pink.setLocalTranslation(new Vector3f(1,8,1));
+        Material mat3 = new Material(assetManager,
+                "Common/MatDefs/Misc/Unshaded.j3md");
+        mat3.setColor("Color", ColorRGBA.Pink);
+        red.setMaterial(mat3);
+        
         /** Create a pivot node at (0,0,0) and attach it to the root node */
         Node pivot = new Node("pivot");
         rootNode.attachChild(pivot); // put this node in the scene
@@ -46,6 +56,7 @@ public class HelloNode extends SimpleApplication {
         /** Attach the two boxes to the *pivot* node. (And transitively to the root node.) */
         pivot.attachChild(blue);
         pivot.attachChild(red);
+        pivot.attachChild(pink);
         /** Rotate the pivot node: Note that both boxes have rotated! */
         pivot.rotate(.4f,.4f,0f);
 
