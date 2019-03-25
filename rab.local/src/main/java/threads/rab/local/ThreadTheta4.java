@@ -37,7 +37,7 @@ public class ThreadTheta4 implements Runnable{
 				
 				if(Math.abs(angleMotor- angleCalc) > toleranz) {
 					brickController.getHingTheta4().setSpeed((int) Math.abs(speed));
-					if (speed > 0) {
+					if (speed < 0) {
 						brickController.getHingTheta4().forward();
 					} else {
 						brickController.getHingTheta4().backward();

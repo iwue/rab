@@ -28,7 +28,7 @@ public class ThreadTheta1 implements Runnable {
 
 					angleCalc = CalculationAngels.calcTheta1(Statics.getCurrentPosition());
 					
-					if(Math.abs(angleCalc - angleMotor) < toleranz) {
+					if(Math.abs(angleCalc - angleMotor) > toleranz) {
 						speed = calcSpeed(angleMotor, angleCalc);
 						brickComponentHandler.getHingTheta1().setSpeed((int) Math.abs(speed));
 						

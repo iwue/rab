@@ -1,4 +1,4 @@
-package brick.rab.local;
+	package brick.rab.local;
 
 import java.rmi.RemoteException;
 

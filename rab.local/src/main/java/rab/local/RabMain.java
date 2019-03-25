@@ -59,6 +59,7 @@ public class RabMain {
 			tThetaEffector = new Thread(new ThreadEffector(dualshockSimple, brickController));
 			tThetaEffector.setName("Effector");
 			tThetaEffector.start();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(1);
