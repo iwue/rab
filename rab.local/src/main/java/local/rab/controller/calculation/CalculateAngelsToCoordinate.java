@@ -38,8 +38,8 @@ public class CalculateAngelsToCoordinate {
 				+ (a5 * Math.cos(Math.toRadians(angleTheta3 + angleTheta2)))
 				+ a6;
 		
-		double y = c * Math.sin(angleTheta1);
-		double x = c * Math.cos(angleTheta1);
+		double y = c * Math.sin(Math.toRadians(angleTheta1));
+		double x = c * Math.cos(Math.toRadians(angleTheta1));
 		
 		point3d = new Point3D(x, y, z);
 		return point3d;
