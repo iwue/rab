@@ -7,8 +7,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
 		<swt.version>4.6</swt.version>
-	    <jme3_g>com.jme3</jme3_g>
-	    <jme3_v>3.0.10</jme3_v>
+		<jme3_g>com.jme3</jme3_g>
+		<jme3_v>3.0.10</jme3_v>
 	</properties>
 
 
@@ -22,11 +22,11 @@
 			<id>maven-wso2</id>
 			<url>http://dist.wso2.org/maven2/</url>
 		</repository>
-		
+
 		<repository>
 			<id>com_jme3-repo</id>
 			<url>http://dl.bintray.com/jmonkeyengine/com.jme3</url>
-	    </repository>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -36,33 +36,33 @@
 		</pluginRepository>
 	</pluginRepositories>
 
-<dependencies>
-    <dependency>
-      <groupId>${jme3_g}</groupId>
-      <artifactId>jme3-core</artifactId>
-      <version>${jme3_v}</version>
-    </dependency>
-    <dependency>
-      <groupId>${jme3_g}</groupId>
-      <artifactId>jme3-desktop</artifactId>
-      <version>${jme3_v}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>${jme3_g}</groupId>
-      <artifactId>jme3-lwjgl</artifactId>
-      <version>${jme3_v}</version>
-      <scope>runtime</scope>
-    </dependency>
+	<dependencies>
+		<dependency>
+			<groupId>${jme3_g}</groupId>
+			<artifactId>jme3-core</artifactId>
+			<version>${jme3_v}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>${jme3_g}</groupId>
+			<artifactId>jme3-desktop</artifactId>
+			<version>${jme3_v}</version>
+			<scope>runtime</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>${jme3_g}</groupId>
+			<artifactId>jme3-lwjgl</artifactId>
+			<version>${jme3_v}</version>
+			<scope>runtime</scope>
+		</dependency>
 
-<!-- https://mvnrepository.com/artifact/org.j3d/j3d-core -->
-<dependency>
-    <groupId>org.j3d</groupId>
-    <artifactId>j3d-core</artifactId>
-    <version>3.0.1</version>
-</dependency>
-
-
+		<!-- https://mvnrepository.com/artifact/org.j3d/j3d-core -->
+		<dependency>
+			<groupId>org.j3d</groupId>
+			<artifactId>j3d-core</artifactId>
+			<version>3.0.1</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.eclipse.swt/org.eclipse.swt -->
 		<dependency>
@@ -161,15 +161,14 @@
 			<version>3.5.4</version>
 		</dependency>
 
-		
 		<!-- https://mvnrepository.com/artifact/javax.vecmath/vecmath -->
 		<dependency>
-		    <groupId>javax.vecmath</groupId>
-		    <artifactId>vecmath</artifactId>
-		    <version>1.5.2</version>
-		    <scope>runtime</scope>
+			<groupId>javax.vecmath</groupId>
+			<artifactId>vecmath</artifactId>
+			<version>1.5.2</version>
+			<scope>runtime</scope>
 		</dependency>
-		
+
 
 		<!-- https://mvnrepository.com/artifact/org.jogamp.jogl/jogl-all-main -->
 		<dependency>
@@ -177,5 +176,13 @@
 			<artifactId>jogl-all-main</artifactId>
 			<version>2.3.2</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.knowm.xchart/xchart -->
+		<dependency>
+			<groupId>org.knowm.xchart</groupId>
+			<artifactId>xchart</artifactId>
+			<version>3.5.4</version>
+		</dependency>
+
 	</dependencies>
 </project>

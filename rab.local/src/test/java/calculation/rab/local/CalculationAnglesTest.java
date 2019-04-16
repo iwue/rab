@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
+import local.rab.controller.calculation.CalculationAngels;
+
 class CalculationAnglesTest {
 	private CalculationAngels calcAngels;
 	

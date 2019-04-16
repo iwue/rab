@@ -3,7 +3,7 @@ package calculation.rab.local;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
-import controller.rab.local.CheckCoordinatesHandler;
+import local.rab.controller.CheckCoordinatesHandler;
 
 public class CheckCoordinatesTest {
 
