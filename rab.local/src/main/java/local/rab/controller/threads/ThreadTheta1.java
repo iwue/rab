@@ -14,27 +14,52 @@ public class ThreadTheta1 implements Runnable {
 		this.brickComponentHandler = brickComponentHandler;
 	}
 	
+	@Override
 	public void run() {
 		double angleMotor = 0;
 		
 		double angleCalc = 0;
-
+		double angleDiff = 0;
+		
 		double speed = 0;
 		double toleranz = 2;
 		
 		while(true) {
 			try {
-					angleMotor = (double) brickComponentHandler.getHingTheta1().getTachoCount() * Statics.getTransmissionTheta1();
+					angleMotor = brickComponentHandler.getHingTheta1().getTachoCount() * Statics.getTransmissionTheta1();
 
+					if(angleMotor < 0) {
+						angleMotor += 360;
+					}
+					
 					angleCalc = CalculationAngels.calcTheta1(Statics.getNewPosition());
 					
-					if((Math.abs(angleCalc) - Math.abs(angleMotor)) > toleranz) {
-						speed = calcSpeed(angleMotor, angleCalc);
+					if(Math.abs(calcDiff(angleMotor, angleCalc)) > toleranz) {
+						speed = (calcDiff(angleMotor, angleCalc) / Statics.getTransmissionTheta1()) / Statics.getInterval();
 						
-						if (speed < Statics.getMinSpeedMotor() ) {
+						if (speed < Statics.getMinSpeedMotor() 
+								&& speed > 0) {
+							
+							// Positiv, Minimum
 							speed = Statics.getMinSpeedMotor();
-						} else if (speed > Statics.getMaxSpeedOnCoordinateSystem()) {
-							speed = Statics.getMaxSpeedOnCoordinateSystem();
+							
+						} else if (speed > -Statics.getMinSpeedMotor() 
+								&& speed < 0) {
+							
+							// negativ, Minimum
+							speed = -Statics.getMinSpeedMotor();
+						
+						} else if (speed > Statics.getMaxSpeedMotor()
+								&& speed > 0 ) {
+						
+							// positiv, Maximum
+							speed = Statics.getMaxSpeedMotor();
+						
+						}  else if (speed < -Statics.getMaxSpeedMotor()
+								&& speed < 0 ) {
+						
+							// negativ, Maximum
+							speed = -Statics.getMaxSpeedMotor();
 						}
 						
 						brickComponentHandler.getHingTheta1().setSpeed((int) Math.abs(speed));
@@ -58,7 +83,7 @@ public class ThreadTheta1 implements Runnable {
 	/**
 	 * Setzen der Geschwindigkeit für Theta 1
 	 */
-	private double calcSpeed(double oldAngle, double newAngle) {
+	private double calcDiff(double oldAngle, double newAngle) {
 		if (oldAngle < 0) {
 			oldAngle = oldAngle + 360;
 		}
@@ -89,6 +114,6 @@ public class ThreadTheta1 implements Runnable {
 			}
 		}
 		
-		return (speedTheta1WithoutTransmission / Statics.getTransmissionTheta1()) / Statics.getInterval();
+		return (speedTheta1WithoutTransmission);
 	}
 }

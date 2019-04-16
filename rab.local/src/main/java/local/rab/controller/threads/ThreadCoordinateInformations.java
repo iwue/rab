@@ -4,6 +4,7 @@ import local.rab.config.Statics;
 
 public class ThreadCoordinateInformations implements Runnable{
 
+	@Override
 	public void run() {
 		while(true) {
 			// Ausgabe auf CLI

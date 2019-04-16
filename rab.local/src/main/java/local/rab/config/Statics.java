@@ -3,7 +3,6 @@ package local.rab.config;
 import javafx.geometry.Point3D;
 
 public class Statics {
-	
 	private static String propertyFile = "rab.properties";
 	// Länge der Achsen in mm
 	private static double a1 = 260;
@@ -43,7 +42,7 @@ public class Statics {
 	
 	// Pro Sekunde
 	private static double minSpeedMotor = 50;
-	private static double maxSpeedMotor = 150;
+	private static double maxSpeedMotor = 450;
 	
 	/*
 	 * Mode 1 = Koordinaten System
@@ -87,6 +86,7 @@ public class Statics {
 		
 		mode = Integer.parseInt(ConfigHandler.getProperty("mode"));
 	}
+	
 	public static double getA1() {
 		return a1;
 	}

@@ -13,6 +13,7 @@ public class ThreadTheta2 implements Runnable {
 		this.brickComponentHandler = brickComponentHandler;
 	}
 	
+	@Override
 	public void run() {
 		double angleMotor = 0;
 		
@@ -23,18 +24,37 @@ public class ThreadTheta2 implements Runnable {
 		
 		while(true) {
 			try {
-					angleMotor = (double) (brickComponentHandler.getHingTheta20().getTachoCount() * Statics.getTransmissionTheta2() * -1) + 90;
+					angleMotor = brickComponentHandler.getHingTheta20().getTachoCount() * Statics.getTransmissionTheta2() * -1 + 90;
 
 					angleCalc = CalculationAngels.calcTheta2(Statics.getNewPosition());
 					
-					if((Math.abs(angleCalc) - Math.abs(angleMotor)) > toleranz) {
+					if(Math.abs(calcDiff(angleMotor,angleCalc)) > toleranz) {
 						
-						speed = calcSpeed(angleMotor, angleCalc);
+						speed = (calcDiff(angleMotor, angleCalc) / Statics.getTransmissionTheta2()) / Statics.getInterval();
 						
-						if (speed < Statics.getMinSpeedMotor()) {
+						if (speed < Statics.getMinSpeedMotor() 
+								&& speed > 0) {
+							
+							// Positiv, Minimum
 							speed = Statics.getMinSpeedMotor();
-						} else if (speed > Statics.getMaxSpeedOnCoordinateSystem()) {
-							speed = Statics.getMaxSpeedOnCoordinateSystem();
+							
+						} else if (speed > -Statics.getMinSpeedMotor() 
+								&& speed < 0) {
+							
+							// negativ, Minimum
+							speed = -Statics.getMinSpeedMotor();
+						
+						} else if (speed > Statics.getMaxSpeedMotor()
+								&& speed > 0 ) {
+						
+							// positiv, Maximum
+							speed = Statics.getMaxSpeedMotor();
+						
+						}  else if (speed < -Statics.getMaxSpeedMotor()
+								&& speed < 0 ) {
+						
+							// negativ, Maximum
+							speed = -Statics.getMaxSpeedMotor();
 						}
 						
 						brickComponentHandler.getHingTheta20().setSpeed((int) Math.abs(speed));
@@ -62,12 +82,12 @@ public class ThreadTheta2 implements Runnable {
 	/**
 	 * Setzen der Geschwindigkeit für Theta 1
 	 */
-	private double calcSpeed(double oldAngle, double newAngle) {
+	private double calcDiff(double oldAngle, double newAngle) {
 		// Differenz der Winkel für die Winkelgeschwindikgkeit
 		double diff = oldAngle - newAngle;
 
 		// Geschwindigkeit berechnen für Theta 2
-		return diff / Statics.getTransmissionTheta2() / Statics.getInterval();
+		return diff;
 
 	}
 }

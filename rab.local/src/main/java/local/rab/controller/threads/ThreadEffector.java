@@ -13,6 +13,7 @@ public class ThreadEffector implements Runnable{
 		this.dualshockSimple = dualshockSimple;
 	}
 	
+	@Override
 	public void run() {
 		double joystickL2;
 		double joystickR2;

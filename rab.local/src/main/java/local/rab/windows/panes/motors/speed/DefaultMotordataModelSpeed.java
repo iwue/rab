@@ -1,21 +1,18 @@
 package local.rab.windows.panes.motors.speed;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import lejos.remote.ev3.RMIRegulatedMotor;
-import local.rab.RandomGenerator;
 
-public class DefaultMotordataModel implements MotordataModel {
+public class DefaultMotordataModelSpeed implements MotordataModel {
 
 	private List<Double>[] speedData;
 	
-	private RandomGenerator motor;
+	private RMIRegulatedMotor motor;
     private int sampleCount = 100;
+   private  int data = 0; 
 	
-	public DefaultMotordataModel(RandomGenerator motor) {
+	public DefaultMotordataModelSpeed(RMIRegulatedMotor motor) {
 		// data
 		List<Double> dataX = new ArrayList<Double>(sampleCount);
 		for(int i=0; i < sampleCount; i++) {
@@ -42,10 +39,14 @@ public class DefaultMotordataModel implements MotordataModel {
 			speedData[1].remove(0);
 			
 			//Get Data from Motor
-			int data = motor.getRandom().nextInt(200);
+			if(motor.isMoving()) {
+				data = motor.getSpeed();
+			} else {
+				data = 0;
+			}
 			
 			//Add
-			speedData[0].add(speedData[0].size(), (double) speedData[0].get(speedData[0].size() -1) + 1);
+			speedData[0].add(speedData[0].size(), speedData[0].get(speedData[0].size() -1) + 1);
 			speedData[1].add(speedData[1].size(), (double) (data));
 			
 			return speedData;		
