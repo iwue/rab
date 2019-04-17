@@ -22,7 +22,7 @@ public class ThreadTheta2 implements Runnable {
 		double speed = 0;
 		double toleranz = 2;
 		
-		while(true) {
+		while(!Thread.interrupted()) {
 			try {
 					angleMotor = brickComponentHandler.getHingTheta20().getTachoCount() * Statics.getTransmissionTheta2() * -1 + 90;
 

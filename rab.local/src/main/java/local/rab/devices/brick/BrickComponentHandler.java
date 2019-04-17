@@ -89,6 +89,7 @@ public class BrickComponentHandler {
 			hingTheta4.close();
 			hingTheta1.close();
 			effector.close();
+			sampleGyros.close();
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

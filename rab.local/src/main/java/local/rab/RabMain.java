@@ -1,8 +1,13 @@
 package local.rab;
 
+import java.rmi.RemoteException;
+
 import javax.swing.JFrame;
 
+import com.sun.j3d.utils.applet.JMainFrame;
+
 import local.rab.config.Statics;
+import local.rab.controller.CheckCoordinatesHandler;
 import local.rab.controller.MoveSimpleController;
 import local.rab.controller.RabMainController;
 import local.rab.controller.calculation.CalculateAngelsToCoordinate;
@@ -16,6 +21,8 @@ import local.rab.devices.brick.BrickComponentHandler;
 import local.rab.devices.dualshock.DualshockController;
 import local.rab.devices.dualshock.DualshockSimple;
 import local.rab.windows.WindowsMonitor;
+import local.rab.windows.InfoFront;
+
 import javafx.geometry.Point3D;
 
 public class RabMain {
@@ -32,7 +39,9 @@ public class RabMain {
 	private Thread tThetaEffector;
 	private Thread tInformation;
 	private JFrame jMainFrame;
+	private InfoFront jInfo;
 	private CalculateAngelsToCoordinate calculateAngelsToCoordinate;
+	private CheckCoordinatesHandler checkCoordinatesHandler;
 
 	private MoveTest moveTest;
 
@@ -43,6 +52,15 @@ public class RabMain {
 
 	public void rab() {
 		try {
+			jInfo = new InfoFront();
+			jInfo.getInfoBox().setText("System starting...");
+			jInfo.setAlwaysOnTop(true);
+			jInfo.repaint();
+			jInfo.setLocationRelativeTo(null);
+			jInfo.setResizable(false);
+			jInfo.setVisible(true);
+			jInfo.toFront();
+			
 			Statics.initProperties();
 			dualshockController = new DualshockController(0);
 			dualshockSimple = new DualshockSimple(dualshockController.getController());
@@ -52,6 +70,7 @@ public class RabMain {
 			moveTest = new MoveTest();
 			moveTest.generalTestList();
 			calculateAngelsToCoordinate = new CalculateAngelsToCoordinate();
+			checkCoordinatesHandler = new CheckCoordinatesHandler();
 
 			if(Statics.getMode() == 1) {
 			
@@ -82,24 +101,23 @@ public class RabMain {
 			
 			jMainFrame = new WindowsMonitor(brickController);
 			jMainFrame.setVisible(true);
+			jMainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+			
+			jInfo.setVisible(false);
+			
+			jMainFrame.toFront();
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(1);
 		}
-		
-		if (Statics.getMode() == 1) {
-			while (true) {
+		while (true) {
+			if (Statics.getMode() == 1) {
+				
 				rabController.move();
-
-				Point3D point =  calculateAngelsToCoordinate.calc(brickController);
 				
-				System.out.println("::::::: X: " + point.getX() +" Y: " + point.getY() + "Z: " + point.getZ());
-				
-				if (dualshockSimple.isPressedActionCross()) {
-					break;
-				}
-
+				// Home Position
 				if (dualshockSimple.isPressedActionSquare()) {
 					
 					Point3D currentPosition = new Point3D(
@@ -108,24 +126,142 @@ public class RabMain {
 															Statics.getStartZ());
 					Statics.setCurrentPosition(currentPosition);
 				}
-			}
-		} else if (Statics.getMode() == 2) {
-			while (true) {
-
 				
+				if(dualshockSimple.isPressedActionCirle()) {
+					Statics.setMode(2);
+					tTheta1.interrupt();
+					tTheta2.interrupt();
+					tTheta3.interrupt();
+					Statics.setTheta4Automatic(true);
+					
+					jInfo.getInfoBox().setText("Switch to Mode 2");
+					jInfo.repaint();
+					jInfo.setLocationRelativeTo(null);
+					jInfo.setResizable(false);
+					jInfo.setVisible(true);
+					jInfo.toFront();
+					
+					try {
+						Thread.sleep(1000);
+					} catch(InterruptedException e) {
+						e.printStackTrace();
+					}
+					jInfo.setVisible(false);
+				}
+			} else if (Statics.getMode() == 2) {
+				Point3D currentPosition = calculateAngelsToCoordinate.calc(brickController);
 				moveSimple.move();
 
-				if (dualshockSimple.isPressedActionCross()) {
-					break;
-				}
-
-				if (dualshockSimple.isPressedActionSquare()) {
+				if (!checkCoordinatesHandler.isCoordinateValid(currentPosition)) {
+					brickController.getBrickLeft().getBrick().getLED().setPattern(5);
+					brickController.getBrickRight().getBrick().getLED().setPattern(5);
 					
+					jInfo.getInfoBox().setText("Out of Range.");
+					jInfo.repaint();
+					jInfo.setLocationRelativeTo(null);
+					jInfo.setResizable(false);
+					jInfo.setVisible(true);
+					jInfo.toFront();
+				} else {
+					brickController.getBrickLeft().getBrick().getLED().setPattern(2);
+					brickController.getBrickRight().getBrick().getLED().setPattern(2);
+					jInfo.setVisible(false);
+				}
+				
+				if(dualshockSimple.isPressedActionCirle()) {
+					if (checkCoordinatesHandler.isCoordinateValid(currentPosition)) {
+						Statics.setMode(1);
+						Statics.setCurrentPosition(currentPosition);	
+						Statics.setTheta4Automatic(false);
+						
+						tTheta1 = new Thread(new ThreadTheta1(brickController));
+						tTheta1.setName("Theta 1");
+						tTheta1.start();
+			
+						tTheta2 = new Thread(new ThreadTheta2(brickController));
+						tTheta2.setName("Theta 2");
+						tTheta2.start();
+			
+						tTheta3 = new Thread(new ThreadTheta3(brickController));
+						tTheta3.setName("Theta 3");
+						tTheta3.start();
+						
+						jInfo.getInfoBox().setText("Switch to Mode 1");
+						jInfo.repaint();
+						jInfo.setLocationRelativeTo(null);
+						jInfo.setResizable(false);
+						jInfo.setVisible(true);
+						jInfo.toFront();
+						
+						brickController.getBrickLeft().getBrick().getLED().setPattern(1);
+						brickController.getBrickRight().getBrick().getLED().setPattern(1);
+						try {
+							Thread.sleep(1000);
+						} catch(InterruptedException e) {
+							e.printStackTrace();
+						}
+						jInfo.setVisible(false);
+					} 
+				}
+			}
+			
+			// Shutdown
+			if (dualshockSimple.isPressedActionCross()) {
+				jInfo.getInfoBox().setText("System shutdown ...");
+				jInfo.repaint();
+				jInfo.setLocationRelativeTo(null);
+				jInfo.setResizable(false);
+				jInfo.setVisible(true);
+				jInfo.toFront();
+				
+				jMainFrame.setVisible(false);
+				
+				if(Statics.getMode() == 2) {
+					Point3D currentPosition = calculateAngelsToCoordinate.calc(brickController);
+					Statics.setCurrentPosition(currentPosition);	
+					Statics.setTheta4Automatic(false);
+					
+					tTheta1 = new Thread(new ThreadTheta1(brickController));
+					tTheta1.setName("Theta 1");
+					tTheta1.start();
+		
+					tTheta2 = new Thread(new ThreadTheta2(brickController));
+					tTheta2.setName("Theta 2");
+					tTheta2.start();
+		
+					tTheta3 = new Thread(new ThreadTheta3(brickController));
+					tTheta3.setName("Theta 3");
+					tTheta3.start();
+				}
+				
+				Point3D currentPosition = new Point3D(
+						Statics.getStartX(), 
+						Statics.getStartY(),
+						Statics.getStartZ());
+				Statics.setCurrentPosition(currentPosition);
+				
+				try {
+					Thread.sleep(1000);
+					
+					while(brickController.getHingTheta1().isMoving()
+							|| brickController.getHingTheta20().isMoving()
+							|| brickController.getHingTheta3().isMoving()
+							|| brickController.getHingTheta4().isMoving()) {
+					}
+					
+					tTheta1.interrupt();
+					tTheta2.interrupt();
+					tTheta3.interrupt();
+					tTheta4.interrupt();
+					brickController.closeHings();
+					jInfo.setVisible(false);
+					System.exit(0);
+				} catch(InterruptedException e) {
+					e.printStackTrace();
+				} catch (RemoteException e) {
+					e.printStackTrace();
 				}
 			}
 		}
-
-		System.exit(0);
-
 	}
 }

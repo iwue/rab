@@ -1,17 +1,20 @@
 package local.rab.controller.threads;
 
 import local.rab.config.Statics;
+import local.rab.controller.calculation.CalculateAngelsToCoordinate;
 import local.rab.controller.calculation.CalculationAngels;
 import local.rab.devices.brick.BrickComponentHandler;
 
 public class ThreadTheta4 implements Runnable {
 	private float toleranz = 4; // in Grad
 	private BrickComponentHandler brickController;
+	private CalculateAngelsToCoordinate angelsToCoordinate;
 
 	public ThreadTheta4(BrickComponentHandler brickController) {
 		super();
 
 		this.brickController = brickController;
+		angelsToCoordinate = new CalculateAngelsToCoordinate();	
 	}
 
 	@Override
@@ -25,11 +28,11 @@ public class ThreadTheta4 implements Runnable {
 		double toleranz = 2;
 
 		try {
-			while (true) {
+			while (!Thread.interrupted()) {
 				angleMotor = brickController.getHingTheta4().getTachoCount() * Statics.getTransmissionTheta4()* -1;
 
-				if (false) {
-					angleCalc = brickController.getSampleGyros().fetchSample()[0];
+				if (Statics.isTheta4Automatic()) {
+					angleCalc = CalculationAngels.calcTheta4(angelsToCoordinate.calc(brickController));
 				} else {
 					angleCalc = CalculationAngels.calcTheta4(Statics.getNewPosition());
 				}
