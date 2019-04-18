@@ -1,17 +1,15 @@
 package local.rab;
 
+import java.awt.Frame;
 import java.rmi.RemoteException;
 
 import javax.swing.JFrame;
-
-import com.sun.j3d.utils.applet.JMainFrame;
 
 import local.rab.config.Statics;
 import local.rab.controller.CheckCoordinatesHandler;
 import local.rab.controller.MoveSimpleController;
 import local.rab.controller.RabMainController;
 import local.rab.controller.calculation.CalculateAngelsToCoordinate;
-import local.rab.controller.threads.ThreadCoordinateInformations;
 import local.rab.controller.threads.ThreadEffector;
 import local.rab.controller.threads.ThreadTheta1;
 import local.rab.controller.threads.ThreadTheta2;
@@ -65,7 +63,7 @@ public class RabMain {
 			dualshockController = new DualshockController(0);
 			dualshockSimple = new DualshockSimple(dualshockController.getController());
 			brickController = new BrickComponentHandler();
-			rabController = new RabMainController(dualshockSimple);
+			rabController = new RabMainController(dualshockSimple, brickController);
 			moveSimple = new MoveSimpleController(dualshockSimple, brickController);
 			moveTest = new MoveTest();
 			moveTest.generalTestList();
@@ -95,13 +93,9 @@ public class RabMain {
 			tThetaEffector.setName("Effector");
 			tThetaEffector.start();	
 			
-			tInformation = new Thread(new ThreadCoordinateInformations());
-			tInformation.setName("Information");
-			tInformation.start();
-			
 			jMainFrame = new WindowsMonitor(brickController);
 			jMainFrame.setVisible(true);
-			jMainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+			jMainFrame.setExtendedState(Frame.MAXIMIZED_BOTH); 
 			
 			jInfo.setVisible(false);
 			

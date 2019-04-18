@@ -4,14 +4,17 @@ import java.util.LinkedList;
 
 import javafx.geometry.Point3D;
 import local.rab.config.Statics;
+import local.rab.devices.brick.BrickComponentHandler;
 import local.rab.devices.dualshock.DualshockSimple;
 
 public class RabMainController {
 	private DualshockSimple dualshockSimple;
 	private CheckCoordinatesHandler checkCoordinatesHandler;
-
-	public RabMainController(DualshockSimple dualshockSimple) {
+	private BrickComponentHandler componentHandler;
+	
+	public RabMainController(DualshockSimple dualshockSimple, BrickComponentHandler componentHandler) {
 		try {
+			this.componentHandler = componentHandler;
 			this.dualshockSimple = dualshockSimple;
 			this.checkCoordinatesHandler = new CheckCoordinatesHandler();
 		} catch (Exception e) {
@@ -75,6 +78,8 @@ public class RabMainController {
 			
 			if (checkCoordinatesHandler.isCoordinateValid(newPosition)) {
 				Statics.setCurrentPosition(newPosition);
+			} else {
+				componentHandler.getBrickLeft().getBrick().getAudio().playTone(5000, 2000);
 			}
 			try {
 				Thread.sleep(250);

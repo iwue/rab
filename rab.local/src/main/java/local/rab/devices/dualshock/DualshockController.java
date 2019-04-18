@@ -58,7 +58,8 @@ public class DualshockController {
 		for (int i = 0; i < controllers.length; i++) {
 			Controller controller = controllers[i];
 
-			if (controller.getType() == Controller.Type.STICK || controller.getType() == Controller.Type.GAMEPAD
+			if (controller.getType() == Controller.Type.STICK 
+					|| controller.getType() == Controller.Type.GAMEPAD
 					|| controller.getType() == Controller.Type.WHEEL
 					|| controller.getType() == Controller.Type.FINGERSTICK) {
 				foundControllers.add(controller);
