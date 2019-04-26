@@ -3,7 +3,9 @@
  */
 package local.rab.devices.brick;
 
-import javafx.geometry.Point3D;
+
+import org.j3d.maths.vector.Point3d;
+
 import local.rab.config.Statics;
 import local.rab.controller.CheckCoordinatesHandler;
 import local.rab.controller.calculation.CalculationAngels;
@@ -62,8 +64,8 @@ public class BrickMoveController {
 		Statics.setInterval(oldIntervall);
 	}
 	
-	public void goTo(Point3D point3d, double timeForMove) {
-		goTo(point3d.getX(), point3d.getY(), point3d.getZ(), timeForMove);
+	public void goTo(Point3d point3d, double timeForMove) {
+		goTo(point3d.x, point3d.y, point3d.z, timeForMove);
 	}
 
 	/**
@@ -252,26 +254,26 @@ public class BrickMoveController {
 	 * @param newY Y im Koordinatensystem, welcher erreicht werden soll
 	 * @param newZ Z im Koordinatensystem, welcher erreicht werden soll
 	 */
-private void setSpeedTheta4(double newX, double newY, double newZ) {
-	try {
-		// Auslesen des aktuellen Winkels bei Theta 4 vom Motor
-		double oldAngle = brickController.getHingTheta4().getTachoCount() * Statics.getTransmissionTheta4() * -1;
-		// Berechnen des neuen Winekel für Theta 4
-		double newAngle = CalculationAngels.calcTheta4(newX, newY, newZ);
-
-		// Differenz der Winkel für die Winkelgeschwindikgkeit
-		speedTheta4WithoutTransmission = oldAngle - newAngle;
-
-		// Geschwindigkeit berechnen für Theta 4
-		speedTheta4WithTransmission = Math.abs(
-				speedTheta4WithoutTransmission / Statics.getTransmissionTheta4() / Statics.getInterval());
-
-		// Setzen der Geschwindigkeit für Theta 4
-		brickController.getHingTheta4().setSpeed((int) speedTheta4WithTransmission);
-	} catch (Exception e) {
-		e.printStackTrace();
+	private void setSpeedTheta4(double newX, double newY, double newZ) {
+		try {
+			// Auslesen des aktuellen Winkels bei Theta 4 vom Motor
+			double oldAngle = brickController.getHingTheta4().getTachoCount() * Statics.getTransmissionTheta4() * -1;
+			// Berechnen des neuen Winekel für Theta 4
+			double newAngle = CalculationAngels.calcTheta4(newX, newY, newZ);
+	
+			// Differenz der Winkel für die Winkelgeschwindikgkeit
+			speedTheta4WithoutTransmission = oldAngle - newAngle;
+	
+			// Geschwindigkeit berechnen für Theta 4
+			speedTheta4WithTransmission = Math.abs(
+					speedTheta4WithoutTransmission / Statics.getTransmissionTheta4() / Statics.getInterval());
+	
+			// Setzen der Geschwindigkeit für Theta 4
+			brickController.getHingTheta4().setSpeed((int) speedTheta4WithTransmission);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-}
 
 	/**
 	 * Fahren der Bewegung für Theta 1 Vorher muss der Befehl

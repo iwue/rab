@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>app</groupId>
-	<artifactId>rab.local</artifactId>
+	<artifactId>local.rab</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
 		<swt.version>4.6</swt.version>
@@ -36,6 +36,7 @@
 		</pluginRepository>
 	</pluginRepositories>
 
+	
 	<dependencies>
 		<dependency>
 			<groupId>${jme3_g}</groupId>
@@ -184,5 +185,28 @@
 			<version>3.5.4</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.github.dejv78.commons.jfx/jfx-geometry -->
+		<dependency>
+		    <groupId>com.github.dejv78.commons.jfx</groupId>
+		    <artifactId>jfx-geometry</artifactId>
+		    <version>1.1.0</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.github.bdeneuter/lejos-ev3-api -->
+		<dependency>
+		    <groupId>com.github.bdeneuter</groupId>
+		    <artifactId>lejos-ev3-api</artifactId>
+		    <version>0.9.1-beta</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/net.java.jinput/jinput-platform -->
+		<dependency>
+		    <groupId>net.java.jinput</groupId>
+		    <artifactId>jinput-platform</artifactId>
+		    <version>2.0.7</version>
+		    <type>pom</type>
+		</dependency>
+				
+				
 	</dependencies>
 </project>

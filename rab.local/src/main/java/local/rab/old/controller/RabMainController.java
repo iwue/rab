@@ -2,7 +2,8 @@ package local.rab.old.controller;
 
 import java.util.LinkedList;
 
-import javafx.geometry.Point3D;
+import org.j3d.maths.vector.Point3d;
+
 import local.rab.config.Statics;
 import local.rab.devices.dualshock.DualshockSimple;
 
@@ -22,7 +23,7 @@ public class RabMainController {
 		}
 	}
 	
-	public void choreography(LinkedList<Point3D>  point3ds, double timeForMove) {
+	public void choreography(LinkedList<Point3d>  point3ds, double timeForMove) {
 		while (!point3ds.isEmpty()) {
 			moveBrickController.goTo(point3ds.removeFirst(), timeForMove);
 		}

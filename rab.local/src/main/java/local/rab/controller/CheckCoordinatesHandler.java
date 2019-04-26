@@ -1,6 +1,7 @@
 	package local.rab.controller;
 
-import javafx.geometry.Point3D;
+import org.j3d.maths.vector.Point3d;
+
 import local.rab.config.Statics;
 import local.rab.controller.calculation.CalculationAngels;
 
@@ -25,8 +26,8 @@ public class CheckCoordinatesHandler {
 	private  double d6 = a6 - a2;
 	private  double d7 = a1;
 	
-	public boolean   isCoordinateValid(Point3D point3d) {
-		return isCoordinateValid(point3d.getX(), point3d.getY(), point3d.getZ());
+	public boolean   isCoordinateValid(Point3d point3d) {
+		return isCoordinateValid(point3d.x, point3d.y, point3d.z);
 	}
 
 	public  boolean isCoordinateValid(double x4, double y4, double z4) {

@@ -1,6 +1,8 @@
 package local.rab.controller.calculation;
 
-import javafx.geometry.Point3D;
+import org.j3d.maths.vector.Point3d;
+import org.opencv.core.Point3;
+
 import local.rab.config.Statics;
 
 public class CalculationAngels {
@@ -11,8 +13,8 @@ public class CalculationAngels {
 	private static double a6 = Statics.getA6();
 	
 	
-	public static double calcTheta1(Point3D point) {
-		return calcTheta1(point.getX(), point.getY());
+	public static double calcTheta1(Point3d point) {
+		return calcTheta1(point.x, point.y);
 	}
 	
 	/**
@@ -77,8 +79,8 @@ public class CalculationAngels {
 	}
 
 	
-	public static double calcTheta2(Point3D point) {
-		return calcTheta2(point.getX(), point.getY(), point.getZ());
+	public static double calcTheta2(Point3d point) {
+		return calcTheta2(point.x, point.y, point.z);
 	}
 	
 	/**
@@ -131,8 +133,8 @@ public class CalculationAngels {
 		return finalAngle;
 	}
 
-	public static double calcTheta3(Point3D point) {
-		return calcTheta3(point.getX(), point.getY(), point.getZ());
+	public static double calcTheta3(Point3d point) {
+		return calcTheta3(point.x, point.y, point.z);
 	}
 	
 	/**
@@ -177,8 +179,8 @@ public class CalculationAngels {
 	}
 
 	
-	public static double calcTheta4(Point3D point) {
-		return calcTheta4(point.getX(), point.getY(), point.getZ());
+	public static double calcTheta4(Point3d point) {
+		return calcTheta4(point.x, point.y, point.z);
 	}
 	
 	/**

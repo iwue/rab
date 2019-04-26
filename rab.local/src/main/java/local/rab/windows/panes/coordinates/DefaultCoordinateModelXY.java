@@ -37,11 +37,11 @@ public class DefaultCoordinateModelXY implements CoordinateModel {
 	@Override
 	public List<Double>[][] getCoordinateXY() {
 		try {
-			speedData[0][0].set(0, Statics.getNewPosition().getX());
-			speedData[0][0].set(1, Statics.getNewPosition().getX());
+			speedData[0][0].set(0, Statics.getNewPosition().x);
+			speedData[0][0].set(1, Statics.getNewPosition().x);
 			
-			speedData[1][1].set(0, Statics.getNewPosition().getY());
-			speedData[1][1].set(1, Statics.getNewPosition().getY());
+			speedData[1][1].set(0, Statics.getNewPosition().y);
+			speedData[1][1].set(1, Statics.getNewPosition().y);
 			
 			return speedData;		
 		} catch (Exception e) {

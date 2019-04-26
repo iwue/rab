@@ -4,7 +4,8 @@
 package local.rab.old.controller;
 
 
-import javafx.geometry.Point3D;
+import org.j3d.maths.vector.Point3d;
+
 import local.rab.config.Statics;
 import local.rab.controller.CheckCoordinatesHandler;
 import local.rab.controller.calculation.CalculationAngels;
@@ -64,8 +65,8 @@ public class BrickMoveController {
 		Statics.setInterval(oldIntervall);
 	}
 	
-	public void goTo(Point3D point3d, double timeForMove) {
-		goTo(point3d.getX(), point3d.getY(), point3d.getZ(), timeForMove);
+	public void goTo(Point3d point3d, double timeForMove) {
+		goTo(point3d.x, point3d.y, point3d.z, timeForMove);
 	}
 
 	/**

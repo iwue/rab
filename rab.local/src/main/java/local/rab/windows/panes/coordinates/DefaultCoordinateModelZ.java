@@ -29,8 +29,8 @@ public class DefaultCoordinateModelZ implements CoordinateModel {
 	@Override
 	public List<Double>[][] getCoordinateXY() {
 		try {
-			speedData[0][1].set(0, Statics.getNewPosition().getZ());
-			speedData[0][1].set(1, Statics.getNewPosition().getZ());
+			speedData[0][1].set(0, Statics.getNewPosition().z);
+			speedData[0][1].set(1, Statics.getNewPosition().z);
 			return speedData;		
 		} catch (Exception e) {
 			e.printStackTrace();

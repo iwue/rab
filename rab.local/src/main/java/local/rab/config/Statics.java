@@ -1,6 +1,6 @@
 package local.rab.config;
 
-import javafx.geometry.Point3D;
+import org.j3d.maths.vector.Point3d;
 
 public class Statics {
 	private static String propertyFile = "rab.properties";
@@ -20,7 +20,7 @@ public class Statics {
 	private static double startY = 0;
 	private static double startZ = 428;
 	
-	private static Point3D newPosition = new Point3D(0, 0 ,0); 
+	private static Point3d newPosition = new Point3d(); 
 	
 	private static double currentX;
 	private static double currentY;
@@ -65,7 +65,8 @@ public class Statics {
 		startX = Double.parseDouble(ConfigHandler.getProperty("startX"));
 		startY = Double.parseDouble(ConfigHandler.getProperty("startY"));
 		startZ = Double.parseDouble(ConfigHandler.getProperty("startZ"));
-		newPosition = new Point3D(startX, startY, startZ);
+		newPosition = new Point3d();
+		newPosition.set(startX, startY, startZ);
 		
 		transmissionTheta1 = Double.parseDouble(ConfigHandler.getProperty("transmissionTheta1"));
 		transmissionTheta2 = Double.parseDouble(ConfigHandler.getProperty("transmissionTheta2"));
@@ -246,11 +247,11 @@ public class Statics {
 		Statics.currentZ = currentZ;
 	}
 
-	public static Point3D getNewPosition() {
+	public static Point3d getNewPosition() {
 		return newPosition;
 	}
 	
-	public static void setCurrentPosition(Point3D currentPosition) {
+	public static void setCurrentPosition(Point3d currentPosition) {
 		Statics.newPosition = currentPosition;
 	}
 	

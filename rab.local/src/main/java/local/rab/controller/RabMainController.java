@@ -2,7 +2,8 @@ package local.rab.controller;
 
 import java.util.LinkedList;
 
-import javafx.geometry.Point3D;
+import org.j3d.maths.vector.Point3d;
+
 import local.rab.config.Statics;
 import local.rab.devices.brick.BrickComponentHandler;
 import local.rab.devices.dualshock.DualshockSimple;
@@ -22,11 +23,11 @@ public class RabMainController {
 		}
 	}
 
-	public void choreography(LinkedList<Point3D> point3ds, double timeForMove) {
+	public void choreography(LinkedList<Point3d> point3ds, double timeForMove) {
 		double oldTime = Statics.getInterval();
 		Statics.setInterval(timeForMove);
 		
-		Point3D point = null;
+		Point3d point = null;
 		while (!point3ds.isEmpty()) {
 			
 			point = point3ds.removeFirst();
@@ -71,10 +72,10 @@ public class RabMainController {
 
 			// Addieren der Bewegung zur Akuellen Position
 			// Es ensteht die neue Position
-			Point3D newPosition = new Point3D(
-					Statics.getNewPosition().getX() + moveX,
-					Statics.getNewPosition().getY() + moveY, 
-					Statics.getNewPosition().getZ() + moveZ);
+			Point3d newPosition = new Point3d();
+			newPosition.set(Statics.getNewPosition().x + moveX,
+					Statics.getNewPosition().y + moveY, 
+					Statics.getNewPosition().z + moveZ);
 			
 			if (checkCoordinatesHandler.isCoordinateValid(newPosition)) {
 				Statics.setCurrentPosition(newPosition);

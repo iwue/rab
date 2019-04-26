@@ -5,6 +5,8 @@ import java.rmi.RemoteException;
 
 import javax.swing.JFrame;
 
+import org.j3d.maths.vector.Point3d;
+
 import local.rab.config.Statics;
 import local.rab.controller.CheckCoordinatesHandler;
 import local.rab.controller.MoveSimpleController;
@@ -21,7 +23,6 @@ import local.rab.devices.dualshock.DualshockSimple;
 import local.rab.windows.WindowsMonitor;
 import local.rab.windows.InfoFront;
 
-import javafx.geometry.Point3D;
 
 public class RabMain {
 	private RabMainController rabController;
@@ -114,8 +115,8 @@ public class RabMain {
 				// Home Position
 				if (dualshockSimple.isPressedActionSquare()) {
 					
-					Point3D currentPosition = new Point3D(
-															Statics.getStartX(), 
+					Point3d currentPosition = new Point3d();
+							currentPosition.set(Statics.getStartX(), 
 															Statics.getStartY(),
 															Statics.getStartZ());
 					Statics.setCurrentPosition(currentPosition);
@@ -143,7 +144,7 @@ public class RabMain {
 					jInfo.setVisible(false);
 				}
 			} else if (Statics.getMode() == 2) {
-				Point3D currentPosition = calculateAngelsToCoordinate.calc(brickController);
+				Point3d currentPosition = calculateAngelsToCoordinate.calc(brickController);
 				moveSimple.move();
 
 				if (!checkCoordinatesHandler.isCoordinateValid(currentPosition)) {
@@ -174,13 +175,13 @@ public class RabMain {
 			
 						tTheta2 = new Thread(new ThreadTheta2(brickController));
 						tTheta2.setName("Theta 2");
-						tTheta2.start();
+						tTheta2.start();	
 			
 						tTheta3 = new Thread(new ThreadTheta3(brickController));
 						tTheta3.setName("Theta 3");
 						tTheta3.start();
 						
-						jInfo.getInfoBox().setText("Switch to Mode 1");
+						jInfo.getInfoBox().setText("Switch to Mode 1"); 
 						jInfo.repaint();
 						jInfo.setLocationRelativeTo(null);
 						jInfo.setResizable(false);
@@ -189,6 +190,7 @@ public class RabMain {
 						
 						brickController.getBrickLeft().getBrick().getLED().setPattern(1);
 						brickController.getBrickRight().getBrick().getLED().setPattern(1);
+						
 						try {
 							Thread.sleep(1000);
 						} catch(InterruptedException e) {
@@ -211,7 +213,7 @@ public class RabMain {
 				jMainFrame.setVisible(false);
 				
 				if(Statics.getMode() == 2) {
-					Point3D currentPosition = calculateAngelsToCoordinate.calc(brickController);
+					Point3d currentPosition = calculateAngelsToCoordinate.calc(brickController);
 					Statics.setCurrentPosition(currentPosition);	
 					Statics.setTheta4Automatic(false);
 					
@@ -228,10 +230,11 @@ public class RabMain {
 					tTheta3.start();
 				}
 				
-				Point3D currentPosition = new Point3D(
-						Statics.getStartX(), 
+				Point3d currentPosition = new Point3d();
+				currentPosition.set(Statics.getStartX(), 
 						Statics.getStartY(),
 						Statics.getStartZ());
+				
 				Statics.setCurrentPosition(currentPosition);
 				
 				try {
