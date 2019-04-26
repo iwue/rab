@@ -17,8 +17,8 @@ public class SeriesChartPaneXYZ extends JPanel implements ChartMonitor{
 		
 		chart = new XYChartBuilder()
 				.title(title)
-				.width(420)
-				.height(350)
+				.width(320)
+				.height(250)
 				.theme(ChartTheme.GGPlot2)
 				.build();
 		

@@ -19,7 +19,7 @@ public class BrickComponentHandler {
 	private RMIRegulatedMotor effector;
 
 	// Sensoren
-	private static RMISampleProvider sampleGyros;
+	//private static RMISampleProvider sampleGyros;
 
 	/**
 	 * Instanzieren des Objekts
@@ -89,7 +89,7 @@ public class BrickComponentHandler {
 			hingTheta4.close();
 			hingTheta1.close();
 			effector.close();
-			sampleGyros.close();
+			//sampleGyros.close();
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -99,7 +99,7 @@ public class BrickComponentHandler {
 	 * Konfigurieren der Motoren
 	 */
 	public void setupsSensors() {
-		sampleGyros = brickLeft.getBrick().createSampleProvider("S1", "lejos.hardware.sensor.EV3GyroSensor", "Angle");
+		//sampleGyros = brickLeft.getBrick().createSampleProvider("S1", "lejos.hardware.sensor.EV3GyroSensor", "Angle");
 	}
 
 	public RMIRegulatedMotor getHingTheta1() {
@@ -126,9 +126,9 @@ public class BrickComponentHandler {
 		return effector;
 	}
 
-	public RMISampleProvider getSampleGyros() {
-		return sampleGyros;
-	}
+//	public RMISampleProvider getSampleGyros() {
+//		return sampleGyros;
+//	}
 
 	public BrickConnectionHandler getBrickLeft() {
 		return brickLeft;
