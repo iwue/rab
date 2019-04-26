@@ -21,6 +21,7 @@ public class ThreadTheta3 implements Runnable {
 
 		double speed = 0;
 		double toleranz = 2;
+		double minMotor = 80;
 		
 		while(!Thread.interrupted()) {
 			try {
@@ -31,17 +32,17 @@ public class ThreadTheta3 implements Runnable {
 					if(Math.abs(calcDiff(angleMotor, angleCalc)) > toleranz) {
 						speed = (calcDiff(angleMotor, angleCalc)  / Statics.getTransmissionTheta3()) / Statics.getInterval();
 						
-						if (speed < Statics.getMinSpeedMotor() 
+						if (speed < minMotor 
 								&& speed > 0) {
 							
 							// Positiv, Minimum
-							speed = Statics.getMinSpeedMotor();
+							speed = minMotor;
 							
-						} else if (speed > -Statics.getMinSpeedMotor() 
+						} else if (speed > -minMotor 
 								&& speed < 0) {
 							
 							// negativ, Minimum
-							speed = -Statics.getMinSpeedMotor();
+							speed = -minMotor;
 						
 						} else if (speed > Statics.getMaxSpeedMotor()
 								&& speed > 0 ) {

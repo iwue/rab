@@ -21,6 +21,7 @@ public class ThreadTheta2 implements Runnable {
 
 		double speed = 0;
 		double toleranz = 2;
+		double minSpeed = 80;
 		
 		while(!Thread.interrupted()) {
 			try {
@@ -32,17 +33,17 @@ public class ThreadTheta2 implements Runnable {
 						
 						speed = (calcDiff(angleMotor, angleCalc) / Statics.getTransmissionTheta2()) / Statics.getInterval();
 						
-						if (speed < Statics.getMinSpeedMotor() 
+						if (speed < minSpeed
 								&& speed > 0) {
 							
 							// Positiv, Minimum
-							speed = Statics.getMinSpeedMotor();
+							speed = minSpeed;
 							
-						} else if (speed > -Statics.getMinSpeedMotor() 
+						} else if (speed > -minSpeed
 								&& speed < 0) {
 							
 							// negativ, Minimum
-							speed = -Statics.getMinSpeedMotor();
+							speed = -minSpeed;
 						
 						} else if (speed > Statics.getMaxSpeedMotor()
 								&& speed > 0 ) {

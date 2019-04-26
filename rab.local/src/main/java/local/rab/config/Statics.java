@@ -41,7 +41,7 @@ public class Statics {
 	private static boolean theta4Automatic = true;
 	
 	// Pro Sekunde
-	private static double minSpeedMotor = 75;
+	private static double minSpeedMotor = 50;
 	private static double maxSpeedMotor = 450;
 	
 	/*
